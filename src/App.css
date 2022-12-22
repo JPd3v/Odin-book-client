@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
 * {
   padding: 0px;
   margin: 0px;
@@ -5,7 +7,9 @@
 }
 
 :root {
+  --ff-main: 'Roboto', sans-serif;
   --main-color: hsl(246, 100%, 67%);
+  --color-error: hsl(0, 97%, 46%);
 
   --fc-prim: hsl(0, 0%, 0%);
   --fc-second: hsl(0, 0%, 100%);
@@ -18,10 +22,19 @@
 
 html {
   font-size: 62.5%;
+  font-family: var(--ff-main);
 }
 
 body {
   font-size: 1.6rem;
+}
+
+input,
+select,
+textarea,
+button {
+  font-family: inherit;
+  font-size: inherit;
 }
 
 /* utility classes*/
@@ -38,10 +51,9 @@ body {
   /* background-color: rgb(94 76 255); */
   width: 100%;
   display: flex;
-  justify-content: space-evenly;
   align-items: center;
   justify-content: space-between;
-  padding: 5px 15px;
+  padding: 5px 20px;
 }
 
 a {
@@ -124,6 +136,54 @@ a {
 .hamburger-menu__close-button svg {
   width: 20px;
   height: 20px;
+}
+
+.sign-up-page {
+  display: flex;
+  justify-content: center;
+  margin: 40px 10px;
+}
+
+.sign-up-form {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  min-width: 300px;
+  max-width: 400px;
+  width: 100%;
+  gap: 17px;
+  justify-content: center;
+  flex-direction: column;
+  padding: 20px 10px;
+  box-shadow: 0px 0px 7px 2px hsl(0deg 0% 69%);
+  border-radius: 5px;
+}
+
+.sign-up-form__label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 70%;
+}
+
+.sign-up-form__label input,
+select {
+  outline-color: var(--main-color);
+}
+
+.sign-up-form__error {
+  text-align: start;
+  width: 70%;
+  color: var(--color-error);
+}
+
+.sign-up-form__submit {
+  color: var(--fc-second);
+  background: var(--main-color);
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 @media (max-width: 600px) {
