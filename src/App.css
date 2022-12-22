@@ -1,0 +1,136 @@
+* {
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+}
+
+:root {
+  --main-color: hsl(246, 100%, 67%);
+
+  --fc-prim: hsl(0, 0%, 0%);
+  --fc-second: hsl(0, 0%, 100%);
+
+  --fs-p: 1.6rem;
+  --fs-3: 2.2rem;
+  --fs-2: 2.6rem;
+  --fs-1: 3rem;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.6rem;
+}
+
+/* utility classes*/
+
+.hidden {
+  display: none !important;
+  pointer-events: none;
+}
+
+.nav-bar {
+  position: sticky;
+  top: 0px;
+  background-color: var(--main-color);
+  /* background-color: rgb(94 76 255); */
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 15px;
+}
+
+a {
+  text-decoration: none;
+}
+
+.nav-bar__list {
+  list-style-type: none;
+  display: flex;
+  gap: 15px;
+}
+
+.nav-bar a {
+  color: var(--fc-second);
+}
+
+.nav-bar__hamburger-button {
+  color: var(--fc-second);
+  background: none;
+  border: none;
+  display: none;
+}
+
+.hamburger-menu {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+  background: hsl(0deg 0% 0% / 62%);
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+.hamburger-menu--open {
+  opacity: 1;
+}
+
+.hamburger-menu__list {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.hamburger-menu__content {
+  background: var(--fc-second);
+  color: var(--main-color);
+  height: 100vh;
+  min-width: 250px;
+  max-width: 350px;
+  width: 78%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 60px;
+  padding: 20px;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+}
+
+.hamburger-menu__content--open {
+  transform: translateX(0px);
+}
+
+.hamburger-menu__content a {
+  color: var(--fc-prim);
+}
+
+.hamburger-menu__close-button {
+  position: absolute;
+  top: 5px;
+  right: -5px;
+  background: none;
+  border: none;
+  transform: translateX(100%);
+  color: var(--fc-second);
+}
+
+.hamburger-menu__close-button svg {
+  width: 20px;
+  height: 20px;
+}
+
+@media (max-width: 600px) {
+  .nav-bar__right-side {
+    display: none;
+  }
+  .nav-bar__hamburger-button {
+    display: inline-block;
+  }
+}
