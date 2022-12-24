@@ -18,6 +18,8 @@
   --fs-3: 2.2rem;
   --fs-2: 2.6rem;
   --fs-1: 3rem;
+
+  --bx-shw-form: 0px 0px 7px 2px hsl(0deg 0% 69%);
 }
 
 html {
@@ -91,6 +93,10 @@ a {
   opacity: 1;
 }
 
+.hamburger-menu__title {
+  font-size: var(--fs-1);
+}
+
 .hamburger-menu__list {
   list-style-type: none;
   display: flex;
@@ -151,15 +157,16 @@ a {
   min-width: 300px;
   max-width: 400px;
   width: 100%;
-  gap: 17px;
+  gap: 20px;
   justify-content: center;
   flex-direction: column;
   padding: 20px 10px;
-  box-shadow: 0px 0px 7px 2px hsl(0deg 0% 69%);
+  box-shadow: var(--bx-shw-form);
   border-radius: 5px;
 }
 
-.sign-up-form__label {
+.sign-up-form__label,
+.log-in-form__label {
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -167,23 +174,50 @@ a {
 }
 
 .sign-up-form__label input,
-select {
+.log-in-form__label input {
   outline-color: var(--main-color);
+  border-radius: 4px;
+  border: 1px solid #808080;
 }
 
-.sign-up-form__error {
+.sign-up-form__error,
+.log-in-form__error {
   text-align: start;
   width: 70%;
   color: var(--color-error);
 }
 
-.sign-up-form__submit {
+.sign-up-form__submit,
+.log-in-form__submit {
   color: var(--fc-second);
   background: var(--main-color);
   padding: 5px 10px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.sign-up-form__title,
+.log-in-form__title {
+  font-size: var(--fs-1);
+}
+
+.log-in-page {
+  display: flex;
+  justify-content: center;
+  margin: 40px 10px;
+}
+.log-in-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 300px;
+  max-width: 400px;
+  width: 100%;
+  gap: 30px;
+  box-shadow: var(--bx-shw-form);
+  border-radius: 15px;
+  padding: 30px 0px;
 }
 
 @media (max-width: 600px) {
