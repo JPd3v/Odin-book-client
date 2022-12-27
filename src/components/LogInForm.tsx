@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useForm } from 'react-hook-form';
+import useLogIn from '../hooks/useLogIn';
 
 interface IFormInputs {
   username: string;
@@ -15,8 +16,10 @@ export default function LogInForm() {
     formState: { errors },
   } = useForm<IFormInputs>({ mode: 'onChange' });
 
+  const logInMutation = useLogIn();
+
   function onSubmit(formInputs: IFormInputs) {
-    console.log(formInputs);
+    logInMutation.mutate(formInputs);
   }
 
   return (
@@ -69,7 +72,29 @@ export default function LogInForm() {
         </p>
       ) : null}
 
-      <button type="submit" className="log-in-form__submit">
+      {logInMutation.isLoading ? 'loading spinner placeholder' : null}
+
+      {logInMutation.isError ? (
+        <div className="log-in-form__server-error">
+          {logInMutation.error.response.status === 422 ? (
+            logInMutation.error.response.data.errors.map((error) => (
+              <p key={error.msg} className="log-in-form__error" role="alert">
+                {error.msg}
+              </p>
+            ))
+          ) : (
+            <p className="log-in-form__error" role="alert">
+              {logInMutation.error.response.data.message}
+            </p>
+          )}
+        </div>
+      ) : null}
+
+      <button
+        type="submit"
+        className="log-in-form__submit"
+        disabled={logInMutation.isLoading}
+      >
         Log in
       </button>
     </form>

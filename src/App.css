@@ -220,6 +220,13 @@ a {
   padding: 30px 0px;
 }
 
+.log-in-form__server-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
 @media (max-width: 600px) {
   .nav-bar__right-side {
     display: none;
