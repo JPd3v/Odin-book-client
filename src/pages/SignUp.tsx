@@ -1,5 +1,9 @@
 import SignUpForm from '../components/SignUpForm';
 
 export default function SignUp() {
-  return <SignUpForm />;
+  return (
+    <main className="sign-up-page">
+      <SignUpForm />
+    </main>
+  );
 }
