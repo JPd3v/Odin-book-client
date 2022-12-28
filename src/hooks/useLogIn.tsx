@@ -32,6 +32,9 @@ async function logIn({ username, password }: IFormInputs) {
     {
       username,
       password,
+    },
+    {
+      withCredentials: true,
     }
   );
 

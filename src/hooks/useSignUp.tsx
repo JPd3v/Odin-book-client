@@ -40,7 +40,7 @@ interface IErrorMsg {
 
 async function postSignUp(userData: IFormInputs) {
   const req = await axiosConfig.post(`/users/sign-up`, userData, {
-    headers: { 'Content-Type': 'application/json' },
+    withCredentials: true,
   });
   return req.data;
 }
