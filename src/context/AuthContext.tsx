@@ -10,6 +10,7 @@ interface IAuthContext {
     React.SetStateAction<string | null | undefined>
   >;
   setUserInfo?: React.Dispatch<React.SetStateAction<IUserInfo>>;
+  logOutUser?: () => void;
 }
 
 interface IUserInfo {
@@ -36,12 +37,18 @@ export default function ContextProvider({ children }: Ichildren) {
   );
   const [userInfo, setUserInfo] = useState<IUserInfo>(initialUSerInfo);
 
+  function logOutUser() {
+    setUserToken(null);
+    setUserInfo(initialUSerInfo);
+  }
+
   const value = useMemo(
     () => ({
       userToken,
       setUserToken,
       setUserInfo,
       userInfo,
+      logOutUser,
     }),
     [userToken]
   );
