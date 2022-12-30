@@ -8,7 +8,8 @@
 
 :root {
   --ff-main: 'Roboto', sans-serif;
-  --main-color: hsl(246, 100%, 67%);
+  --color-main: hsl(246, 100%, 67%);
+  --color-background-second: hsl(0, 0%, 100%);
   --color-error: hsl(0, 97%, 46%);
 
   --fc-prim: hsl(0, 0%, 0%);
@@ -39,6 +40,10 @@ button {
   font-size: inherit;
 }
 
+li {
+  list-style-type: none;
+}
+
 /* utility classes*/
 
 .hidden {
@@ -49,7 +54,7 @@ button {
 .nav-bar {
   position: sticky;
   top: 0px;
-  background-color: var(--main-color);
+  background-color: var(--color-main);
   /* background-color: rgb(94 76 255); */
   width: 100%;
   display: flex;
@@ -66,6 +71,7 @@ a {
   list-style-type: none;
   display: flex;
   gap: 15px;
+  position: relative;
 }
 
 .nav-bar a {
@@ -77,6 +83,57 @@ a {
   background: none;
   border: none;
   display: none;
+}
+
+.profile-drop-down__button {
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  overflow: hidden;
+  width: 30px;
+  height: 30px;
+}
+
+.profile-drop-down-button__img {
+  width: 100%;
+  object-fit: cover;
+  height: 100%;
+}
+
+.profile-drop-down__list {
+  position: absolute;
+  background: var(--color-background-second);
+  right: 0;
+  transform: translateY(16px);
+  padding: 9px;
+  min-width: max-content;
+  border: 1px solid var(--color-main);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 15px;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-drop-down__list::before {
+  content: '';
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid var(--color-main);
+  position: absolute;
+  right: 6px;
+  top: 0;
+  transform: translateY(-100%);
+}
+
+.profile-drop-down__log-out {
+  background: none;
+  border: none;
+  color: var(--color-error);
+  cursor: pointer;
 }
 
 .hamburger-menu {
@@ -106,7 +163,7 @@ a {
 
 .hamburger-menu__content {
   background: var(--fc-second);
-  color: var(--main-color);
+  color: var(--color-main);
   height: 100vh;
   min-width: 250px;
   max-width: 350px;
@@ -175,7 +232,7 @@ a {
 
 .sign-up-form__label input,
 .log-in-form__label input {
-  outline-color: var(--main-color);
+  outline-color: var(--color-main);
   border-radius: 4px;
   border: 1px solid #808080;
 }
@@ -190,7 +247,7 @@ a {
 .sign-up-form__submit,
 .log-in-form__submit {
   color: var(--fc-second);
-  background: var(--main-color);
+  background: var(--color-main);
   padding: 5px 10px;
   border: none;
   border-radius: 5px;
