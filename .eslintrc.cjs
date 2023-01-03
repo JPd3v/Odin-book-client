@@ -30,5 +30,13 @@ module.exports = {
     'react/react-in-jsx-scope': 0,
     'prettier/prettier': ['warn', { endOfLine: 'auto' }],
     'no-underscore-dangle': ['error', { allow: ['_id'] }],
+    '@typescript-eslint/naming-convention': [
+      'warn',
+      {
+        selector: 'variable',
+        format: ['camelCase', 'UPPER_CASE', 'PascalCase'],
+        leadingUnderscore: 'allow',
+      },
+    ],
   },
 };
