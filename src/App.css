@@ -286,6 +286,60 @@ a {
   margin-top: 15px;
 }
 
+.post-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.post {
+  background: #ffffff;
+  border: 1px solid black;
+  padding: 10px 10px;
+}
+
+.post__header {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+}
+
+.post__creator {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.post__creator-img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.post__creator-name {
+  font-size: var(--fs-p);
+}
+
+.page-not-found {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+}
+
+.page-not-found__warning {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.page-not-found__warning a {
+  background-color: var(--color-main);
+  padding: 5px 10px;
+  color: var(--fc-second);
+}
+
 @media (max-width: 600px) {
   .nav-bar__right-side {
     display: none;
