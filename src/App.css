@@ -8,9 +8,13 @@
 
 :root {
   --ff-main: 'Roboto', sans-serif;
+
   --color-main: hsl(246, 100%, 67%);
   --color-background-second: hsl(0, 0%, 100%);
   --color-error: hsl(0, 97%, 46%);
+
+  --accentue-color-1: hsl(203deg 100% 50%);
+  --accentue-color-2: hsl(100deg 100% 50%);
 
   --fc-prim: hsl(0, 0%, 0%);
   --fc-second: hsl(0, 0%, 100%);
@@ -294,30 +298,64 @@ a {
 .post {
   background: #ffffff;
   border: 1px solid black;
-  padding: 10px 10px;
+  padding: 10px 15px;
 }
 
-.post__header {
+.post__header,
+.comment__header {
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 10px;
 }
 
-.post__creator {
+.post__creator,
+.comment__creator {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.post__creator-img {
+.post__creator-img,
+.comment__creator-img {
   width: 40px;
   height: 40px;
   object-fit: cover;
   border-radius: 50%;
 }
 
-.post__creator-name {
+.post__creator-name,
+.comment__creator-name {
   font-size: var(--fs-p);
+}
+
+.post__controllers,
+.comment__controllers {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.post__content,
+.comment__content {
+  margin-top: 20px;
+}
+
+.post__controllers button,
+.comment__controllers button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: var(--color-main);
+  font-weight: 600;
+}
+
+.comment {
+  border-left: 5px solid var(--accentue-color-1);
+  border-radius: 5px;
+  padding: 10px;
 }
 
 .page-not-found {
