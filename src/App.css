@@ -12,6 +12,7 @@
   --color-main: hsl(246, 100%, 67%);
   --color-background-second: hsl(0, 0%, 100%);
   --color-error: hsl(0, 97%, 46%);
+  --color-post-buttons: hsl(0deg 0% 38%);
 
   --accentue-color-1: hsl(203deg 100% 50%);
   --accentue-color-2: hsl(100deg 100% 50%);
@@ -375,13 +376,13 @@ a {
   cursor: pointer;
   display: flex;
   align-items: center;
-  color: var(--color-main);
+  color: var(--color-post-buttons);
   font-weight: 600;
 }
 
 .comments {
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
   gap: 10px;
 }
 
