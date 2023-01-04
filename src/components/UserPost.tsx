@@ -4,6 +4,7 @@ import { AiOutlineLike, AiOutlineLink } from 'react-icons/ai';
 import formatDistance from 'date-fns/formatDistance';
 import { Link } from 'react-router-dom';
 import PostComments from './PostComments';
+import CommentQuantityLimiter from './CommentQuantityLimiter';
 
 interface IProps {
   userPost: IUserPost;
@@ -51,13 +52,21 @@ interface Ireplies {
   timestamp: string;
 }
 
-export type { IUserPost, IComment };
+export type { IUserPost, IComment, Ireplies };
 
 export default (function UserPost({ userPost }: IProps) {
   const { _id, content, creator, edited, likes, timestamp, comments } =
     userPost;
 
   const [showComments, setShowComments] = useState(true);
+  const [commentsLimit, setCommentsLimit] = useState(1);
+
+  function handleIncrement(increment: number) {
+    if (commentsLimit + increment < comments.length) {
+      return setCommentsLimit((prev) => prev + increment);
+    }
+    return setCommentsLimit(comments.length);
+  }
 
   const formater = Intl.NumberFormat('en', { notation: 'compact' });
 
@@ -111,7 +120,16 @@ export default (function UserPost({ userPost }: IProps) {
           Copy Link
         </button>
       </div>
-      {showComments ? <PostComments comments={comments} /> : null}
+      {showComments && comments.length ? (
+        <CommentQuantityLimiter
+          commentsLength={comments.length}
+          currentLimit={commentsLimit}
+          handleIncrement={(increment) => handleIncrement(increment)}
+        />
+      ) : null}
+      {showComments ? (
+        <PostComments comments={comments} commentsLimit={commentsLimit} />
+      ) : null}
     </article>
   );
 });

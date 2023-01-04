@@ -16,6 +16,8 @@
   --accentue-color-1: hsl(203deg 100% 50%);
   --accentue-color-2: hsl(100deg 100% 50%);
 
+  --border-color: hsl(0, 0%, 58%);
+
   --fc-prim: hsl(0, 0%, 0%);
   --fc-second: hsl(0, 0%, 100%);
 
@@ -48,6 +50,10 @@ li {
   list-style-type: none;
 }
 
+a {
+  text-decoration: none;
+}
+
 /* utility classes*/
 
 .hidden {
@@ -65,10 +71,6 @@ li {
   align-items: center;
   justify-content: space-between;
   padding: 5px 20px;
-}
-
-a {
-  text-decoration: none;
 }
 
 .nav-bar__list {
@@ -295,14 +297,34 @@ a {
   flex-direction: column;
 }
 
+.comments-controller {
+  margin: 20px 1px;
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  padding: 10px 0px;
+  display: flex;
+  gap: 20px;
+}
+
+.comments-controller__show-more {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.comments-controller__show-more:hover {
+  text-decoration: underline;
+}
+
 .post {
   background: #ffffff;
-  border: 1px solid black;
+  border: 1px solid var(--border-color);
   padding: 10px 15px;
 }
 
 .post__header,
-.comment__header {
+.comment__header,
+.reply__header {
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 10px;
@@ -316,7 +338,8 @@ a {
 }
 
 .post__creator-img,
-.comment__creator-img {
+.comment__creator-img,
+.reply__creator-img {
   width: 40px;
   height: 40px;
   object-fit: cover;
@@ -324,12 +347,14 @@ a {
 }
 
 .post__creator-name,
-.comment__creator-name {
+.comment__creator-name,
+.reply__creator-name {
   font-size: var(--fs-p);
 }
 
 .post__controllers,
-.comment__controllers {
+.comment__controllers,
+.reply__controllers {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -337,12 +362,14 @@ a {
 }
 
 .post__content,
-.comment__content {
+.comment__content,
+.reply__content {
   margin-top: 20px;
 }
 
 .post__controllers button,
-.comment__controllers button {
+.comment__controllers button,
+.reply__controllers button {
   background: none;
   border: none;
   cursor: pointer;
@@ -352,10 +379,27 @@ a {
   font-weight: 600;
 }
 
+.comments {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 10px;
+}
+
 .comment {
   border-left: 5px solid var(--accentue-color-1);
   border-radius: 5px;
   padding: 10px;
+  background: #ededed;
+}
+
+.replies {
+  margin-top: 25px;
+  border-left: 4px solid var(--accentue-color-2);
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
 }
 
 .page-not-found {
