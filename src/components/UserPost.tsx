@@ -61,6 +61,8 @@ export default (function UserPost({ userPost }: IProps) {
   const [showComments, setShowComments] = useState(true);
   const [commentsLimit, setCommentsLimit] = useState(1);
 
+  const postComments = comments.slice(0, commentsLimit).reverse();
+
   function handleIncrement(increment: number) {
     if (commentsLimit + increment < comments.length) {
       return setCommentsLimit((prev) => prev + increment);
@@ -127,9 +129,7 @@ export default (function UserPost({ userPost }: IProps) {
           handleIncrement={(increment) => handleIncrement(increment)}
         />
       ) : null}
-      {showComments ? (
-        <PostComments comments={comments} commentsLimit={commentsLimit} />
-      ) : null}
+      {showComments ? <PostComments comments={postComments} /> : null}
     </article>
   );
 });

@@ -27,7 +27,7 @@ export default function UserFeed() {
   }, [loadingDivRef, posts]);
 
   return (
-    <>
+    <div className="posts-container">
       {posts
         ? posts.data?.pages.map((page) => {
             return page.map((userPost: IUserPost) => {
@@ -39,6 +39,6 @@ export default function UserFeed() {
       <div className="infite-scroll-post-loading" ref={loadingDivRef}>
         loading component place holder
       </div>
-    </>
+    </div>
   );
 }
