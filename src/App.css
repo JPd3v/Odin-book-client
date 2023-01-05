@@ -299,7 +299,7 @@ a {
 }
 
 .comments-controller {
-  margin: 20px 1px;
+  margin: 20px 0px;
   border-top: 1px solid var(--border-color);
   border-bottom: 1px solid var(--border-color);
   padding: 10px 0px;
@@ -387,10 +387,41 @@ a {
 }
 
 .comment {
-  border-left: 5px solid var(--accentue-color-1);
+  border-left: 4px solid var(--accentue-color-1);
   border-radius: 5px;
   padding: 10px;
   background: #ededed;
+}
+
+.comment-form {
+  margin-top: 20px;
+}
+
+.comment-form__text-input {
+  border-left: 4px solid var(--color-main);
+  outline-color: var(--color-main);
+  border-radius: 5px;
+  padding: 10px;
+  min-width: 50%;
+  max-width: 100%;
+}
+
+.comment-form__controllers {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.comment-form__submit {
+  color: var(--fc-second);
+  background: var(--color-main);
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+.comment-form__error-message {
+  color: var(--color-error);
 }
 
 .replies {
