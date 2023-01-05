@@ -58,7 +58,7 @@ export default (function UserPost({ userPost }: IProps) {
   const { _id, content, creator, edited, likes, timestamp, comments } =
     userPost;
 
-  const [showComments, setShowComments] = useState(true);
+  const [showComments, setShowComments] = useState(false);
   const [commentsLimit, setCommentsLimit] = useState(1);
 
   const postComments = comments.slice(0, commentsLimit).reverse();
@@ -107,7 +107,7 @@ export default (function UserPost({ userPost }: IProps) {
       <div className="post__controllers">
         <button type="button">
           {/* IMPORTANT ADD CONDINITONAL ARIA LABEL RENDERING IF THE POST IS LIKED OR NOT */}
-          <AiOutlineLike aria-label="Give like" /> {likesCount}
+          <AiOutlineLike aria-label="Give like" /> <p>{likesCount}</p>
         </button>
         <button type="button" onClick={() => setShowComments((prev) => !prev)}>
           <BiCommentDetail
@@ -115,7 +115,7 @@ export default (function UserPost({ userPost }: IProps) {
               showComments ? 'close comment section' : 'open comment section'
             }`}
           />
-          {commentsCount}
+          <p>{commentsCount}</p>
         </button>
         <button type="button">
           <AiOutlineLink />
