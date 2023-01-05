@@ -397,22 +397,25 @@ a {
   margin-top: 20px;
 }
 
-.comment-form__text-input {
+.comment-form__text-input,
+.reply-form__text-input {
   border-left: 4px solid var(--color-main);
   outline-color: var(--color-main);
   border-radius: 5px;
   padding: 10px;
-  min-width: 50%;
+  min-width: 75%;
   max-width: 100%;
 }
 
-.comment-form__controllers {
+.comment-form__controllers,
+.reply-form__controllers {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.comment-form__submit {
+.comment-form__submit,
+.reply-form__submit {
   color: var(--fc-second);
   background: var(--color-main);
   border: none;
@@ -420,7 +423,8 @@ a {
   padding: 5px 10px;
   cursor: pointer;
 }
-.comment-form__error-message {
+.comment-form__error-message,
+.reply-form__error-message {
   color: var(--color-error);
 }
 
