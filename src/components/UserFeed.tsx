@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import useUserRelatedPosts from '../hooks/useUserRelatedPosts';
 import UserPost from './UserPost';
 import type { IUserPost } from './UserPost';
+import NewPostForm from './NewPostForm';
 
 export default function UserFeed() {
   const posts = useUserRelatedPosts();
@@ -27,18 +28,21 @@ export default function UserFeed() {
   }, [loadingDivRef, posts]);
 
   return (
-    <div className="posts-container">
-      {posts
-        ? posts.data?.pages.map((page) => {
-            return page.map((userPost: IUserPost) => {
-              return <UserPost key={userPost._id} userPost={userPost} />;
-            });
-          })
-        : null}
+    <>
+      <NewPostForm />
+      <div className="posts-container">
+        {posts
+          ? posts.data?.pages.map((page) => {
+              return page.map((userPost: IUserPost) => {
+                return <UserPost key={userPost._id} userPost={userPost} />;
+              });
+            })
+          : null}
 
-      <div className="infite-scroll-post-loading" ref={loadingDivRef}>
-        loading component place holder
+        <div className="infite-scroll-post-loading" ref={loadingDivRef}>
+          loading component place holder
+        </div>
       </div>
-    </div>
+    </>
   );
 }
