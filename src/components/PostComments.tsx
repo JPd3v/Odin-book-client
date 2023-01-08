@@ -4,9 +4,10 @@ import type { IComment } from './UserPost';
 
 interface IProps {
   comments: IComment[];
+  postId: string;
 }
 
-export default function PostComments({ comments }: IProps) {
+export default function PostComments({ comments, postId }: IProps) {
   return (
     <>
       <div className="comments">
@@ -14,7 +15,7 @@ export default function PostComments({ comments }: IProps) {
           <Comment key={comment._id} comment={comment} />
         ))}
       </div>
-      <NewCommentForm />
+      <NewCommentForm postId={postId} />
     </>
   );
 }

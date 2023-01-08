@@ -129,7 +129,9 @@ export default (function UserPost({ userPost }: IProps) {
           handleIncrement={(increment) => handleIncrement(increment)}
         />
       ) : null}
-      {showComments ? <PostComments comments={postComments} /> : null}
+      {showComments ? (
+        <PostComments comments={postComments} postId={_id} />
+      ) : null}
     </article>
   );
 });

@@ -1,26 +1,38 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useForm } from 'react-hook-form';
+import useNewComment from '../hooks/useNewComment';
+
+interface IProps {
+  postId: string;
+}
 
 interface IFormInputs {
   text: string;
 }
 
-export default function NewCommentForm() {
+export type { IFormInputs };
+
+export default function NewCommentForm({ postId }: IProps) {
   const {
     register,
     handleSubmit,
+    resetField,
     formState: { errors },
   } = useForm<IFormInputs>({ mode: 'onChange' });
 
+  const createNewComment = useNewComment();
+
   const FORM_UUID = crypto.randomUUID();
 
-  function onSubmit(formData: IFormInputs) {
-    console.log(formData);
+  function onSubmit(formInputs: IFormInputs) {
+    createNewComment.mutate({ formInputs, postId });
+    resetField('text');
   }
+
   return (
     <form className="comment-form" noValidate onSubmit={handleSubmit(onSubmit)}>
       <textarea
-        aria-labelledby={`comment-error ${FORM_UUID}`}
+        aria-labelledby={`comment-error${FORM_UUID}`}
         aria-invalid={errors.text ? 'true' : 'false'}
         className="comment-form__text-input"
         placeholder="write a comment"
@@ -29,16 +41,64 @@ export default function NewCommentForm() {
         })}
       />
       <div className="comment-form__controllers">
-        <button type="submit" className="comment-form__submit">
+        <button
+          disabled={createNewComment.isLoading}
+          type="submit"
+          className="comment-form__submit"
+        >
           Submit
         </button>
-        <p
-          className="comment-form__error-message"
-          id={`comment-error ${FORM_UUID}`}
-        >
-          {errors.text?.message}
-        </p>
+        {errors.text ? (
+          <p
+            className="comment-form__error-message"
+            id={`comment-error${FORM_UUID}`}
+          >
+            {errors.text?.message}
+          </p>
+        ) : null}
+        {createNewComment.isLoading ? <p>loading spinner placeholder</p> : null}
+        {createNewComment.isError ? (
+          <div>
+            {createNewComment.error.response.status === 422 ? (
+              createNewComment.error.response.data.errors.map((error) => (
+                <p
+                  key={error.msg}
+                  className="comment-form__error-message"
+                  role="alert"
+                >
+                  {error.msg}
+                </p>
+              ))
+            ) : (
+              <p className="comment-form__error-message" role="alert">
+                {createNewComment.error.response.data.message}
+              </p>
+            )}
+          </div>
+        ) : null}
       </div>
     </form>
   );
 }
+
+// {
+//   createNewComment.isError ? (
+//     <div>
+//       {createNewComment.error.response.status === 422 ? (
+//         createNewComment.error.response.data.errors.map((error) => (
+//           <p
+//             key={error.msg}
+//             className="comment-form__error-message"
+//             role="alert"
+//           >
+//             {error.msg}
+//           </p>
+//         ))
+//       ) : (
+//         <p className="comment-form__error-message" role="alert">
+//           {createNewComment.error.response.data.message}
+//         </p>
+//       )}
+//     </div>
+//   ) : null;
+// }
