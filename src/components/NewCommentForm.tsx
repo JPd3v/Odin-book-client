@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useForm } from 'react-hook-form';
+import { useEffect } from 'react';
 import useNewComment from '../hooks/useNewComment';
 
 interface IProps {
@@ -16,7 +17,7 @@ export default function NewCommentForm({ postId }: IProps) {
   const {
     register,
     handleSubmit,
-    resetField,
+    reset,
     formState: { errors },
   } = useForm<IFormInputs>({ mode: 'onChange' });
 
@@ -26,8 +27,13 @@ export default function NewCommentForm({ postId }: IProps) {
 
   function onSubmit(formInputs: IFormInputs) {
     createNewComment.mutate({ formInputs, postId });
-    resetField('text');
   }
+
+  useEffect(() => {
+    if (createNewComment.isSuccess) {
+      reset();
+    }
+  }, [createNewComment.isSuccess, reset]);
 
   return (
     <form className="comment-form" noValidate onSubmit={handleSubmit(onSubmit)}>
