@@ -1,7 +1,7 @@
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import { lazy, Suspense, useEffect } from 'react';
-import PageLayout from './pages/PageLayout';
+import PageLayout from './layout/PageLayout';
 import useRefreshUser from './hooks/useRefreshUser';
 import AuthGuard from './guards/AuthGuard';
 import RestrictedIfLogedIn from './guards/RestrictedIfLogedIn';
