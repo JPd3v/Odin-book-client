@@ -11,13 +11,14 @@ export default function useUserRelatedPosts() {
         headers: { Authorization: `Bearer ${userToken}` },
       }
     );
-    return req.data;
+    return { posts: req.data };
   }
 
   return useInfiniteQuery({
     queryKey: ['posts'],
     queryFn: ({ pageParam = 1 }) => getRelatedPosts(pageParam),
+    staleTime: 1000 * 60 * 3,
     getNextPageParam: (lastPage, allPages) =>
-      lastPage.length ? allPages.length + 1 : undefined,
+      lastPage.posts.length ? allPages.length + 1 : undefined,
   });
 }
