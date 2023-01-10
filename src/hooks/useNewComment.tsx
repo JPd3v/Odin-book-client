@@ -10,12 +10,11 @@ interface INewComment {
 }
 
 export interface InfiniteData {
-  pages: Ipages[];
+  pages: Ipage[] | undefined;
 }
 
-interface Ipages {
-  map(arg0: (result: IUserPost) => IUserPost): IUserPost;
-  page: Array<IUserPost>;
+interface Ipage {
+  posts: IUserPost[];
 }
 
 interface IAxiosErrors {
@@ -24,7 +23,7 @@ interface IAxiosErrors {
 
 interface IErrorResponse {
   status: number;
-  data: { message: string; errors: IErrorMsg[] };
+  data: { message?: string; errors?: IErrorMsg[] };
 }
 
 interface IErrorMsg {
@@ -51,21 +50,20 @@ export default function useNewComment() {
     mutationFn: (data) => newComment(data, userToken),
     onSuccess(data) {
       const commentPostId = data.post_id;
-      // NOTE: COME LATER AND FIX TYPES ERROR
 
-      queryClient.setQueryData<InfiniteData>(['posts'], (oldData) => ({
-        ...oldData,
-        pages: oldData?.pages.map((page) =>
-          page.map((post) =>
-            post._id === commentPostId
-              ? {
-                  ...post,
-                  comments: [data, ...post.comments],
-                }
-              : post
-          )
-        ),
-      }));
+      queryClient.setQueryData<InfiniteData>(['posts'], (prev) => {
+        return {
+          ...prev,
+          pages: prev?.pages?.map((page) => ({
+            ...page,
+            posts: page.posts.map((post) =>
+              post._id === commentPostId
+                ? { ...post, comments: [data, ...post.comments] }
+                : post
+            ),
+          })),
+        };
+      });
     },
   });
 }
