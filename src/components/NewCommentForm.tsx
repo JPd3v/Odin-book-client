@@ -62,49 +62,22 @@ export default function NewCommentForm({ postId }: IProps) {
             {errors.text?.message}
           </p>
         ) : null}
+
         {createNewComment.isLoading ? <p>loading spinner placeholder</p> : null}
+
         {createNewComment.isError ? (
-          <div>
-            {createNewComment.error.response.status === 422 ? (
-              createNewComment.error.response.data.errors.map((error) => (
-                <p
-                  key={error.msg}
-                  className="comment-form__error-message"
-                  role="alert"
-                >
-                  {error.msg}
-                </p>
-              ))
-            ) : (
-              <p className="comment-form__error-message" role="alert">
-                {createNewComment.error.response.data.message}
+          <div role="alert">
+            {createNewComment.error.response.data.errors?.map((error) => (
+              <p key={error.msg} className="comment-form__error-message">
+                {error.msg}
               </p>
-            )}
+            ))}
+            <p className="comment-form__error-message">
+              {createNewComment.error.response.data?.message}
+            </p>
           </div>
         ) : null}
       </div>
     </form>
   );
 }
-
-// {
-//   createNewComment.isError ? (
-//     <div>
-//       {createNewComment.error.response.status === 422 ? (
-//         createNewComment.error.response.data.errors.map((error) => (
-//           <p
-//             key={error.msg}
-//             className="comment-form__error-message"
-//             role="alert"
-//           >
-//             {error.msg}
-//           </p>
-//         ))
-//       ) : (
-//         <p className="comment-form__error-message" role="alert">
-//           {createNewComment.error.response.data.message}
-//         </p>
-//       )}
-//     </div>
-//   ) : null;
-// }
