@@ -33,15 +33,24 @@ export default function UserFeed() {
       <div className="posts-container">
         {posts
           ? posts.data?.pages.map((page) => {
-              return page.map((userPost: IUserPost) => {
+              return page.posts.map((userPost: IUserPost) => {
                 return <UserPost key={userPost._id} userPost={userPost} />;
               });
             })
           : null}
 
-        <div className="infite-scroll-post-loading" ref={loadingDivRef}>
-          loading component place holder
-        </div>
+        {posts.hasNextPage ? (
+          <div className="infite-scroll-post-loading" ref={loadingDivRef}>
+            loading component place holder
+          </div>
+        ) : null}
+
+        {posts.isError ? (
+          <p>
+            Something went wrong when trying to get your feed posts, try again
+            later
+          </p>
+        ) : null}
       </div>
     </>
   );
