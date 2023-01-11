@@ -2,6 +2,7 @@
 import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
 import useNewPost from '../hooks/useNewPost';
+import LoadingSpinner from './LoadingSpinner';
 
 interface IFormInputs {
   text: string;
@@ -43,13 +44,13 @@ export default function NewPostForm() {
         {...register('text', { required: "can't create an empty post" })}
       />
 
-      <div className="new-post-form__controllers">
-        {errors.text ? (
-          <p className="new-post-form__error-message" id="new-post-error">
-            {errors.text.message}
-          </p>
-        ) : null}
+      {errors.text ? (
+        <p className="new-post-form__error-message" id="new-post-error">
+          {errors.text.message}
+        </p>
+      ) : null}
 
+      <div className="new-post-form__controllers">
         <button
           type="submit"
           className="new-post-form__submit"
@@ -57,26 +58,26 @@ export default function NewPostForm() {
         >
           Create new post
         </button>
-
         {newPostMutation.isLoading ? (
-          <div>
-            <p>loading spinner placeholder</p>
-          </div>
-        ) : null}
-        {newPostMutation.isError ? (
-          <div role="alert">
-            {newPostMutation.error.response.data?.errors?.map((error) => (
-              <p key={error.msg} className="new-post-form__error-message">
-                {error.msg}
-              </p>
-            ))}
-
-            <p className="new-post-form__error-message">
-              {newPostMutation.error.response.data.message}
-            </p>
+          <div className="new-post-form__loading-spinner">
+            <LoadingSpinner />
           </div>
         ) : null}
       </div>
+
+      {newPostMutation.isError ? (
+        <div role="alert">
+          {newPostMutation.error.response.data?.errors?.map((error) => (
+            <p key={error.msg} className="new-post-form__error-message">
+              {error.msg}
+            </p>
+          ))}
+
+          <p className="new-post-form__error-message">
+            {newPostMutation.error.response.data.message}
+          </p>
+        </div>
+      ) : null}
     </form>
   );
 }

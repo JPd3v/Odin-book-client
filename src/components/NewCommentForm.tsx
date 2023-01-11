@@ -2,6 +2,7 @@
 import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
 import useNewComment from '../hooks/useNewComment';
+import LoadingSpinner from './LoadingSpinner';
 
 interface IProps {
   postId: string;
@@ -63,7 +64,11 @@ export default function NewCommentForm({ postId }: IProps) {
           </p>
         ) : null}
 
-        {createNewComment.isLoading ? <p>loading spinner placeholder</p> : null}
+        {createNewComment.isLoading ? (
+          <div className="comment-form__loading-spinner">
+            <LoadingSpinner />
+          </div>
+        ) : null}
 
         {createNewComment.isError ? (
           <div role="alert">

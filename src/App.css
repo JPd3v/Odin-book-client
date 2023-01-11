@@ -308,8 +308,8 @@ a {
 .new-post-form__controllers {
   display: flex;
   gap: 10px;
-  flex-direction: column;
   align-items: start;
+  margin: 10px 0px;
 }
 
 .posts-container {
@@ -450,7 +450,9 @@ a {
   color: var(--color-error);
 }
 
-.reply-form__loading-spinner {
+.comment-form__loading-spinner,
+.reply-form__loading-spinner,
+.new-post-form__loading-spinner {
   width: 30px;
   height: 30px;
 }
