@@ -8,6 +8,7 @@ import RestrictedIfLogedIn from './guards/RestrictedIfLogedIn';
 import Users from './pages/Users';
 import IndividualPost from './pages/IndividualPost';
 import PageNotFound404 from './pages/PageNotFound404';
+import LoadingPage from './components/LoadingPage';
 
 const Home = lazy(() => import('./pages/Home'));
 const SignUp = lazy(() => import('./pages/SignUp'));
@@ -28,7 +29,7 @@ function App() {
 
   return (
     <div className="App">
-      <Suspense fallback={<p>loading.. place holder</p>}>
+      <Suspense fallback={<LoadingPage />}>
         <Routes>
           <Route element={<PageLayout />}>
             <Route path="/" element={<Home />} />
