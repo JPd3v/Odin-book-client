@@ -44,6 +44,7 @@ interface IComment {
 
 interface Ireplies {
   _id: string;
+  comment_id: string;
   creator: IUser;
   content: IContent;
   likes: string[];
