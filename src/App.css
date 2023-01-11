@@ -450,6 +450,11 @@ a {
   color: var(--color-error);
 }
 
+.reply-form__loading-spinner {
+  width: 30px;
+  height: 30px;
+}
+
 .replies {
   margin-top: 25px;
   border-left: 4px solid var(--accentue-color-2);
@@ -478,6 +483,24 @@ a {
   background-color: var(--color-main);
   padding: 5px 10px;
   color: var(--fc-second);
+}
+
+.loading-spinner {
+  width: 100%;
+  height: 100%;
+  border: 3px solid var(--color-main);
+  border-left-color: transparent;
+  border-radius: 50%;
+  animation: Spinner infinite linear 1s;
+}
+
+@keyframes Spinner {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @media (max-width: 600px) {
