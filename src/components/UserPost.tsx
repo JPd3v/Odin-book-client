@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import { BiCommentDetail } from 'react-icons/bi';
-import { AiOutlineLike, AiOutlineLink } from 'react-icons/ai';
+import { AiFillLike, AiOutlineLike, AiOutlineLink } from 'react-icons/ai';
 import formatDistance from 'date-fns/formatDistance';
 import { Link } from 'react-router-dom';
 import PostComments from './PostComments';
 import CommentQuantityLimiter from './CommentQuantityLimiter';
+import useAuth from '../hooks/useAuth';
+import useIdIsOnArray from '../hooks/useIdIsOnArray';
+import usePostLike from '../hooks/usePostLike';
 
 interface IProps {
   userPost: IUserPost;
@@ -61,6 +64,8 @@ export default (function UserPost({ userPost }: IProps) {
 
   const [showComments, setShowComments] = useState(false);
   const [commentsLimit, setCommentsLimit] = useState(1);
+  const { userInfo } = useAuth();
+  const likeMutation = usePostLike();
 
   const postComments = comments.slice(0, commentsLimit).reverse();
 
@@ -70,6 +75,7 @@ export default (function UserPost({ userPost }: IProps) {
     }
     return setCommentsLimit(comments.length);
   }
+  const userLikeThisPost = useIdIsOnArray(userPost.likes, userInfo?._id);
 
   const formater = Intl.NumberFormat('en', { notation: 'compact' });
 
@@ -106,10 +112,28 @@ export default (function UserPost({ userPost }: IProps) {
       <p className="post__content">{content.text}</p>
 
       <div className="post__controllers">
-        <button type="button">
-          {/* IMPORTANT ADD CONDINITONAL ARIA LABEL RENDERING IF THE POST IS LIKED OR NOT */}
-          <AiOutlineLike aria-label="Give like" /> <p>{likesCount}</p>
-        </button>
+        {userLikeThisPost ? (
+          <button
+            type="button"
+            className="post__controllers-like-button post__controllers-like-button--active"
+            onClick={() =>
+              !likeMutation.isLoading ? likeMutation.mutate(_id) : null
+            }
+          >
+            <AiFillLike aria-label="Remove like" />
+            <p>{likesCount}</p>
+          </button>
+        ) : (
+          <button
+            type="button"
+            onClick={() =>
+              !likeMutation.isLoading ? likeMutation.mutate(_id) : null
+            }
+          >
+            <AiOutlineLike aria-label="Give like" /> <p>{likesCount}</p>
+          </button>
+        )}
+
         <button type="button" onClick={() => setShowComments((prev) => !prev)}>
           <BiCommentDetail
             aria-label={`${
