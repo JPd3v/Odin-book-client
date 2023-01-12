@@ -17,46 +17,48 @@ export default function NavBar() {
   }
 
   return (
-    <nav className="nav-bar">
-      <div>
-        <Link to="/">
-          <h1>Odin Book</h1>
-        </Link>
-      </div>
-      <div className="nav-bar__right-side">
-        <ul className="nav-bar__list">
-          {!userToken ? (
-            <>
-              <li>
-                <Link to="/sign-up">Sign up</Link>
-              </li>
-              <li>
-                <Link to="/log-in">Log in</Link>
-              </li>
-            </>
-          ) : null}
-          <li>{userToken ? <ProfileDropDown /> : null}</li>
-        </ul>
-      </div>
+    <div className="nav-bar-wrapper">
+      <nav className="nav-bar">
+        <div>
+          <Link to="/">
+            <h1>Odin Book</h1>
+          </Link>
+        </div>
+        <div className="nav-bar__right-side">
+          <ul className="nav-bar__list">
+            {!userToken ? (
+              <>
+                <li>
+                  <Link to="/sign-up">Sign up</Link>
+                </li>
+                <li>
+                  <Link to="/log-in">Log in</Link>
+                </li>
+              </>
+            ) : null}
+            <li>{userToken ? <ProfileDropDown /> : null}</li>
+          </ul>
+        </div>
 
-      {!isOpen && !hasTransitionedIn ? (
-        <button
-          type="button"
-          aria-label="open navigation menu"
-          className="nav-bar__hamburger-button"
-          onClick={openCloseMenu}
-        >
-          <GiHamburgerMenu />
-        </button>
-      ) : null}
+        {!isOpen && !hasTransitionedIn ? (
+          <button
+            type="button"
+            aria-label="open navigation menu"
+            className="nav-bar__hamburger-button"
+            onClick={openCloseMenu}
+          >
+            <GiHamburgerMenu />
+          </button>
+        ) : null}
 
-      {isOpen || hasTransitionedIn ? (
-        <HamburgerMenu
-          isOpen={isOpen}
-          hasTransitionedIn={hasTransitionedIn}
-          handleClick={() => openCloseMenu()}
-        />
-      ) : null}
-    </nav>
+        {isOpen || hasTransitionedIn ? (
+          <HamburgerMenu
+            isOpen={isOpen}
+            hasTransitionedIn={hasTransitionedIn}
+            handleClick={() => openCloseMenu()}
+          />
+        ) : null}
+      </nav>
+    </div>
   );
 }

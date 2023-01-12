@@ -17,6 +17,8 @@
   --accentue-color-1: hsl(203deg 100% 50%);
   --accentue-color-2: hsl(100deg 100% 50%);
 
+  --linear-gradient-1: linear-gradient(180deg, var(--color-main), #9feeff);
+
   --border-color: hsl(0, 0%, 58%);
 
   --fc-prim: hsl(0, 0%, 0%);
@@ -55,6 +57,10 @@ a {
   text-decoration: none;
 }
 
+main {
+  padding-top: 40px;
+}
+
 /* utility classes*/
 
 .hidden {
@@ -62,16 +68,25 @@ a {
   pointer-events: none;
 }
 
+.App {
+  position: relative;
+  height: 100vh;
+}
+
 .nav-bar {
-  position: sticky;
-  top: 0px;
+  position: fixed;
   background-color: var(--color-main);
-  /* background-color: rgb(94 76 255); */
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 5px 20px;
+}
+
+.nav-bar-wrapper {
+  position: absolute;
+  background-color: var(--color-main);
+  width: 100%;
 }
 
 .nav-bar__list {
@@ -211,22 +226,25 @@ a {
 .sign-up-page {
   display: flex;
   justify-content: center;
-  margin: 40px 10px;
+  padding: 40px 0px;
+  height: fit-content;
+  background: var(--linear-gradient-1);
 }
 
 .sign-up-form {
   display: flex;
-  align-items: center;
   flex-direction: column;
+  align-items: center;
   min-width: 300px;
   max-width: 400px;
   width: 100%;
-  gap: 20px;
+  gap: 30px;
+  border-radius: 15px;
+  padding: 30px 0px;
+  background: white;
+  height: fit-content;
+  margin: 50px 20px;
   justify-content: center;
-  flex-direction: column;
-  padding: 20px 10px;
-  box-shadow: var(--bx-shw-form);
-  border-radius: 5px;
 }
 
 .sign-up-form__label,
@@ -269,7 +287,9 @@ a {
 .log-in-page {
   display: flex;
   justify-content: center;
-  margin: 40px 10px;
+  padding: 40px 0px;
+  height: 100%;
+  background: var(--linear-gradient-1);
 }
 .log-in-form {
   display: flex;
@@ -279,9 +299,12 @@ a {
   max-width: 400px;
   width: 100%;
   gap: 30px;
-  box-shadow: var(--bx-shw-form);
   border-radius: 15px;
   padding: 30px 0px;
+  background: white;
+  height: fit-content;
+  align-self: center;
+  margin: 0px 20px;
 }
 
 .log-in-form__server-error,
