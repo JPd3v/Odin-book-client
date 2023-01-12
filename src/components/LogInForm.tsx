@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useForm } from 'react-hook-form';
 import useLogIn from '../hooks/useLogIn';
+import LoadingSpinner from './LoadingSpinner';
 
 interface IFormInputs {
   username: string;
@@ -72,7 +73,11 @@ export default function LogInForm() {
         </p>
       ) : null}
 
-      {logInMutation.isLoading ? 'loading spinner placeholder' : null}
+      {logInMutation.isLoading ? (
+        <div className="log-in-form__loading-spinner">
+          <LoadingSpinner />
+        </div>
+      ) : null}
 
       {logInMutation.isError ? (
         <div className="log-in-form__server-error">

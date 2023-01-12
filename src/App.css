@@ -454,6 +454,8 @@ a {
   color: var(--color-error);
 }
 
+.sign-up-form__loading-spinner,
+.log-in-form__loading-spinner,
 .comment-form__loading-spinner,
 .reply-form__loading-spinner,
 .new-post-form__loading-spinner {

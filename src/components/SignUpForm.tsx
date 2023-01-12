@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import differenceInYears from 'date-fns/differenceInYears';
 import UseSignup from '../hooks/useSignUp';
 import type { IFormInputs } from '../hooks/useSignUp';
+import LoadingSpinner from './LoadingSpinner';
 
 const todayDate = new Date();
 
@@ -178,7 +179,11 @@ export default function SignUpForm() {
         </p>
       ) : null}
 
-      {registerMutation.isLoading ? <div>loading place holder</div> : null}
+      {registerMutation.isLoading ? (
+        <div className="sign-up-form__loading-spinner">
+          <LoadingSpinner />
+        </div>
+      ) : null}
 
       {registerMutation.isError ? (
         <div className="sign-up-form__server-error">
