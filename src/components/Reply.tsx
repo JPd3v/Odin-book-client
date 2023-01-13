@@ -1,14 +1,21 @@
 import { Link } from 'react-router-dom';
 import formatDistance from 'date-fns/formatDistance';
-import { AiOutlineLike } from 'react-icons/ai';
+import { AiFillLike, AiOutlineLike } from 'react-icons/ai';
 import type { Ireplies } from './UserPost';
+import useIdIsOnArray from '../hooks/useIdIsOnArray';
+import useReplyLike from '../hooks/useReplyLike';
+import useAuth from '../hooks/useAuth';
 
 interface IProps {
   reply: Ireplies;
 }
 
 export default function Reply({ reply }: IProps) {
-  const { _id, content, creator, edited, likes, post_id, timestamp } = reply;
+  const { content, creator, edited, likes, post_id, timestamp } = reply;
+
+  const { userInfo } = useAuth();
+  const userLikeThisReply = useIdIsOnArray(likes, userInfo?._id);
+  const likeMutation = useReplyLike();
 
   const formater = Intl.NumberFormat('en', { notation: 'compact' });
   const likesCount = formater.format(likes.length);
@@ -42,9 +49,27 @@ export default function Reply({ reply }: IProps) {
       </div>
       <p className="reply__content"> {content.text}</p>
       <div className="reply__controllers">
-        <button type="button">
-          <AiOutlineLike aria-label="Give like" /> <p>{likesCount}</p>
-        </button>
+        {userLikeThisReply ? (
+          <button
+            type="button"
+            className="reply__controllers-like-button reply__controllers-like-button--active"
+            onClick={() =>
+              !likeMutation.isLoading ? likeMutation.mutate(reply) : null
+            }
+          >
+            <AiFillLike aria-label="Remove like" />
+            <p>{likesCount}</p>
+          </button>
+        ) : (
+          <button
+            type="button"
+            onClick={() =>
+              !likeMutation.isLoading ? likeMutation.mutate(reply) : null
+            }
+          >
+            <AiOutlineLike aria-label="Give like" /> <p>{likesCount}</p>
+          </button>
+        )}
       </div>
     </div>
   );
