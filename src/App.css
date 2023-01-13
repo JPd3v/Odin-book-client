@@ -23,6 +23,7 @@
 
   --fc-prim: hsl(0, 0%, 0%);
   --fc-second: hsl(0, 0%, 100%);
+  --fc-links-posts: hsl(0, 0%, 28%);
 
   --fs-p: 1.6rem;
   --fs-3: 2.2rem;
@@ -393,6 +394,18 @@ main {
 .comment__creator-name,
 .reply__creator-name {
   font-size: var(--fs-p);
+  color: rgb(92 92 255);
+}
+.post__header-right a,
+.comment__header-right a,
+.reply__header-right a {
+  color: var(--fc-links-posts);
+}
+
+.post__header-right a:hover,
+.comment__header-right a:hover,
+.reply__header-right a:hover {
+  text-decoration-line: underline;
 }
 
 .post__controllers,
@@ -422,7 +435,8 @@ main {
   font-weight: 600;
 }
 
-.post__controllers-like-button--active {
+.post__controllers-like-button--active,
+.comment__controllers-like-button--active {
   color: var(--color-main) !important;
 }
 

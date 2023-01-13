@@ -1,9 +1,13 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import formatDistance from 'date-fns/formatDistance';
-import { BiCommentDetail } from 'react-icons/bi';
-import { AiOutlineLike } from 'react-icons/ai';
+import { BsArrowReturnRight } from 'react-icons/bs';
+import { AiFillLike, AiOutlineLike } from 'react-icons/ai';
 import type { IComment } from './UserPost';
+import Replies from './Replies';
+import useAuth from '../hooks/useAuth';
+import useIdIsOnArray from '../hooks/useIdIsOnArray';
+import useCommentLike from '../hooks/useCommentLike';
 
 interface IProps {
   comment: IComment;
@@ -11,6 +15,10 @@ interface IProps {
 
 export default function Comment({ comment }: IProps) {
   const [showReplies, SetShowReplies] = useState(false);
+
+  const { userInfo } = useAuth();
+  const userLikeThisComment = useIdIsOnArray(comment.likes, userInfo?._id);
+  const likeMutation = useCommentLike();
 
   const formater = Intl.NumberFormat('en', { notation: 'compact' });
 
@@ -44,21 +52,45 @@ export default function Comment({ comment }: IProps) {
           >{`${commentDateFormated} ${comment.edited ? '(edited)' : ''}`}</Link>
         </div>
       </div>
+
       <p className="comment__content"> {comment.content.text}</p>
+
       <div className="comment__controllers">
-        <button type="button">
-          <AiOutlineLike aria-label="Give like" /> {likesCount}
-        </button>
+        {userLikeThisComment ? (
+          <button
+            type="button"
+            className="comment__controllers-like-button comment__controllers-like-button--active"
+            onClick={() =>
+              !likeMutation.isLoading ? likeMutation.mutate(comment) : null
+            }
+          >
+            <AiFillLike aria-label="Remove like" />
+            <p>{likesCount}</p>
+          </button>
+        ) : (
+          <button
+            type="button"
+            onClick={() =>
+              !likeMutation.isLoading ? likeMutation.mutate(comment) : null
+            }
+          >
+            <AiOutlineLike aria-label="Give like" /> <p>{likesCount}</p>
+          </button>
+        )}
+
         <button type="button" onClick={() => SetShowReplies((prev) => !prev)}>
-          <BiCommentDetail
+          <BsArrowReturnRight
             aria-label={`${
               showReplies ? 'open replies section ' : 'close replies section'
             }`}
           />
-          {repliesCount}
+          <p>{`${repliesCount} replies`}</p>
         </button>
       </div>
-      {showReplies ? <p>replies place holder</p> : null}
+
+      {showReplies ? (
+        <Replies replies={comment.replies} commentId={comment._id} />
+      ) : null}
     </div>
   );
 }
