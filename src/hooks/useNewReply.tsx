@@ -52,20 +52,25 @@ export default function useNewReply() {
     mutationFn: (data) => newReply(data, userToken),
     onSuccess: (data) => {
       const commentId = data.comment_id;
+      const postId = data.post_id;
 
       queryClient.setQueryData<InfiniteData>(['posts'], (prev) => {
         return {
           ...prev,
           pages: prev?.pages?.map((page) => ({
             ...page,
-            posts: page.posts.map((post) => ({
-              ...post,
-              comments: post.comments.map((comment) =>
-                comment._id === commentId
-                  ? { ...comment, replies: [...comment.replies, data] }
-                  : comment
-              ),
-            })),
+            posts: page.posts.map((post) =>
+              post._id === postId
+                ? {
+                    ...post,
+                    comments: post.comments.map((comment) =>
+                      comment._id === commentId
+                        ? { ...comment, replies: [...comment.replies, data] }
+                        : comment
+                    ),
+                  }
+                : post
+            ),
           })),
         };
       });
