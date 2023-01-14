@@ -31,6 +31,11 @@
   --fs-1: 3rem;
 
   --bx-shw-form: 0px 0px 7px 2px hsl(0deg 0% 69%);
+
+  --z-index-base: 0;
+  --z-index-drop-down: 20;
+  --z-index-nav-bar: 30;
+  --z-index-modal: 40;
 }
 
 html {
@@ -88,6 +93,7 @@ main {
   position: absolute;
   background-color: var(--color-main);
   width: 100%;
+  z-index: var(--z-index-nav-bar);
 }
 
 .nav-bar__list {
@@ -361,9 +367,12 @@ main {
 }
 
 .post {
-  background: #ffffff;
+  position: relative;
+  background: var(--color-background-second);
+  color: var(fc-prim);
   border: 1px solid var(--border-color);
   padding: 10px 15px;
+  z-index: var(--z-index-base);
 }
 
 .post__header,
@@ -512,6 +521,35 @@ main {
   display: flex;
   flex-direction: column;
   gap: 25px;
+}
+
+.post__dots-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.dots-drop-down button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.dots-drop-down__content {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 7px;
+  border: 1px solid grey;
+  border-radius: 10px;
+  position: absolute;
+  transform: translateX(-100%);
+}
+
+.dots-drop-down__delete {
+  color: var(--color-error);
 }
 
 .page-not-found {
