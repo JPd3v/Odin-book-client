@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import formatDistance from 'date-fns/formatDistance';
 import { AiFillLike, AiOutlineLike } from 'react-icons/ai';
@@ -5,17 +6,33 @@ import type { Ireplies } from './UserPost';
 import useIdIsOnArray from '../hooks/useIdIsOnArray';
 import useReplyLike from '../hooks/useReplyLike';
 import useAuth from '../hooks/useAuth';
+import DotsDropdown from './DotsDropdown';
+import EditText from './EditText';
+import useDeleteReply from '../hooks/useDeleteReply';
+import useEditReply from '../hooks/useEditReply';
 
 interface IProps {
   reply: Ireplies;
 }
 
 export default function Reply({ reply }: IProps) {
-  const { content, creator, edited, likes, post_id, timestamp } = reply;
+  const { content, creator, edited, likes, post_id, timestamp, _id } = reply;
 
+  const [isEditing, setIsEditing] = useState(false);
   const { userInfo } = useAuth();
   const userLikeThisReply = useIdIsOnArray(likes, userInfo?._id);
+
   const likeMutation = useReplyLike();
+  const deleteReplyMutation = useDeleteReply();
+  const editReplyMutation = useEditReply();
+
+  function handleReplyDelete() {
+    deleteReplyMutation.mutate(_id);
+  }
+
+  function handleEditState() {
+    setIsEditing((prev) => !prev);
+  }
 
   const formater = Intl.NumberFormat('en', { notation: 'compact' });
   const likesCount = formater.format(likes.length);
@@ -25,6 +42,15 @@ export default function Reply({ reply }: IProps) {
 
   return (
     <div className="reply">
+      {creator._id === userInfo?._id ? (
+        <div className="post__dots-button">
+          <DotsDropdown
+            onDelete={() => handleReplyDelete()}
+            onEdit={() => handleEditState()}
+          />
+        </div>
+      ) : null}
+
       <div className="reply__header">
         <Link to={`users/${creator._id}`}>
           <img
@@ -47,7 +73,18 @@ export default function Reply({ reply }: IProps) {
           >{`${replyDateFormated} ${edited ? '(edited)' : ''}`}</Link>
         </div>
       </div>
-      <p className="reply__content"> {content.text}</p>
+
+      {isEditing ? (
+        <EditText
+          text={content.text}
+          id={_id}
+          toggleEditState={() => handleEditState()}
+          mutation={editReplyMutation}
+        />
+      ) : (
+        <p className="reply__content"> {content.text}</p>
+      )}
+
       <div className="reply__controllers">
         {userLikeThisReply ? (
           <button
