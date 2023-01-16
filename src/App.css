@@ -489,7 +489,8 @@ main {
 
 .comment-form__submit,
 .reply-form__submit,
-.new-post-form__submit {
+.new-post-form__submit,
+.edit-form__submit {
   color: var(--fc-second);
   background: var(--color-main);
   border: none;
@@ -500,7 +501,8 @@ main {
 
 .comment-form__error-message,
 .reply-form__error-message,
-.new-post-form__error-message {
+.new-post-form__error-message,
+.edit-form__error {
   color: var(--color-error);
 }
 
@@ -508,7 +510,8 @@ main {
 .log-in-form__loading-spinner,
 .comment-form__loading-spinner,
 .reply-form__loading-spinner,
-.new-post-form__loading-spinner {
+.new-post-form__loading-spinner,
+.edit-form__loading-spinner {
   width: 30px;
   height: 30px;
 }
@@ -521,6 +524,33 @@ main {
   display: flex;
   flex-direction: column;
   gap: 25px;
+}
+
+.edit-form {
+  align-items: start;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin: 10px 0px;
+}
+
+.edit-form__input {
+  padding: 5px;
+  border-radius: 5px;
+  min-width: 100%;
+  max-width: 100%;
+}
+
+.edit-form__buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.edit-form__cancel {
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  border: 1px solid var(--border-color);
 }
 
 .post__dots-button {
@@ -546,6 +576,7 @@ main {
   border-radius: 10px;
   position: absolute;
   transform: translateX(-100%);
+  background: var(--color-background-second);
 }
 
 .dots-drop-down__delete {

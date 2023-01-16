@@ -8,6 +8,10 @@ import CommentQuantityLimiter from './CommentQuantityLimiter';
 import useAuth from '../hooks/useAuth';
 import useIdIsOnArray from '../hooks/useIdIsOnArray';
 import usePostLike from '../hooks/usePostLike';
+import DotsDropdown from './DotsDropdown';
+import useDeletePost from '../hooks/useDeletePost';
+import EditText from './EditText';
+import useEditPost from '../hooks/useEditPost';
 
 interface IProps {
   userPost: IUserPost;
@@ -64,8 +68,12 @@ export default (function UserPost({ userPost }: IProps) {
 
   const [showComments, setShowComments] = useState(false);
   const [commentsLimit, setCommentsLimit] = useState(1);
+  const [isEditing, setIsEditing] = useState(false);
   const { userInfo } = useAuth();
+
   const likeMutation = usePostLike();
+  const deletePostMutation = useDeletePost();
+  const editPostMutation = useEditPost();
 
   const postComments = comments.slice(0, commentsLimit).reverse();
 
@@ -75,6 +83,15 @@ export default (function UserPost({ userPost }: IProps) {
     }
     return setCommentsLimit(comments.length);
   }
+
+  function handlePostDelete() {
+    deletePostMutation.mutate(_id);
+  }
+
+  function handleEditState() {
+    setIsEditing((prev) => !prev);
+  }
+
   const userLikeThisPost = useIdIsOnArray(userPost.likes, userInfo?._id);
 
   const formater = Intl.NumberFormat('en', { notation: 'compact' });
@@ -87,6 +104,15 @@ export default (function UserPost({ userPost }: IProps) {
 
   return (
     <article className="post">
+      {creator._id === userInfo?._id ? (
+        <div className="post__dots-button">
+          <DotsDropdown
+            onDelete={() => handlePostDelete()}
+            onEdit={() => handleEditState()}
+          />
+        </div>
+      ) : null}
+
       <div className="post__header">
         <Link to={`users/${creator._id}`}>
           <img
@@ -109,7 +135,17 @@ export default (function UserPost({ userPost }: IProps) {
           >{`${postDateFormated} ${edited ? '(edited)' : ''}`}</Link>
         </div>
       </div>
-      <p className="post__content">{content.text}</p>
+
+      {isEditing ? (
+        <EditText
+          text={content.text}
+          id={_id}
+          toggleEditState={() => handleEditState()}
+          mutation={editPostMutation}
+        />
+      ) : (
+        <p className="post__content">{content.text}</p>
+      )}
 
       <div className="post__controllers">
         {userLikeThisPost ? (
