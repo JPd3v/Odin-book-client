@@ -464,6 +464,7 @@ main {
   border-left: 4px solid var(--accentue-color-1);
   border-radius: 5px;
   padding: 10px;
+  position: relative;
 }
 
 .comment-form {

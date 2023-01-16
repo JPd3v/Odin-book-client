@@ -8,6 +8,10 @@ import Replies from './Replies';
 import useAuth from '../hooks/useAuth';
 import useIdIsOnArray from '../hooks/useIdIsOnArray';
 import useCommentLike from '../hooks/useCommentLike';
+import EditText from './EditText';
+import DotsDropdown from './DotsDropdown';
+import useDeleteComment from '../hooks/useDeleteComment';
+import useEditComment from '../hooks/useEditComment';
 
 interface IProps {
   comment: IComment;
@@ -15,10 +19,22 @@ interface IProps {
 
 export default function Comment({ comment }: IProps) {
   const [showReplies, SetShowReplies] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
   const { userInfo } = useAuth();
   const userLikeThisComment = useIdIsOnArray(comment.likes, userInfo?._id);
+
   const likeMutation = useCommentLike();
+  const deleteCommentMutation = useDeleteComment();
+  const editCommentMutation = useEditComment();
+
+  function handlePostDelete() {
+    deleteCommentMutation.mutate(comment._id);
+  }
+
+  function handleEditState() {
+    setIsEditing((prev) => !prev);
+  }
 
   const formater = Intl.NumberFormat('en', { notation: 'compact' });
 
@@ -30,6 +46,14 @@ export default function Comment({ comment }: IProps) {
 
   return (
     <div className="comment">
+      {comment.creator._id === userInfo?._id ? (
+        <div className="post__dots-button">
+          <DotsDropdown
+            onDelete={() => handlePostDelete()}
+            onEdit={() => handleEditState()}
+          />
+        </div>
+      ) : null}
       <div className="comment__header">
         <Link to={`users/${comment.creator._id}`}>
           <img
@@ -53,7 +77,16 @@ export default function Comment({ comment }: IProps) {
         </div>
       </div>
 
-      <p className="comment__content"> {comment.content.text}</p>
+      {isEditing ? (
+        <EditText
+          text={comment.content.text}
+          id={comment._id}
+          toggleEditState={() => handleEditState()}
+          mutation={editCommentMutation}
+        />
+      ) : (
+        <p className="comment__content"> {comment.content.text}</p>
+      )}
 
       <div className="comment__controllers">
         {userLikeThisComment ? (
