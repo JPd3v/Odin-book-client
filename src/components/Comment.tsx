@@ -28,7 +28,7 @@ export default function Comment({ comment }: IProps) {
   const deleteCommentMutation = useDeleteComment();
   const editCommentMutation = useEditComment();
 
-  function handlePostDelete() {
+  function handleCommentDelete() {
     deleteCommentMutation.mutate(comment._id);
   }
 
@@ -49,7 +49,7 @@ export default function Comment({ comment }: IProps) {
       {comment.creator._id === userInfo?._id ? (
         <div className="post__dots-button">
           <DotsDropdown
-            onDelete={() => handlePostDelete()}
+            onDelete={() => handleCommentDelete()}
             onEdit={() => handleEditState()}
           />
         </div>
