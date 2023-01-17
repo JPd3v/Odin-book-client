@@ -12,8 +12,16 @@ interface IProps {
 export default function DotsDropdown({ onDelete, onEdit }: IProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dropDownRef = useRef(null);
-
   const handleClickOutside = useClickOutsideRef(dropDownRef);
+
+  function handleEdit() {
+    onEdit();
+    setIsOpen(false);
+  }
+  function handleDelete() {
+    onDelete();
+    setIsOpen(false);
+  }
 
   useEffect(() => {
     return setIsOpen(false);
@@ -33,12 +41,12 @@ export default function DotsDropdown({ onDelete, onEdit }: IProps) {
           <button
             type="button"
             className="dots-drop-down__delete"
-            onClick={onDelete}
+            onClick={handleDelete}
           >
             <RiDeleteBinLine />
             Delete
           </button>
-          <button type="button" className="drop-down" onClick={onEdit}>
+          <button type="button" className="drop-down" onClick={handleEdit}>
             <BiEdit />
             Edit
           </button>
