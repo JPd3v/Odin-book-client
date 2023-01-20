@@ -32,6 +32,7 @@ export default function DotsDropdown({ onDelete, onEdit }: IProps) {
       <button
         type="button"
         className="dots-drop-down__button"
+        aria-label={isOpen ? 'Close more options' : 'More options'}
         onClick={() => setIsOpen((prev) => !prev)}
       >
         <BsThreeDotsVertical />

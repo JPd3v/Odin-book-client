@@ -28,7 +28,7 @@ export default function UserFeed() {
   }, [loadingDivRef, posts]);
 
   return (
-    <>
+    <div className="feed-container">
       <NewPostForm />
       <div className="posts-container">
         {posts
@@ -52,6 +52,6 @@ export default function UserFeed() {
           </p>
         ) : null}
       </div>
-    </>
+    </div>
   );
 }
