@@ -9,7 +9,7 @@ export default function RecommendedFriends() {
       <div className="recommended-friends__container">
         <p>Recommended friends </p>
         {friends?.data?.map((friend) => (
-          <div className="recommended-friends__card">
+          <div key={friend._id} className="recommended-friends__card">
             <Link to={`users/${friend._id}`}>
               <img
                 className="recommended-friends__card-profile-img"
