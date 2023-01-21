@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import useRecommendedFriends from '../hooks/useRecommendedFriends';
+import LoadingSpinner from './LoadingSpinner';
 
 export default function RecommendedFriends() {
   const friends = useRecommendedFriends();
@@ -7,7 +8,6 @@ export default function RecommendedFriends() {
     <aside className="recommended-friends">
       <div className="recommended-friends__container">
         <p>Recommended friends </p>
-
         {friends?.data?.map((friend) => (
           <div className="recommended-friends__card">
             <Link to={`users/${friend._id}`}>
@@ -26,8 +26,21 @@ export default function RecommendedFriends() {
             </p>
           </div>
         ))}
-        {!friends.data?.length ? (
-          <p>actually dont have recommended friends for you</p>
+
+        {friends.isError ? (
+          <p className="recommended-friends__error">
+            {friends.error.response.data.message}
+          </p>
+        ) : null}
+
+        {friends.data?.length === 0 ? (
+          <p>We currently have no recommended friends for you</p>
+        ) : null}
+
+        {friends.isLoading ? (
+          <div className="recommended-friends__loading-spinner">
+            <LoadingSpinner />
+          </div>
         ) : null}
       </div>
     </aside>

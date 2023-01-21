@@ -528,7 +528,8 @@ main {
 .comment-form__error-message,
 .reply-form__error-message,
 .new-post-form__error-message,
-.edit-form__error {
+.edit-form__error,
+.recommended-friends__error {
   color: var(--color-error);
 }
 
@@ -634,12 +635,20 @@ main {
   object-fit: cover;
   border-radius: 50%;
 }
+
 .recommended-friends__card a {
   color: var(--fc-prim);
   font-weight: 500;
 }
+
 .recommended-friends__card a:hover {
   text-decoration: underline;
+}
+
+.recommended-friends__loading-spinner {
+  width: 30px;
+  height: 30px;
+  place-self: center;
 }
 
 .page-not-found {

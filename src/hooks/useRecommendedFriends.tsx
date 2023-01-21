@@ -10,6 +10,14 @@ interface IUser {
 }
 
 interface IAxiosError {
+  response: IErrorResponse;
+}
+
+interface IErrorResponse {
+  data: IErrorData;
+}
+
+interface IErrorData {
   message: string;
 }
 
@@ -27,7 +35,7 @@ async function RecommendedFriends(userToken: string, pageSize = 5) {
 export default function useRecommendedFriends() {
   const { userToken } = useAuth();
   return useQuery<IUser[], IAxiosError>({
-    queryKey: ['users'],
+    queryKey: ['recommended friends'],
     queryFn: () => RecommendedFriends(userToken ?? ''),
   });
 }
