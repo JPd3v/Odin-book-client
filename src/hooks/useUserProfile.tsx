@@ -3,6 +3,19 @@ import { useParams } from 'react-router-dom';
 import axiosConfig from '../config/axiosConfig';
 import useAuth from './useAuth';
 
+interface IAxiosErrors {
+  response: IErrorResponse;
+}
+
+interface IErrorResponse {
+  status: number;
+  data: IErrorMsg;
+}
+
+interface IErrorMsg {
+  message: string;
+}
+
 interface IProfileImage {
   public_id?: string;
   img: string;
@@ -39,7 +52,7 @@ export default function useUserProfile() {
   const params = useParams();
   const { userToken } = useAuth();
 
-  return useQuery<IUserProfile, unknown>(['user', params.id], {
+  return useQuery<IUserProfile, IAxiosErrors>(['user', params.id], {
     queryFn: () => userProfile(params.id ?? '', userToken ?? ''),
     staleTime: 1000 * 60 * 2,
     cacheTime: 1000 * 60 * 3,
