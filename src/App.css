@@ -12,13 +12,18 @@
   --color-main: hsl(246, 100%, 67%);
   --color-background-second: hsl(0, 0%, 100%);
   --color-background-soft: hsl(0, 0%, 97%);
+  --color-background-friends-container: hsl(0, 0%, 93%);
   --color-error: hsl(0, 97%, 46%);
   --color-post-buttons: hsl(0deg 0% 38%);
 
   --accentue-color-1: hsl(203deg 100% 50%);
   --accentue-color-2: hsl(100deg 100% 50%);
 
-  --linear-gradient-1: linear-gradient(180deg, var(--color-main), #9feeff);
+  --linear-gradient-1: linear-gradient(
+    180deg,
+    var(--color-main),
+    hsl(191, 100%, 81%)
+  );
 
   --border-color: hsl(0, 0%, 58%);
 
@@ -622,6 +627,8 @@ main {
   gap: 10px;
   margin: 20px;
   padding: 20px;
+  background: var(--color-background-friends-container);
+  border-radius: 5px;
 }
 
 .recommended-friends__card {
@@ -730,6 +737,9 @@ main {
   flex-direction: column;
   gap: 10px;
   padding: 10px;
+  height: fit-content;
+  background: var(--color-background-friends-container);
+  border-radius: 5px;
 }
 
 .user-friends__friend {

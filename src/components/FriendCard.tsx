@@ -12,7 +12,7 @@ export default function FriendCard({ friend }: IProps) {
       <Link to={`/users/${_id}`}>
         <img
           src={`${profile_image.img}`}
-          alt=""
+          alt={`${first_name} ${last_name}`}
           className="user-friend__friend-img"
         />
       </Link>
