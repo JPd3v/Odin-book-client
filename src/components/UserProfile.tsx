@@ -1,15 +1,23 @@
 import useAuth from '../hooks/useAuth';
+import useDeleteFriend from '../hooks/useDeleteFriend';
 import useIdIsOnArray from '../hooks/useIdIsOnArray';
 import useUserProfile from '../hooks/useUserProfile';
 import PageNotFound404 from '../pages/PageNotFound404';
 import FriendCard from './FriendCard';
+import FriendStatusDropdown from './FriendStatusDropdown';
 import LoadingPage from './LoadingPage';
 
 export default function UserProfile() {
   const { userInfo } = useAuth();
 
   const user = useUserProfile();
+  const deleteFriendMutation = useDeleteFriend();
+
   const friendList = user.data?.friend_list ?? [];
+
+  function handleDeleteFriend() {
+    deleteFriendMutation.mutate();
+  }
 
   function checkFriend() {
     for (let index = 0; index < friendList.length; index += 1) {
@@ -41,9 +49,11 @@ export default function UserProfile() {
           alt=""
           className="user-profile__img"
         />
-        <div>
+        <div className="user-profile__info">
           <h2 className="user-profile__name">{`${user.data?.first_name} ${user.data?.last_name}`}</h2>
-          {isFriend ? <p>are Friends</p> : null}
+          {isFriend ? (
+            <FriendStatusDropdown onDelete={() => handleDeleteFriend()} />
+          ) : null}
           {haveFriendRequest ? <p>pending request</p> : null}
           {!haveFriendRequest &&
           !isFriend &&
