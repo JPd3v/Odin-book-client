@@ -1,3 +1,4 @@
+import useAddFriend from '../hooks/useAddFriend';
 import useAuth from '../hooks/useAuth';
 import useDeleteFriend from '../hooks/useDeleteFriend';
 import useIdIsOnArray from '../hooks/useIdIsOnArray';
@@ -12,11 +13,15 @@ export default function UserProfile() {
 
   const user = useUserProfile();
   const deleteFriendMutation = useDeleteFriend();
+  const addFriendMutation = useAddFriend();
 
   const friendList = user.data?.friend_list ?? [];
 
   function handleDeleteFriend() {
     deleteFriendMutation.mutate();
+  }
+  function handleAddFriend() {
+    addFriendMutation.mutate();
   }
 
   function checkFriend() {
@@ -58,7 +63,13 @@ export default function UserProfile() {
           {!haveFriendRequest &&
           !isFriend &&
           user.data?._id !== userInfo?._id ? (
-            <p>add friend</p>
+            <button
+              type="button"
+              onClick={handleAddFriend}
+              className="user-profile__add-friend"
+            >
+              Send friend request
+            </button>
           ) : null}
         </div>
       </div>
