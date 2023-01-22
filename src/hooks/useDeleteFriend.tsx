@@ -38,9 +38,11 @@ export default function useDeleteFriend() {
       return { user };
     },
 
-    onError: (_err, _newTodo, context) => {
+    onError: (_err, _variables, context) => {
       queryClient.setQueryData(['user', params.id], context?.user);
     },
-    onSuccess() {},
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['user', params.id] });
+    },
   });
 }
