@@ -701,6 +701,14 @@ main {
   cursor: pointer;
 }
 
+.user-profile__cancel-friend-request {
+  align-self: start;
+  padding: 4px 20px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
 .user-profile__friend-dropdown {
   position: relative;
   display: flex;

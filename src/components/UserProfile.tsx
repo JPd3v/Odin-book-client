@@ -1,5 +1,6 @@
 import useAddFriend from '../hooks/useAddFriend';
 import useAuth from '../hooks/useAuth';
+import useCancelFriendRequest from '../hooks/useCancelFriendRequest';
 import useDeleteFriend from '../hooks/useDeleteFriend';
 import useIdIsOnArray from '../hooks/useIdIsOnArray';
 import useUserProfile from '../hooks/useUserProfile';
@@ -12,16 +13,23 @@ export default function UserProfile() {
   const { userInfo } = useAuth();
 
   const user = useUserProfile();
+
   const deleteFriendMutation = useDeleteFriend();
+  const cancelFriendRequestMutation = useCancelFriendRequest();
   const addFriendMutation = useAddFriend();
 
   const friendList = user.data?.friend_list ?? [];
 
-  function handleDeleteFriend() {
-    deleteFriendMutation.mutate();
-  }
   function handleAddFriend() {
     addFriendMutation.mutate();
+  }
+
+  function handleCancelFriendRequest() {
+    cancelFriendRequestMutation.mutate();
+  }
+
+  function handleDeleteFriend() {
+    deleteFriendMutation.mutate();
   }
 
   function checkFriend() {
@@ -54,12 +62,23 @@ export default function UserProfile() {
           alt=""
           className="user-profile__img"
         />
+
         <div className="user-profile__info">
           <h2 className="user-profile__name">{`${user.data?.first_name} ${user.data?.last_name}`}</h2>
           {isFriend ? (
             <FriendStatusDropdown onDelete={() => handleDeleteFriend()} />
           ) : null}
-          {haveFriendRequest ? <p>pending request</p> : null}
+
+          {haveFriendRequest ? (
+            <button
+              type="button"
+              onClick={handleCancelFriendRequest}
+              className="user-profile__cancel-friend-request"
+            >
+              Cancel friend request
+            </button>
+          ) : null}
+
           {!haveFriendRequest &&
           !isFriend &&
           user.data?._id !== userInfo?._id ? (
