@@ -39,7 +39,7 @@ interface IUserProfile {
   friend_list: IFriends[];
 }
 
-export type { IFriends };
+export type { IFriends, IUserProfile };
 
 async function userProfile(userId: string, userToken: string) {
   const req = await axiosConfig.get(`/users/${userId}`, {
@@ -55,6 +55,6 @@ export default function useUserProfile() {
   return useQuery<IUserProfile, IAxiosErrors>(['user', params.id], {
     queryFn: () => userProfile(params.id ?? '', userToken ?? ''),
     staleTime: 1000 * 60 * 2,
-    cacheTime: 1000 * 60 * 3,
+    cacheTime: 1000 * 60 * 2,
   });
 }
