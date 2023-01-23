@@ -18,15 +18,17 @@ interface IUserInfo {
   first_name: string;
   last_name: string;
   profile_image: string;
+  friend_requests: string[];
 }
 
 export type { IUserInfo };
 
 const initialUSerInfo = {
   _id: '',
-  firstName: '',
-  lastName: '',
-  profileImg: '',
+  first_name: '',
+  last_name: '',
+  profile_image: '',
+  friend_requests: [''],
 };
 
 export const AuthContext = createContext<IAuthContext>({});
@@ -50,7 +52,7 @@ export default function ContextProvider({ children }: Ichildren) {
       userInfo,
       logOutUser,
     }),
-    [userToken]
+    [userToken, userInfo]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
