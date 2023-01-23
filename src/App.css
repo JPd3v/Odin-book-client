@@ -709,6 +709,42 @@ main {
   cursor: pointer;
 }
 
+.user-profile__pending-dropdown {
+  position: relative;
+  width: 180px;
+}
+
+.user-profile__pending-dropdown-open {
+  display: flex;
+  gap: 5px;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  padding: 2px 0px;
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+}
+
+.user-profile__pending-dropdown-content {
+  position: absolute;
+  padding: 5px;
+  background: var(--color-background-friends-container);
+  border-radius: 5px;
+}
+
+.user-profile__pending-dropdown-content button {
+  width: 100%;
+  cursor: pointer;
+  background: none;
+  border: none;
+  margin: 5px;
+}
+
+.user-profile__pending-dropdown-content button:hover {
+  color: var(--accentue-color-1);
+}
+
 .user-profile__friend-dropdown {
   position: relative;
   display: flex;
