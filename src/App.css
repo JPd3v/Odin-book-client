@@ -739,6 +739,9 @@ main {
   background: none;
   border: none;
   margin: 5px;
+  margin: 7px;
+  display: flex;
+  justify-content: start;
 }
 
 .user-profile__pending-dropdown-content button:hover {
