@@ -1,17 +1,11 @@
-import { useMutation } from '@tanstack/react-query';
-import AxiosConfig from '../config/axiosConfig';
 // eslint-disable-next-line import/no-cycle
+import { IResponseData } from 'components/log-in/index';
+import { useMutation } from '@tanstack/react-query';
+import { axiosConfig } from 'config/index';
 import useAuth from './useAuth';
 
-import type { IUserInfo } from '../context/AuthContext';
-
-interface IResponseData {
-  token: string;
-  userInfo: IUserInfo;
-}
-
 async function refresh() {
-  const req = await AxiosConfig.get<IResponseData>('/users/refresh-token', {
+  const req = await axiosConfig.get<IResponseData>('/users/refresh-token', {
     withCredentials: true,
   });
 

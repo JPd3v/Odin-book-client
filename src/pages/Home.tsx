@@ -1,7 +1,6 @@
-import WelcomeHero from '../components/WelcomeHero';
-import UserFeed from '../components/UserFeed';
-import useAuth from '../hooks/useAuth';
-import RecommendedFriends from '../components/RecommendedFriends';
+import { UserFeed, RecommendedFriends } from 'components/feed/index';
+import { useAuth } from 'hooks/index';
+import { WelcomeHero } from 'components/welcome-hero/index';
 
 export default function Home() {
   const { userToken } = useAuth();

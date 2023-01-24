@@ -1,27 +1,9 @@
 import { createContext, useMemo, useState } from 'react';
+import type { IUserInfo, IAuthContext } from './types';
 
 interface Ichildren {
   children: React.ReactElement;
 }
-interface IAuthContext {
-  userToken?: string | null | undefined;
-  userInfo?: IUserInfo;
-  setUserToken?: React.Dispatch<
-    React.SetStateAction<string | null | undefined>
-  >;
-  setUserInfo?: React.Dispatch<React.SetStateAction<IUserInfo>>;
-  logOutUser?: () => void;
-}
-
-interface IUserInfo {
-  _id: string;
-  first_name: string;
-  last_name: string;
-  profile_image: string;
-  friend_requests: string[];
-}
-
-export type { IUserInfo };
 
 const initialUSerInfo = {
   _id: '',

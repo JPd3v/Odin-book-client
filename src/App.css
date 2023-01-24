@@ -240,6 +240,7 @@ main {
   display: grid;
   grid-template-columns: 2fr 1fr;
   background: var(--color-background-soft);
+  height: 100%;
 }
 
 .sign-up-page {

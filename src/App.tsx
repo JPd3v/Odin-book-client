@@ -1,18 +1,17 @@
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import { lazy, Suspense, useEffect } from 'react';
-import PageLayout from './layout/PageLayout';
-import useRefreshUser from './hooks/useRefreshUser';
-import AuthGuard from './guards/AuthGuard';
-import RestrictedIfLogedIn from './guards/RestrictedIfLogedIn';
-import Users from './pages/Users';
-import IndividualPost from './pages/IndividualPost';
-import PageNotFound404 from './pages/PageNotFound404';
-import LoadingPage from './components/LoadingPage';
+import { LoadingPage } from './components/common/index';
+import { useRefreshUser } from './hooks/index';
+import { AuthGuard, RestrictedIfLogedIn } from './guards/index';
+import { PageLayout } from './layout/index';
 
 const Home = lazy(() => import('./pages/Home'));
 const SignUp = lazy(() => import('./pages/SignUp'));
 const LogIn = lazy(() => import('./pages/LogIn'));
+const User = lazy(() => import('./pages/Users'));
+const IndividualPost = lazy(() => import('./pages/IndividualPost'));
+const PageNotFound404 = lazy(() => import('./pages/PageNotFound404'));
 
 function App() {
   const refreshUser = useRefreshUser();
@@ -34,9 +33,9 @@ function App() {
           <Route element={<PageLayout />}>
             <Route path="/" element={<Home />} />
             <Route element={<AuthGuard />}>
-              <Route path="/users" element={<Users />}>
-                <Route index element={<Users />} />
-                <Route path=":id" element={<Users />} />
+              <Route path="/users" element={<User />}>
+                <Route index element={<User />} />
+                <Route path=":id" element={<User />} />
               </Route>
               <Route path="/posts" element={<IndividualPost />}>
                 <Route index element={<IndividualPost />} />

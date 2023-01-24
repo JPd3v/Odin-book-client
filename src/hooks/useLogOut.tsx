@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import axiosConfig from '../config/axiosConfig';
+import { axiosConfig } from '../config/index';
 import useAuth from './useAuth';
 
 export default function useLogOut() {
