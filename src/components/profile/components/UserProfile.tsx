@@ -70,49 +70,51 @@ export default function UserProfile() {
 
   return (
     <>
-      <div className="user-profile">
-        <img
-          src={`${user.data?.profile_image.img}`}
-          alt=""
-          className="user-profile__img"
-        />
+      <div className="user-profile-wrapper">
+        <div className="user-profile">
+          <img
+            src={`${user.data?.profile_image.img}`}
+            alt=""
+            className="user-profile__img"
+          />
 
-        <div className="user-profile__info">
-          <h2 className="user-profile__name">{`${user.data?.first_name} ${user.data?.last_name}`}</h2>
+          <div className="user-profile__info">
+            <h2 className="user-profile__name">{`${user.data?.first_name} ${user.data?.last_name}`}</h2>
 
-          {isFriend ? (
-            <FriendStatusDropdown onDelete={() => handleDeleteFriend()} />
-          ) : null}
+            {isFriend ? (
+              <FriendStatusDropdown onDelete={() => handleDeleteFriend()} />
+            ) : null}
 
-          {isOnUserFriendRequests && !isFriend ? (
-            <PendingFriendRequestDropdown
-              onAccept={() => handleacceptFriend()}
-              onCancel={() => handleDeclineFriend()}
-            />
-          ) : null}
+            {isOnUserFriendRequests && !isFriend ? (
+              <PendingFriendRequestDropdown
+                onAccept={() => handleacceptFriend()}
+                onCancel={() => handleDeclineFriend()}
+              />
+            ) : null}
 
-          {haveFriendRequestFromUser ? (
-            <button
-              type="button"
-              onClick={handleCancelFriendRequest}
-              className="user-profile__cancel-friend-request"
-            >
-              Cancel friend request
-            </button>
-          ) : null}
+            {haveFriendRequestFromUser ? (
+              <button
+                type="button"
+                onClick={handleCancelFriendRequest}
+                className="user-profile__cancel-friend-request"
+              >
+                Cancel friend request
+              </button>
+            ) : null}
 
-          {!haveFriendRequestFromUser &&
-          !isOnUserFriendRequests &&
-          !isFriend &&
-          user.data?._id !== userInfo?._id ? (
-            <button
-              type="button"
-              onClick={handleAddFriend}
-              className="user-profile__add-friend"
-            >
-              Send friend request
-            </button>
-          ) : null}
+            {!haveFriendRequestFromUser &&
+            !isOnUserFriendRequests &&
+            !isFriend &&
+            user.data?._id !== userInfo?._id ? (
+              <button
+                type="button"
+                onClick={handleAddFriend}
+                className="user-profile__add-friend"
+              >
+                Send friend request
+              </button>
+            ) : null}
+          </div>
         </div>
       </div>
       <div className="user-friends">
