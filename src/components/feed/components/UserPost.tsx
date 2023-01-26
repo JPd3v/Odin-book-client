@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { BiCommentDetail } from 'react-icons/bi';
-import { AiFillLike, AiOutlineLike, AiOutlineLink } from 'react-icons/ai';
+import { AiFillLike, AiOutlineLike } from 'react-icons/ai';
 import formatDistance from 'date-fns/formatDistance';
 import { Link } from 'react-router-dom';
 import {
@@ -71,7 +71,7 @@ export default function UserPost({ userPost }: IProps) {
       ) : null}
 
       <div className="post__header">
-        <Link to={`users/${creator._id}`}>
+        <Link to={`/users/${creator._id}`}>
           <img
             className="post__creator-img"
             src={`${creator.profile_image.img}`}
@@ -82,12 +82,12 @@ export default function UserPost({ userPost }: IProps) {
 
         <div className="post__header-right">
           <h2 className="post__creator-name">
-            <Link to={`users/${creator._id}`}>
+            <Link to={`/users/${creator._id}`}>
               {`${creator.first_name} ${creator.last_name}`}
             </Link>
           </h2>
           <Link
-            to={`posts/${_id}`}
+            to={`/posts/${_id}`}
             className="post__info"
           >{`${postDateFormated} ${edited ? '(edited)' : ''}`}</Link>
         </div>
@@ -134,10 +134,6 @@ export default function UserPost({ userPost }: IProps) {
             }`}
           />
           <p>{commentsCount}</p>
-        </button>
-        <button type="button">
-          <AiOutlineLink />
-          Copy Link
         </button>
       </div>
       {showComments && comments.length ? (
