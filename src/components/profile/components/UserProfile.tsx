@@ -1,6 +1,8 @@
 import { useAuth, useIdIsOnArray } from 'hooks/index';
 import { PageNotFound404 } from 'pages/index';
 import { LoadingPage } from 'components/common/index';
+import { IUser } from 'types/index';
+import useFriendRequest from 'hooks/useFriendRequests';
 import useCancelFriendRequest from '../hooks/useCancelFriendRequest';
 import useAddFriend from '../hooks/useAddFriend';
 import useDeclineFriendRequest from '../hooks/useDeclineFriendRequest';
@@ -13,6 +15,7 @@ import useUserProfile from '../hooks/useUserProfile';
 
 export default function UserProfile() {
   const { userInfo } = useAuth();
+  const currentUserFriendRequests = useFriendRequest();
   const user = useUserProfile();
 
   const deleteFriendMutation = useDeleteFriend();
@@ -26,7 +29,7 @@ export default function UserProfile() {
   function handleAddFriend() {
     addFriendMutation.mutate();
   }
-  function handleacceptFriend() {
+  function handleAcceptFriend() {
     acceptFriendMutation.mutate();
   }
   function handleDeclineFriend() {
@@ -36,33 +39,33 @@ export default function UserProfile() {
   function handleCancelFriendRequest() {
     cancelFriendRequestMutation.mutate();
   }
-
   function handleDeleteFriend() {
     deleteFriendMutation.mutate();
   }
 
-  function checkFriend() {
-    for (let index = 0; index < friendList.length; index += 1) {
-      const element = friendList[index];
-      if (element._id === userInfo?._id) {
+  function userIsOnArray(array: IUser[], id: string) {
+    for (let index = 0; index < array.length; index += 1) {
+      const element = array[index];
+      if (element._id === id) {
         return true;
       }
-      if (index === friendList.length - 1) {
+      if (index === array.length - 1) {
         return false;
       }
     }
     return undefined;
   }
-  const isFriend = checkFriend();
+
+  const isFriend = userIsOnArray(friendList, userInfo?._id ?? '');
 
   const haveFriendRequestFromUser = useIdIsOnArray(
     user.data?.friend_requests ?? [],
     userInfo?._id
   );
 
-  const isOnUserFriendRequests = useIdIsOnArray(
-    userInfo?.friend_requests ?? [],
-    user.data?._id
+  const isOnUserFriendRequests = userIsOnArray(
+    currentUserFriendRequests.data ?? [],
+    user.data?._id ?? ''
   );
 
   if (user.isLoading) return <LoadingPage />;
@@ -87,7 +90,7 @@ export default function UserProfile() {
 
             {isOnUserFriendRequests && !isFriend ? (
               <PendingFriendRequestDropdown
-                onAccept={() => handleacceptFriend()}
+                onAccept={() => handleAcceptFriend()}
                 onCancel={() => handleDeclineFriend()}
               />
             ) : null}

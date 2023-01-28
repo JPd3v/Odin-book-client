@@ -17,7 +17,5 @@ export default function useUserProfile() {
 
   return useQuery<IUserProfile, IAxiosErrors>(['user', params.id], {
     queryFn: () => userProfile(params.id ?? '', userToken ?? ''),
-    staleTime: 1000 * 60 * 2,
-    cacheTime: 1000 * 60 * 2,
   });
 }

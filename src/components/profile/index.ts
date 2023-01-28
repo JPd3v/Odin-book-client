@@ -8,3 +8,4 @@ export { default as useCancelFriendRequest } from './hooks/useCancelFriendReques
 export { default as useDeclineFriendRequest } from './hooks/useDeclineFriendRequest';
 export { default as useDeleteFriend } from './hooks/useDeleteFriend';
 export { default as useUserProfile } from './hooks/useUserProfile';
+export * from './types';

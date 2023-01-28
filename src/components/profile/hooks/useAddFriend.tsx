@@ -4,10 +4,10 @@ import { axiosConfig } from 'config/index';
 import { useAuth } from 'hooks/index';
 import { IUserProfile } from '../types';
 
-async function deleteFriend(userId: string, userToken: string) {
-  const req = await axiosConfig.post(
-    '/friendships',
-    { receptor_id: userId },
+async function addFriend(userId: string, userToken: string) {
+  const req = await axiosConfig.put(
+    `/users/${userId}/friends-requests`,
+    {},
     { headers: { Authorization: `Bearer ${userToken}` } }
   );
   return req.data;
@@ -19,7 +19,7 @@ export default function useAddFriend() {
   const queryClient = useQueryClient();
 
   return useMutation(['user', params.id], {
-    mutationFn: () => deleteFriend(params.id ?? '', userToken ?? ''),
+    mutationFn: () => addFriend(params.id ?? '', userToken ?? ''),
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: ['user', params.id] });
 

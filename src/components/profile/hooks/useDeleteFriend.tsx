@@ -6,7 +6,7 @@ import { IUserProfile } from '../types';
 
 async function deleteFriend(userId: string, userToken: string) {
   const req = await axiosConfig.put(
-    `/friendships/${userId}/delete`,
+    `users/friend-list/${userId}/delete`,
     {},
     { headers: { Authorization: `Bearer ${userToken}` } }
   );

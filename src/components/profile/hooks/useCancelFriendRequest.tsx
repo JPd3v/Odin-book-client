@@ -6,7 +6,7 @@ import { IUserProfile } from '../types';
 
 async function cancelFriendRequest(userId: string, userToken: string) {
   const req = await axiosConfig.put(
-    `/friendships/${userId}/cancel`,
+    `users/friend-requests/${userId}/cancel`,
     {},
     { headers: { Authorization: `Bearer ${userToken}` } }
   );
