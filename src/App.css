@@ -25,6 +25,9 @@
     hsl(191, 100%, 81%)
   );
 
+  --scrollbar-track-background: hsl(0, 0%, 90%);
+  --scrollbar-thumb-background: hsl(0, 0%, 53%);
+
   --border-color: hsl(0, 0%, 58%);
 
   --fc-prim: hsl(0, 0%, 0%);
@@ -78,6 +81,23 @@ main {
 .hidden {
   display: none !important;
   pointer-events: none;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track-background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb-background);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-main);
 }
 
 .App {
