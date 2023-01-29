@@ -2,10 +2,11 @@ import { Link } from 'react-router-dom';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { useState } from 'react';
 import { useMountTransition, useAuth } from 'hooks/index';
+import FriendsRequestsDropdown from 'components/nav-bar/components/FriendsRequestsDropdown';
 import HamburgerMenu from './HamburgerMenu';
 import ProfileDropDown from './ProfileDropDown';
 
-function NavBar() {
+export default function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
   const hasTransitionedIn = useMountTransition(isOpen, 300);
 
@@ -35,7 +36,13 @@ function NavBar() {
                 </li>
               </>
             ) : null}
-            <li>{userToken ? <ProfileDropDown /> : null}</li>
+            <li className="nav-bar__user-ui">
+              {userToken ? (
+                <>
+                  <FriendsRequestsDropdown /> <ProfileDropDown />
+                </>
+              ) : null}
+            </li>
           </ul>
         </div>
 
@@ -61,4 +68,3 @@ function NavBar() {
     </div>
   );
 }
-export { NavBar };

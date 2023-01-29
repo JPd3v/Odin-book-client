@@ -140,6 +140,118 @@ main {
   display: none;
 }
 
+.nav-bar__user-ui {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.friends-requests-drop-down {
+  position: relative;
+}
+
+.friends-requests-drop-down__open {
+  background: none;
+  border: none;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.friends-requests-drop-down__open svg {
+  width: 24px;
+  height: auto;
+}
+
+.friends-requests-drop-down__content {
+  position: absolute;
+  transform: translate(-85%, 18px);
+  background: var(--color-background-second);
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  overflow: auto;
+  height: 80vh;
+  min-width: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.friends-requests-drop-down__loading {
+  width: 40px;
+  height: 40px;
+}
+
+.friends-requests-drop-down__title {
+  font-size: var(--fs-p);
+  padding: 6px 8px;
+  width: 100%;
+  font-weight: 400;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.friends-requests-drop-down__requests-container {
+  gap: 15px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.friends-requests-drop-down__request {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.friends-requests-drop-down__request a {
+  color: var(--fc-prim);
+}
+
+.friends-requests-drop-down__request a:hover {
+  text-decoration: underline;
+}
+
+.friends-requests-drop-down__request img {
+  width: 40px;
+  height: auto;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.friends-requests-drop-down__request-user {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.friends-requests-drop-down__request-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.friends-requests-drop-down__request-buttons button {
+  display: flex;
+  gap: 5px;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 10px;
+  border-radius: 3px;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  background: none;
+  background: var(--color-background-soft);
+}
+
+.friends-requests-drop-down__request-buttons button:hover {
+  border: 1px solid var(--color-main);
+}
+
 .profile-drop-down__button {
   border: none;
   cursor: pointer;
