@@ -25,9 +25,13 @@ export default function CommentQuantityLimiter({
         </button>
       ) : null}
 
-      <p>{`${currentLimit} of ${commentsLength} ${
-        currentLimit < commentsLength ? '' : 'Comments'
-      } `}</p>
+      {currentLimit >= commentsLength ? (
+        <p>{`${commentsLength} of ${commentsLength} Comments`}</p>
+      ) : (
+        <p>{`${currentLimit} of ${commentsLength} ${
+          currentLimit < commentsLength ? '' : 'Comments'
+        } `}</p>
+      )}
     </div>
   );
 }
