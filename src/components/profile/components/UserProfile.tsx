@@ -1,13 +1,17 @@
-import { useAuth, useIdIsOnArray } from 'hooks/index';
+import {
+  useAuth,
+  useIdIsOnArray,
+  useAcceptFriendRequest,
+  useDeclineFriendRequest,
+} from 'hooks/index';
 import { PageNotFound404 } from 'pages/index';
 import { LoadingPage } from 'components/common/index';
 import { IUser } from 'types/index';
 import useFriendRequest from 'hooks/useFriendRequests';
+import { useParams } from 'react-router-dom';
 import useCancelFriendRequest from '../hooks/useCancelFriendRequest';
 import useAddFriend from '../hooks/useAddFriend';
-import useDeclineFriendRequest from '../hooks/useDeclineFriendRequest';
 import useDeleteFriend from '../hooks/useDeleteFriend';
-import useAcceptFriendRequest from '../hooks/useAcceptFriendRequest';
 import FriendCard from './FriendCard';
 import FriendStatusDropdown from './FriendStatusDropdown';
 import PendingFriendRequestDropdown from './PendingFriendRequestDropdown';
@@ -17,6 +21,7 @@ export default function UserProfile() {
   const { userInfo } = useAuth();
   const currentUserFriendRequests = useFriendRequest();
   const user = useUserProfile();
+  const params = useParams();
 
   const deleteFriendMutation = useDeleteFriend();
   const cancelFriendRequestMutation = useCancelFriendRequest();
@@ -30,10 +35,10 @@ export default function UserProfile() {
     addFriendMutation.mutate();
   }
   function handleAcceptFriend() {
-    acceptFriendMutation.mutate();
+    acceptFriendMutation.mutate(params.id ?? '');
   }
   function handleDeclineFriend() {
-    declineFriendMutation.mutate();
+    declineFriendMutation.mutate(params.id ?? '');
   }
 
   function handleCancelFriendRequest() {

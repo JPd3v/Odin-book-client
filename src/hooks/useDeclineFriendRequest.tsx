@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
-import { useAuth } from 'hooks/index';
 import { axiosConfig } from 'config/index';
 import { IUser } from 'types/index';
-import { IUserProfile } from '../types';
+import { IUserProfile } from 'components/profile/index';
+import useAuth from './useAuth';
 
 async function declineFriendRequest(userId: string, userToken: string) {
   const req = await axiosConfig.put(
@@ -20,7 +20,8 @@ export default function useDeclineFriendRequest() {
   const queryClient = useQueryClient();
 
   return useMutation(['user', params.id], {
-    mutationFn: () => declineFriendRequest(params.id ?? '', userToken ?? ''),
+    mutationFn: (userId: string) =>
+      declineFriendRequest(userId, userToken ?? ''),
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: ['user', params.id] });
 
@@ -40,15 +41,15 @@ export default function useDeclineFriendRequest() {
       return { user };
     },
 
-    onError: (_err, _variables, context) => {
+    onError: (_err, _userId, context) => {
       queryClient.setQueryData(['user', params.id], context?.user);
     },
-    onSuccess: () => {
+    onSuccess: (_data, userId) => {
       queryClient.invalidateQueries({ queryKey: ['user', params.id] });
       queryClient.setQueryData<IUser[] | undefined>(
         ['friend requests'],
         (prev) => {
-          return prev?.filter((user) => user._id !== params.id);
+          return prev?.filter((user) => user._id !== userId);
         }
       );
     },
