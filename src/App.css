@@ -112,7 +112,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 5px 20px;
+  padding: 5px 7%;
 }
 
 .nav-bar-wrapper {
@@ -749,6 +749,27 @@ main {
 
 .dots-drop-down__delete {
   color: var(--color-error);
+}
+
+.post-page {
+  min-height: 100%;
+  background: var(--color-background-soft);
+  display: flex;
+  justify-content: center;
+}
+
+.single-post {
+  position: relative;
+  background: var(--color-background-second);
+  color: var(--fc-prim);
+  padding: 10px 15px;
+  z-index: var(--z-index-base);
+  border-radius: 10px;
+  min-width: 300px;
+  max-width: 690px;
+  width: 100%;
+  height: fit-content;
+  margin: 10px;
 }
 
 .recommended-friends {
