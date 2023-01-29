@@ -1,11 +1,11 @@
 import { useEffect, useRef } from 'react';
 import type { IPost } from 'types/index';
-import useUserRelatedPosts from '../hooks/useUserRelatedPosts';
+import useFeed from '../hooks/useFeed';
 import UserPost from './UserPost';
 import NewPostForm from './NewPostForm';
 
 export default function UserFeed() {
-  const posts = useUserRelatedPosts();
+  const posts = useFeed();
   const loadingDivRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
