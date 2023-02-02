@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { useState } from 'react';
 import { useMountTransition, useAuth } from 'hooks/index';
+import { SearchBar } from 'components/search/index';
 import FriendsRequestsDropdown from 'components/nav-bar/components/FriendsRequestsDropdown';
 import HamburgerMenu from './HamburgerMenu';
 import ProfileDropDown from './ProfileDropDown';
@@ -24,6 +25,9 @@ export default function NavBar() {
             <h1>Odin Book</h1>
           </Link>
         </div>
+
+        {userToken ? <SearchBar /> : null}
+
         <div className="nav-bar__right-side">
           <ul className="nav-bar__list">
             {!userToken ? (
