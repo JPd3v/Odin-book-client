@@ -5,14 +5,13 @@ import {
   useDeclineFriendRequest,
 } from 'hooks/index';
 import { PageNotFound404 } from 'pages/index';
-import { LoadingPage } from 'components/common/index';
+import { LoadingPage, UserCard } from 'components/common/index';
 import { IUser } from 'types/index';
 import useFriendRequest from 'hooks/useFriendRequests';
 import { useParams } from 'react-router-dom';
 import useCancelFriendRequest from '../hooks/useCancelFriendRequest';
 import useAddFriend from '../hooks/useAddFriend';
 import useDeleteFriend from '../hooks/useDeleteFriend';
-import FriendCard from './FriendCard';
 import FriendStatusDropdown from './FriendStatusDropdown';
 import PendingFriendRequestDropdown from './PendingFriendRequestDropdown';
 import useUserProfile from '../hooks/useUserProfile';
@@ -128,7 +127,7 @@ export default function UserProfile() {
       <div className="user-friends">
         <p>Friends</p>
         {user.data?.friend_list.slice(0, 20).map((friend) => (
-          <FriendCard key={friend._id} friend={friend} />
+          <UserCard key={friend._id} friend={friend} />
         ))}
       </div>
     </>

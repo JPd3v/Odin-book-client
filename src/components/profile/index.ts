@@ -1,4 +1,4 @@
-export { default as FriendCard } from './components/FriendCard';
+export { default as FriendCard } from '../common/UserCard';
 export { default as FriendStatusDropdown } from './components/FriendStatusDropdown';
 export { default as PendingFriendRequestDropdown } from './components/PendingFriendRequestDropdown';
 export { default as UserProfile } from './components/UserProfile';
