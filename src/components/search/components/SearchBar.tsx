@@ -50,15 +50,17 @@ export default function SearchBar() {
       <GoSearch className="search-bar__search-svg" />
       {openResult ? (
         <div className="search-bar__results">
-          {search?.data?.pages.map((page) =>
-            page.users.map((user) => (
-              <UserCard
-                key={user._id}
-                friend={user}
-                clickHandler={() => handleLinkClick()}
-              />
-            ))
-          )}
+          {search?.data?.pages
+            .slice(0, 1)
+            .map((page) =>
+              page.users.map((user) => (
+                <UserCard
+                  key={user._id}
+                  friend={user}
+                  clickHandler={() => handleLinkClick()}
+                />
+              ))
+            )}
 
           {search?.data?.pages[0].users.length === 0 ? (
             <p className="search-bar__not-found">User not found</p>

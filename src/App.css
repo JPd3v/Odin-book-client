@@ -809,6 +809,8 @@ main {
   padding: 20px;
   background: var(--color-background-friends-container);
   border-radius: 5px;
+  min-width: 300px;
+  max-width: min-content;
 }
 
 .recommended-friends__card {
@@ -990,7 +992,11 @@ main {
   display: flex;
   align-items: center;
   gap: 10px;
-  width: -webkit-fill-available;
+}
+
+.user-card p {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .profile-posts {
@@ -1092,9 +1098,13 @@ main {
   flex-direction: column;
   gap: 30px;
   border-radius: 5px;
+  min-width: 300px;
+  max-width: min-content;
+  width: 100%;
 }
 
 .search-page__loading {
+  align-self: center;
   width: 40px;
   height: 40px;
 }
