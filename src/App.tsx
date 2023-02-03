@@ -11,6 +11,7 @@ const SignUp = lazy(() => import('./pages/SignUp'));
 const LogIn = lazy(() => import('./pages/LogIn'));
 const User = lazy(() => import('./pages/Users'));
 const IndividualPost = lazy(() => import('./pages/IndividualPost'));
+const Search = lazy(() => import('./pages/Search'));
 const PageNotFound404 = lazy(() => import('./pages/PageNotFound404'));
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
                 <Route index element={<IndividualPost />} />
                 <Route path=":id" element={<IndividualPost />} />
               </Route>
+              <Route path="/search" element={<Search />} />
             </Route>
             <Route element={<RestrictedIfLogedIn />}>
               <Route path="/sign-up" element={<SignUp />} />

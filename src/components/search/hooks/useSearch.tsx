@@ -29,10 +29,10 @@ async function search(
 export default function useSearch(queryText: string) {
   const { userToken } = useAuth();
 
-  const array = queryText?.split(' ');
+  const stringToArray = queryText?.trim().split(' ');
 
-  const firstName = array[0];
-  const lastName = array[1] ?? '';
+  const firstName = stringToArray[0] ?? '';
+  const lastName = stringToArray[1] ?? '';
 
   return useInfiniteQuery<IPage, IAxiosDefaultErrors, IPage>(
     ['search', `${firstName} ${lastName}`],

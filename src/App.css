@@ -989,7 +989,8 @@ main {
 .user-card {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 10px;
+  width: -webkit-fill-available;
 }
 
 .profile-posts {
@@ -1035,6 +1036,67 @@ main {
 
 .search-bar__error {
   align-self: center;
+}
+
+.search-bar__view-more {
+  color: var(--color-main) !important;
+  align-self: center;
+  font-weight: 500;
+}
+
+.search-page {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  padding: 40px 10px 10px 10px;
+}
+
+.search-page__form {
+  margin-top: 30px;
+}
+
+.search-form__form-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-form__form-input {
+  border: none;
+  border-bottom: 2px solid var(--color-main);
+  text-align: center;
+  background: none;
+  display: flex;
+  padding: 5px 20px 5px 5px;
+  outline-color: var(--color-main);
+}
+
+.search-form__submit {
+  position: absolute;
+  right: 3px;
+  border: none;
+  cursor: pointer;
+  background: none;
+}
+
+.search-form__submit:hover {
+  color: var(--color-main);
+}
+
+.search-page__results {
+  background: var(--color-background-soft);
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  border-radius: 5px;
+}
+
+.search-page__loading {
+  width: 40px;
+  height: 40px;
 }
 
 .page-not-found {
@@ -1096,6 +1158,9 @@ main {
   }
   .nav-bar__hamburger-button {
     display: inline-block;
+  }
+  .search-bar {
+    display: none;
   }
 }
 

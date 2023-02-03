@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { GoSearch } from 'react-icons/go';
 import { LoadingSpinner, UserCard } from 'components/common';
 import { useClickOutsideRef, useDebounce } from 'hooks';
+import { Link } from 'react-router-dom';
 import useSearch from '../hooks/useSearch';
 import type { ISearchInput } from '../types';
 
@@ -15,6 +16,10 @@ export default function SearchBar() {
   const hasClickoutside = useClickOutsideRef(formRef);
   const debouncedInput = useDebounce<string>(textInput, 500);
   const search = useSearch(debouncedInput ?? '');
+
+  const stringToArray = debouncedInput?.trim().split(' ');
+  const firstName = stringToArray ? stringToArray[0] ?? '' : null;
+  const lastName = stringToArray ? stringToArray[1] ?? '' : null;
 
   function handleLinkClick() {
     setOpenResult(false);
@@ -70,6 +75,13 @@ export default function SearchBar() {
               {search.error.response.data.message}
             </div>
           ) : null}
+          <Link
+            className="search-bar__view-more"
+            to={`/search?firstName=${firstName}&lastName=${lastName}`}
+            onClick={() => handleLinkClick()}
+          >
+            view more
+          </Link>
         </div>
       ) : null}
     </form>
