@@ -1114,19 +1114,36 @@ main {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  padding: 10px;
 }
 
 .account-settings__forms {
-  background: var(--color-background-soft);
+  background: var(--color-background-second);
   border-radius: 5px;
   min-width: 300px;
-  max-width: 500px;
-  margin: 0 10px;
+  max-width: 800px;
+  width: 100%;
   overflow: auto;
   display: flex;
   flex-direction: column;
   gap: 40px;
   padding: 20px;
+  position: relative;
+}
+
+.account-settings__close-btn {
+  position: absolute;
+  background: none;
+  border: none;
+  color: var(--fc-prim);
+  cursor: pointer;
+  right: 20px;
+  top: 20px;
+}
+
+.account-settings__close-btn svg {
+  width: 20px;
+  height: 20px;
 }
 
 .account-settings__image-form {
@@ -1142,6 +1159,7 @@ main {
   margin-top: 10px;
 }
 
+.update-user-form__submit,
 .account-settings__form-controllers button {
   padding: 5px;
   border-radius: 5px;
@@ -1150,7 +1168,8 @@ main {
   padding: 5px 10px;
 }
 
-.account-settings__form-submit {
+.account-settings__form-submit,
+.update-user-form__submit {
   background: var(--color-main);
   color: var(--fc-second);
   border: none;
@@ -1197,6 +1216,77 @@ main {
   color: var(--color-error);
   width: 25px;
   height: 25px;
+}
+
+.update-user-form {
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+}
+
+.update-user__inputs-top,
+.update-user__inputs-bottom {
+  gap: 10px;
+  max-width: -webkit-fill-available;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 49%));
+  justify-content: center;
+}
+
+.update-user-form__label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.update-user__inputs {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.update-user-form__error {
+  color: var(--color-error);
+}
+
+.update-user-form__fieldset {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 1px solid var(--color-main);
+  border-radius: 5px;
+  height: fit-content;
+}
+
+.update-user-form__fieldset legend {
+  color: var(--color-main);
+  font-weight: 700;
+}
+
+.update-user-form__loading-spinner {
+  width: 35px;
+  height: 35px;
+  align-self: center;
+}
+
+.update-user-form__server-errors {
+  color: var(--color-error);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-self: center;
+}
+
+.update-user-form__server-error {
+  color: var(--color-error);
+  display: flex;
+  gap: 10px;
+}
+
+.update-user-form__submit {
+  align-self: center;
 }
 
 .search-page__loading {
@@ -1259,7 +1349,7 @@ main {
 }
 
 @media (max-width: 600px) {
-  .nav-bar__right-side {
+  /* .nav-bar__right-side {
     display: none;
   }
   .nav-bar__hamburger-button {
@@ -1267,7 +1357,7 @@ main {
   }
   .search-bar {
     display: none;
-  }
+  } */
 }
 
 @media (max-width: 1000px) {

@@ -2,6 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import { userAdapter } from 'adapters';
 import { axiosConfig } from 'config';
 import { useAuth } from 'hooks';
+import { IAxiosDefaultErrors } from 'types';
 import { IUserDetailsForm } from '../types';
 
 async function updateUserInfo(
@@ -18,7 +19,7 @@ export default function useUpdateUserInfo() {
   const { userToken, setUserInfo } = useAuth();
   return useMutation<
     Partial<IUserDetailsForm>,
-    unknown,
+    IAxiosDefaultErrors,
     Partial<IUserDetailsForm>
   >({
     mutationFn: (inputs) => updateUserInfo(userToken ?? '', inputs),
