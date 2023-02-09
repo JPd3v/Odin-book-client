@@ -3,7 +3,9 @@ interface IUserInfo {
   first_name: string;
   last_name: string;
   profile_image: string;
-  friend_requests: string[];
+  gender: string;
+  birthday: string;
+  email: string;
 }
 
 interface IAuthContext {

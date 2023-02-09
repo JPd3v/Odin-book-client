@@ -10,7 +10,9 @@ const initialUSerInfo = {
   first_name: '',
   last_name: '',
   profile_image: '',
-  friend_requests: [''],
+  gender: '',
+  birthday: '',
+  email: '',
 };
 
 export const AuthContext = createContext<IAuthContext>({});
