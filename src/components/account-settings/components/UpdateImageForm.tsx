@@ -58,6 +58,7 @@ export default function UpdateImageForm() {
             className="account-settings__form-img-input"
             {...register('profileImg')}
             type="file"
+            accept="image/png, image/jpg, image/jpeg"
           />
         </label>
       </div>
