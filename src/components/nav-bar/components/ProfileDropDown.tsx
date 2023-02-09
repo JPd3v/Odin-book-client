@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useAuth, useClickOutsideRef, useLogOut } from 'hooks/index';
 import { SettingsModal } from 'components/account-settings';
+import { Link } from 'react-router-dom';
 
 export default function ProfileDropDown() {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,6 +14,14 @@ export default function ProfileDropDown() {
 
   function handleCloseSettings() {
     setIsSettingsOpen(false);
+  }
+
+  function handleOpenSettings() {
+    setIsSettingsOpen(true);
+  }
+
+  function handleCloseDropDown() {
+    setIsOpen(false);
   }
 
   useEffect(() => {
@@ -36,13 +45,19 @@ export default function ProfileDropDown() {
         <div>
           <ul className="profile-drop-down__list">
             <li>
-              <p>{`${userInfo?.first_name} ${userInfo?.last_name}`}</p>
+              <Link
+                to={`/users/${userInfo?._id}`}
+                className="profile-drop-down__profile-link"
+                onClick={() => handleCloseDropDown()}
+              >
+                <p>{`${userInfo?.first_name} ${userInfo?.last_name}`}</p>
+              </Link>
             </li>
             <li>
               <button
                 type="button"
                 className="profile-drop-down__settings"
-                onClick={() => setIsSettingsOpen(true)}
+                onClick={() => handleOpenSettings()}
               >
                 Account settings
               </button>
@@ -57,7 +72,9 @@ export default function ProfileDropDown() {
               </button>
             </li>
           </ul>
-          {isSettingsOpen ? <SettingsModal /> : null}
+          {isSettingsOpen ? (
+            <SettingsModal onClose={() => handleCloseSettings()} />
+          ) : null}
         </div>
       ) : null}
     </div>
