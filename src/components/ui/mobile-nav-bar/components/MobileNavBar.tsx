@@ -2,6 +2,7 @@ import { SettingsModal } from 'components/account-settings';
 import { useAuth } from 'hooks';
 import { useState } from 'react';
 import { BsFillPersonFill } from 'react-icons/bs';
+import { HiOutlineSearch } from 'react-icons/hi';
 import { FaHome } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import FriendRequestsList from './FriendRequestsList';
@@ -29,6 +30,12 @@ export default function MobileNavBar() {
           <BsFillPersonFill
             className="mobile-nav-bar__icon"
             aria-label="my profile"
+          />
+        </Link>
+        <Link to="/search">
+          <HiOutlineSearch
+            className="mobile-nav-bar__icon"
+            aria-label="search users"
           />
         </Link>
         <FriendRequestsList />

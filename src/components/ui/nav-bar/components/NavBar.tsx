@@ -50,7 +50,7 @@ export default function NavBar() {
           </ul>
         </div>
 
-        {!isOpen && !hasTransitionedIn ? (
+        {!isOpen && !hasTransitionedIn && !userToken ? (
           <button
             type="button"
             aria-label="open navigation menu"

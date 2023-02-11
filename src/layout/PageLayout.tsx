@@ -12,7 +12,7 @@ export default function PageLayout() {
     <>
       <NavBar />
       <Outlet />
-      <MobileNavBar />
+      {userToken ? <MobileNavBar /> : null}
     </>
   );
 }

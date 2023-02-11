@@ -1,7 +1,6 @@
 import { AiOutlineClose } from 'react-icons/ai';
 import ReactFocusLock from 'react-focus-lock';
 import { Link } from 'react-router-dom';
-import { useLogOut, useAuth } from 'hooks/index';
 
 interface IHamburgerMenu {
   isOpen: boolean;
@@ -14,9 +13,6 @@ export default function HamburgerMenu({
   hasTransitionedIn,
   handleClick,
 }: IHamburgerMenu) {
-  const logOut = useLogOut();
-  const { userToken } = useAuth();
-
   return (
     <ReactFocusLock>
       <div
@@ -52,16 +48,6 @@ export default function HamburgerMenu({
           >
             <AiOutlineClose />
           </button>
-
-          {userToken ? (
-            <button
-              type="button"
-              className="hamburger-menu__log-out"
-              onClick={() => logOut.mutate()}
-            >
-              Log out
-            </button>
-          ) : null}
         </div>
       </div>
     </ReactFocusLock>
