@@ -1,14 +1,13 @@
 import useFriendRequest from 'hooks/useFriendRequests';
 import { Link } from 'react-router-dom';
 import { useAcceptFriendRequest, useDeclineFriendRequest } from 'hooks/index';
-import { FaUserFriends } from 'react-icons/fa';
 import { LoadingSpinner } from 'components/common/index';
 
 interface Iprops {
   onLinkClick: () => void;
 }
 
-export default function FriendRequests({ onLinkClick }: Iprops) {
+export default function FriendRequest({ onLinkClick }: Iprops) {
   const friendsRequests = useFriendRequest();
 
   const acceptRequestMutation = useAcceptFriendRequest();
@@ -21,8 +20,10 @@ export default function FriendRequests({ onLinkClick }: Iprops) {
     declineRequestMutation.mutate(userId);
   }
   return (
-    <div className="friends-requests-drop-down__content">
-      <h3 className="friends-requests-drop-down__title">friend requests</h3>
+    <div className=" mobile-friends-requests-drop-down__content">
+      <h3 className="mobile-friends-requests-drop-down__title">
+        friend requests
+      </h3>
 
       {friendsRequests?.data?.length === 0 ? (
         <p>you dont have friend requests</p>
@@ -31,18 +32,18 @@ export default function FriendRequests({ onLinkClick }: Iprops) {
       {friendsRequests.isError ? <p>Something went wrong</p> : null}
 
       {friendsRequests.isLoading ? (
-        <div className="friends-requests-drop-down__loading">
+        <div className="mobile-friends-requests-drop-down__loading">
           <LoadingSpinner />
         </div>
       ) : null}
 
-      <div className="friends-requests-drop-down__requests-container">
+      <div className="mobile-friends-requests-drop-down__requests-container">
         {friendsRequests?.data?.map((request) => (
           <div
             key={request._id}
-            className="friends-requests-drop-down__request"
+            className="mobile-friends-requests-drop-down__request"
           >
-            <div className="friends-requests-drop-down__request-user">
+            <div className="mobile-friends-requests-drop-down__request-user">
               <Link onClick={onLinkClick} to={`/users/${request._id}`}>
                 <img
                   src={request.profile_image.img}
@@ -56,7 +57,7 @@ export default function FriendRequests({ onLinkClick }: Iprops) {
                 >{`${request.first_name} ${request.last_name}`}</Link>
               </p>
             </div>
-            <div className="friends-requests-drop-down__request-buttons">
+            <div className="mobile-friends-requests-drop-down__request-buttons">
               <button
                 type="button"
                 onClick={() => handleAcceptRequest(request._id)}

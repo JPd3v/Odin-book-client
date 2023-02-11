@@ -1,7 +1,7 @@
-import FriendRequests from 'components/nav-bar/components/FriendRequests';
 import { useClickOutsideRef } from 'hooks';
 import { useEffect, useRef, useState } from 'react';
 import { IoMdNotifications } from 'react-icons/io';
+import FriendRequests from './FriendRequests';
 
 export default function FriendsRequestsDropdown() {
   const [isOpen, setIsOpen] = useState(false);
