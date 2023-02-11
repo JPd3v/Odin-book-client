@@ -1,12 +1,23 @@
+import { SettingsModal } from 'components/account-settings';
 import { useAuth } from 'hooks';
+import { useState } from 'react';
 import { BsFillPersonFill } from 'react-icons/bs';
 import { FaHome } from 'react-icons/fa';
-import { IoMdSettings } from 'react-icons/io';
 import { Link } from 'react-router-dom';
 import FriendRequestsList from './FriendRequestsList';
+import SettingsDropdown from './SettingsDropdown';
 
 export default function MobileNavBar() {
   const { userInfo } = useAuth();
+  const [isModalSettingsOpen, setModalSettingsOpen] = useState(false);
+
+  function handleOpenSettingsModal() {
+    setModalSettingsOpen(true);
+  }
+
+  function handleCloseSettingsModal() {
+    setModalSettingsOpen(false);
+  }
 
   return (
     <div className="mobile-nav-bar-wrapper">
@@ -20,11 +31,13 @@ export default function MobileNavBar() {
             aria-label="my profile"
           />
         </Link>
-
         <FriendRequestsList />
-
-        {/* TODO: ADD BUTN ABRIR SETTINGS */}
-        <IoMdSettings className="mobile-nav-bar__icon" />
+        <SettingsDropdown onModalopen={() => handleOpenSettingsModal()} />
+        {isModalSettingsOpen ? (
+          <div>
+            <SettingsModal onClose={() => handleCloseSettingsModal()} />
+          </div>
+        ) : null}
       </nav>
     </div>
   );

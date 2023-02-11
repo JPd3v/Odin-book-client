@@ -338,7 +338,8 @@ a.profile-drop-down__profile-link:hover {
   color: var(--color-main);
 }
 
-.profile-drop-down__settings {
+.profile-drop-down__settings,
+.mobile-nav-bar__settings-open-modal {
   background: none;
   border: none;
   font-weight: 500;
@@ -346,11 +347,13 @@ a.profile-drop-down__profile-link:hover {
   color: var(--fc-prim);
 }
 
-.profile-drop-down__settings:hover {
+.profile-drop-down__settings:hover,
+.mobile-nav-bar__settings-open-modal:hover {
   color: var(--color-main);
 }
 
-.profile-drop-down__log-out {
+.profile-drop-down__log-out,
+.mobile-nav-bar__settings-log-out {
   background: none;
   border: none;
   color: var(--color-error);
@@ -425,7 +428,7 @@ a.profile-drop-down__profile-link:hover {
 
 .mobile-nav-bar-wrapper {
   display: none;
-  z-index: 20;
+  z-index: 30;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -444,10 +447,6 @@ a.profile-drop-down__profile-link:hover {
   width: 40px;
   height: 40px;
   color: var(--fc-second);
-}
-
-.mobile-nav-bar__notifications {
-  /* position: relative; */
 }
 
 .mobile-friends-requests-drop-down__content {
@@ -483,6 +482,29 @@ a.profile-drop-down__profile-link:hover {
   align-items: center;
   gap: 10px;
   width: min-content;
+}
+
+.mobile-nav-bar__settings {
+  position: relative;
+}
+
+.mobile-nav-bar__settings-content {
+  position: absolute;
+  background-color: var(--color-background-second);
+  transform: translate(-75%, -110%);
+  top: 0;
+  border: 1px solid var(--border-color);
+  min-width: 150px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 5px;
+}
+
+.mobile-nav-bar__setting-open {
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
 .user-feed {
