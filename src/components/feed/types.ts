@@ -16,6 +16,7 @@ interface IresponseData {
 
 interface IFormInputs {
   text: string;
+  images: FileList | null;
 }
 
 interface InfiniteData {
