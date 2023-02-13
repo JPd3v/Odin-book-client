@@ -10,6 +10,12 @@ interface IPost {
 
 interface IContent {
   text: string;
+  images: Images[];
+}
+
+interface Images {
+  public_id: string;
+  img: string;
 }
 
 interface IUser {

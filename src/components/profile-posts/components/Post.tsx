@@ -104,6 +104,19 @@ export default function UserPost({ userPost }: IProps) {
         <p className="post__content">{content.text}</p>
       )}
 
+      {content.images.length ? (
+        <div className="post__content-images">
+          {content.images.map((image) => (
+            <img
+              src={image.img}
+              alt=""
+              key={image.public_id}
+              className="post__content-image"
+            />
+          ))}
+        </div>
+      ) : null}
+
       <div className="post__controllers">
         {userLikeThisPost ? (
           <button

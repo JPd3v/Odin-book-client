@@ -721,6 +721,21 @@ a.profile-drop-down__profile-link:hover {
   border-radius: 10px;
 }
 
+.post__content-images {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+  align-items: center;
+}
+
+.post__content-image {
+  width: 85%;
+  height: auto;
+  border-radius: 0;
+  object-fit: cover;
+}
+
 .post__header,
 .comment__header,
 .reply__header {
