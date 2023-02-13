@@ -7,13 +7,17 @@ async function newPost(
   formInputs: IFormInputs,
   userToken: string | null | undefined
 ) {
-  const req = await axiosConfig.post(
-    '/posts/',
-    {
-      content: formInputs,
-    },
-    { headers: { Authorization: `Bearer ${userToken}` } }
-  );
+  const formData = new FormData();
+  formData.append('text', formInputs.text);
+
+  if (formInputs.images) {
+    for (let i = 0; i < formInputs.images.length; i += 1) {
+      formData.append('images', formInputs.images[i]);
+    }
+  }
+  const req = await axiosConfig.post('/posts/', formData, {
+    headers: { Authorization: `Bearer ${userToken}` },
+  });
   return req.data;
 }
 export default function useNewPost() {
