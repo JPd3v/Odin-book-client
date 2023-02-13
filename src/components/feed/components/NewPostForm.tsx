@@ -17,6 +17,7 @@ export default function NewPostForm() {
     setValue,
     control,
     setError,
+    clearErrors,
     handleSubmit,
   } = useForm<IFormInputs>({ mode: 'onChange' });
   const imagesInput = watch('images');
@@ -24,13 +25,12 @@ export default function NewPostForm() {
 
   function onSubmit(formInputs: IFormInputs) {
     if (formInputs.images && formInputs.images?.length > 3) {
-      setError('images', {
-        type: 'custom',
+      return setError('images', {
+        type: 'maxLength',
         message: 'only can submit 3 images maximum per post',
       });
     }
-
-    newPostMutation.mutate(formInputs);
+    return newPostMutation.mutate(formInputs);
   }
 
   function handleFileInputClick() {
@@ -53,6 +53,21 @@ export default function NewPostForm() {
       reset();
     }
   }, [newPostMutation.isSuccess, reset]);
+
+  useEffect(() => {
+    if (!imagesInput) return;
+
+    if (imagesInput.length > 3) {
+      setError('images', {
+        type: 'maxLength',
+        message: 'only can submit 3 images maximum per post',
+      });
+    }
+
+    if (imagesInput.length <= 3) {
+      clearErrors('images');
+    }
+  }, [imagesInput?.length]);
 
   return (
     <form
