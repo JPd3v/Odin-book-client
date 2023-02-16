@@ -12,6 +12,7 @@
   --color-main: hsl(246, 100%, 67%);
   --color-background-second: hsl(0, 0%, 100%);
   --color-background-soft: hsl(0deg 0% 95%);
+  --color-background-welcome-hero: hsl(266deg 9% 93%);
   --color-background-friends-container: hsl(0, 0%, 91%);
   --color-error: hsl(0, 97%, 46%);
   --color-post-buttons: hsl(0deg 0% 38%);
@@ -35,9 +36,10 @@
   --fc-links-posts: hsl(0, 0%, 28%);
 
   --fs-p: 1.6rem;
-  --fs-3: 2.2rem;
+  --fs-1: 2.2rem;
   --fs-2: 2.6rem;
-  --fs-1: 3rem;
+  --fs-3: 3rem;
+  --fs-4: 4rem;
 
   --bx-shw-form: 0px 0px 7px 2px hsl(0deg 0% 69%);
 
@@ -376,7 +378,7 @@ a.profile-drop-down__profile-link:hover {
 }
 
 .hamburger-menu__title {
-  font-size: var(--fs-1);
+  font-size: var(--fs-3);
 }
 
 .hamburger-menu__list {
@@ -572,7 +574,7 @@ a.profile-drop-down__profile-link:hover {
 
 .sign-up-form__title,
 .log-in-form__title {
-  font-size: var(--fs-1);
+  font-size: var(--fs-3);
 }
 
 .log-in-page {
@@ -611,6 +613,7 @@ a.profile-drop-down__profile-link:hover {
   display: flex;
   align-items: center;
   padding: 0 10px;
+  border-radius: 5px;
 }
 
 .log-in-form__socials-guest {
@@ -619,6 +622,7 @@ a.profile-drop-down__profile-link:hover {
   cursor: pointer;
   border: 1px solid var(--border-color);
   background: var(--color-background-soft);
+  border-radius: 5px;
 }
 
 .log-in-form__server-error,
@@ -1204,7 +1208,7 @@ a.profile-drop-down__profile-link:hover {
 }
 
 .profile-posts__empty-posts {
-  font-size: var(--fs-1);
+  font-size: var(--fs-3);
   text-align: center;
   font-weight: 300;
 }
@@ -1537,6 +1541,41 @@ a.profile-drop-down__profile-link:hover {
   top: 0;
   bottom: 0;
   margin: auto;
+}
+
+.welcome-hero {
+  display: flex;
+  justify-content: center;
+  min-height: 100%;
+  align-items: center;
+  background: var(--color-background-welcome-hero);
+}
+
+.welcome-hero__content {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
+  padding: 30px;
+  gap: 49px;
+  flex-wrap: wrap;
+}
+
+.welcome-hero__text {
+  min-width: 300px;
+  max-width: 368px;
+  padding: 20px;
+}
+
+.welcome-hero__title {
+  font-weight: 400;
+}
+
+.welcome-hero__text-highlight {
+  color: var(--color-main);
+  font-size: var(--fs-4);
+  font-weight: 600;
 }
 
 @keyframes Spinner {

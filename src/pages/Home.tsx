@@ -11,7 +11,7 @@ export default function Home() {
       <RecommendedFriends />
     </main>
   ) : (
-    <main>
+    <main className="welcome-hero">
       <WelcomeHero />
     </main>
   );
