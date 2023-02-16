@@ -29,7 +29,14 @@ function App() {
 
   return (
     <div className="App">
-      <Suspense fallback={<LoadingPage />}>
+      <Suspense
+        fallback={
+          <>
+            <PageLayout />
+            <LoadingPage />
+          </>
+        }
+      >
         <Routes>
           <Route element={<PageLayout />}>
             <Route path="/" element={<Home />} />
