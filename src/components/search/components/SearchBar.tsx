@@ -4,18 +4,19 @@ import { useForm } from 'react-hook-form';
 import { GoSearch } from 'react-icons/go';
 import { LoadingSpinner, UserCard } from 'components/common';
 import { useClickOutsideRef, useDebounce } from 'hooks';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useSearch from '../hooks/useSearch';
 import type { ISearchInput } from '../types';
 
 export default function SearchBar() {
-  const { register, watch, reset } = useForm<ISearchInput>();
+  const { register, watch, reset, handleSubmit } = useForm<ISearchInput>();
   const [openResult, setOpenResult] = useState(false);
   const textInput = watch('text');
   const formRef = useRef(null);
   const hasClickoutside = useClickOutsideRef(formRef);
   const debouncedInput = useDebounce<string>(textInput, 500);
   const search = useSearch(debouncedInput ?? '');
+  const navigate = useNavigate();
 
   const stringToArray = debouncedInput?.trim().split(' ');
   const firstName = stringToArray ? stringToArray[0] ?? '' : null;
@@ -37,8 +38,19 @@ export default function SearchBar() {
     setOpenResult(false);
   }, [hasClickoutside]);
 
+  function onSubmit(data: ISearchInput) {
+    const text = data.text?.trim().split(' ');
+    const textFirstName = text ? text[0] ?? '' : null;
+    const textLastName = text ? text[1] ?? '' : null;
+    navigate(`/search?firstName=${textFirstName}&lastName=${textLastName}`);
+  }
+
   return (
-    <form ref={formRef} className="search-bar">
+    <form
+      ref={formRef}
+      className="search-bar"
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <input
         type="search"
         aria-label="search user"
