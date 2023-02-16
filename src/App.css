@@ -598,6 +598,29 @@ a.profile-drop-down__profile-link:hover {
   margin: 0px 20px;
 }
 
+.log-in-form__socials {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.log-in-form__socials-facebook {
+  background: hsl(220, 46%, 48%);
+  height: 30px;
+  color: hsl(0deg 0% 100%);
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+}
+
+.log-in-form__socials-guest {
+  height: 30px;
+  padding: 0 10px;
+  cursor: pointer;
+  border: 1px solid var(--border-color);
+  background: var(--color-background-soft);
+}
+
 .log-in-form__server-error,
 .sign-up-form__server-error {
   display: flex;

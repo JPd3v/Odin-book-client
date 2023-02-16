@@ -10,6 +10,7 @@ interface ServerUserInfo {
   last_name: string;
   gender: string;
   birthday: string;
+  oAuth_id?: string;
 }
 
 export type { ServerUserInfo };

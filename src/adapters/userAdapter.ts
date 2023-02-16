@@ -10,5 +10,6 @@ export default function createUserAdapter(user: ServerUserInfo) {
     gender: user.gender,
     birthday: user.birthday,
     email: user.username,
+    oAuthId: user.oAuth_id,
   };
 }

@@ -2,6 +2,7 @@
 import { useForm } from 'react-hook-form';
 import { LoadingSpinner } from 'components/common/index';
 import useLogIn from '../hooks/useLogIn';
+import useLogInAsGuest from '../hooks/useLogInAsGuest';
 import type { IFormInputs } from '../types';
 
 const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
@@ -14,9 +15,14 @@ export default function LogInForm() {
   } = useForm<IFormInputs>({ mode: 'onChange' });
 
   const logInMutation = useLogIn();
+  const logInAsGuest = useLogInAsGuest();
 
   function onSubmit(formInputs: IFormInputs) {
     logInMutation.mutate(formInputs);
+  }
+
+  function handlelogInAsGuest() {
+    logInAsGuest.mutate('');
   }
 
   return (
@@ -90,6 +96,22 @@ export default function LogInForm() {
           )}
         </div>
       ) : null}
+
+      <div className="log-in-form__socials">
+        <a
+          href="http://localhost:3000/oauth/auth/facebook"
+          className="log-in-form__socials-facebook"
+        >
+          log in with facebook
+        </a>
+        <button
+          type="button"
+          className="log-in-form__socials-guest"
+          onClick={handlelogInAsGuest}
+        >
+          log in as a guest
+        </button>
+      </div>
 
       <button
         type="submit"
