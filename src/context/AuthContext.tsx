@@ -13,6 +13,7 @@ const initialUSerInfo = {
   gender: '',
   birthday: '',
   email: '',
+  oAuth_id: '',
 };
 
 export const AuthContext = createContext<IAuthContext>({});

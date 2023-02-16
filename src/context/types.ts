@@ -6,6 +6,7 @@ interface IUserInfo {
   gender: string;
   birthday: string;
   email: string;
+  oAuth_id?: string;
 }
 
 interface IAuthContext {
