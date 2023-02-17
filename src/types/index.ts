@@ -8,10 +8,6 @@ interface IPost {
   timestamp: string;
 }
 
-interface IPostContext {
-  previousPost: IPost | undefined;
-}
-
 interface IContent {
   text: string;
   images: Images[];
@@ -65,11 +61,4 @@ interface IErrorresponseData {
   errors?: [{ msg: string }];
 }
 
-export type {
-  IPost,
-  IComment,
-  IReply,
-  IUser,
-  IAxiosDefaultErrors,
-  IPostContext,
-};
+export type { IPost, IComment, IReply, IUser, IAxiosDefaultErrors };
