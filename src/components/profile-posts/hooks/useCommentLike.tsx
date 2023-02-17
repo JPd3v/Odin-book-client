@@ -2,8 +2,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useAuth } from 'hooks/index';
 import { axiosConfig } from 'config/index';
 import type { IComment } from 'types/index';
-import type { InfiniteData } from '../types';
 import { useParams } from 'react-router-dom';
+import type { InfiniteData, InfiniteDatacontext } from '../types';
 
 async function likeComment(comment: IComment, userToken: string) {
   const req = await axiosConfig.post(
@@ -21,7 +21,7 @@ export default function useCommentLike() {
   const params = useParams();
   const profileUserId = params.id ?? '';
 
-  return useMutation<string[], unknown, IComment>(
+  return useMutation<string[], unknown, IComment, InfiniteDatacontext>(
     ['user posts', profileUserId],
     {
       mutationFn: (comment) => likeComment(comment, userToken ?? ''),
@@ -73,7 +73,6 @@ export default function useCommentLike() {
         return { previousPosts };
       },
       onError(_error, _variables, context) {
-        // NOTE : FIX  CONTEXT TYPE ERROR
         queryClient.setQueryData(
           ['user posts', profileUserId],
           context?.previousPosts

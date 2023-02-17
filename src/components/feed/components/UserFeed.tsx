@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import type { IPost } from 'types/index';
+import { LoadingSpinner } from 'components/common';
 import useFeed from '../hooks/useFeed';
 import UserPost from './UserPost';
 import NewPostForm from './NewPostForm';
@@ -41,7 +42,7 @@ export default function UserFeed() {
 
         {posts.hasNextPage ? (
           <div className="infite-scroll-post-loading" ref={loadingDivRef}>
-            loading component place holder
+            <LoadingSpinner />
           </div>
         ) : null}
 

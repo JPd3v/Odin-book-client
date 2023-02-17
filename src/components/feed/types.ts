@@ -27,4 +27,13 @@ interface IPage {
   posts: IPost[];
 }
 
-export type { IAxiosDefaultErrors, IFormInputs, InfiniteData };
+interface InfiniteDatacontext {
+  previousPosts: InfiniteData | undefined;
+}
+
+export type {
+  IAxiosDefaultErrors,
+  IFormInputs,
+  InfiniteData,
+  InfiniteDatacontext,
+};

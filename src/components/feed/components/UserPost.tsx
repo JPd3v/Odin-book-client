@@ -110,6 +110,7 @@ export default function UserPost({ userPost }: IProps) {
             <img
               src={image.img}
               alt=""
+              loading="lazy"
               key={image.public_id}
               className="post__content-image"
             />

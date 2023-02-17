@@ -1,3 +1,4 @@
+import { LoadingSpinner } from 'components/common';
 import { useEffect, useRef } from 'react';
 import type { IPost } from 'types/index';
 import useUserPosts from '../hooks/useUserPosts';
@@ -39,7 +40,7 @@ export default function ProfilePosts() {
 
         {posts.hasNextPage ? (
           <div className="infite-scroll-post-loading" ref={loadingDivRef}>
-            loading component place holder
+            <LoadingSpinner />
           </div>
         ) : null}
 

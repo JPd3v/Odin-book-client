@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { axiosConfig } from 'config/index';
 import { useAuth } from 'hooks/index';
 import { useParams } from 'react-router-dom';
-import type { InfiniteData } from '../types';
+import type { InfiniteData, InfiniteDatacontext } from '../types';
 
 async function likePost(postId: string, userToken: string) {
   const req = await axiosConfig.post(
@@ -22,7 +22,7 @@ export default function usePostLike() {
 
   const profileUserId = params.id ?? '';
 
-  return useMutation<string[], unknown, string, unknown>(
+  return useMutation<string[], unknown, string, InfiniteDatacontext>(
     ['user posts', profileUserId],
     {
       mutationFn: (postId) => likePost(postId, userToken ?? ''),
@@ -59,7 +59,6 @@ export default function usePostLike() {
         return { previousPosts };
       },
       onError: (_err, _postId, context) => {
-        // NOTE : FIX  CONTEXT TYPE ERROR
         queryClient.setQueryData(
           ['user posts', profileUserId],
           context?.previousPosts
