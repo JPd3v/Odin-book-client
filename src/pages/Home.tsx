@@ -1,6 +1,13 @@
-import { UserFeed, RecommendedFriends } from 'components/feed/index';
 import { useAuth } from 'hooks/index';
-import { WelcomeHero } from 'components/welcome-hero/index';
+import { lazy } from 'react';
+
+const UserFeed = lazy(() => import('components/feed/components/UserFeed'));
+const RecommendedFriends = lazy(
+  () => import('components/feed/components/RecommendedFriends')
+);
+const WelcomeHero = lazy(
+  () => import('components/welcome-hero/components/WelcomeHero')
+);
 
 export default function Home() {
   const { userToken } = useAuth();
