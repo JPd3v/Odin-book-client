@@ -717,6 +717,7 @@ a.profile-drop-down__profile-link:hover {
   max-width: 690px;
   width: 100%;
   gap: 20px;
+  padding-bottom: 20px;
 }
 
 .infite-scroll-post-loading {

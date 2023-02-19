@@ -50,15 +50,11 @@ export default function ProfilePosts() {
           </p>
         ) : null}
 
-        {posts
-          ? posts.data?.pages?.map((page) =>
-              page.posts.length === 0 ? (
-                <h2 className="profile-posts__empty-posts">
-                  user has never posted anything
-                </h2>
-              ) : null
-            )
-          : null}
+        {posts?.data?.pages[0].posts.length === 0 ? (
+          <h2 className="profile-posts__empty-posts">
+            user has never posted anything
+          </h2>
+        ) : null}
       </div>
     </div>
   );
