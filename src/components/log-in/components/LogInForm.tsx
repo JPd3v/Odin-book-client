@@ -99,7 +99,7 @@ export default function LogInForm() {
 
       <div className="log-in-form__socials">
         <a
-          href="http://localhost:3000/oauth/auth/facebook"
+          href={`${import.meta.env.VITE_BASE_URL}/oauth/auth/facebook`}
           className="log-in-form__socials-facebook"
         >
           log in with facebook
