@@ -1,4 +1,4 @@
-import { LogInForm } from 'components/log-in/index';
+import { LogInForm } from 'features/auth';
 
 export default function LogIn() {
   return (

@@ -1,11 +1,11 @@
-export { default as useAcceptFriendRequest } from './useAcceptFriendRequest';
-export { default as useAuth } from './useAuth';
+export { default as useAcceptFriendRequest } from '../features/users/hooks/useAcceptFriendRequest';
+export { default as useAuth } from '../features/auth/hooks/useAuth';
 export { default as useClickOutsideRef } from './useClickOutsideRef';
 export { default as useDebounce } from './useDebounce';
-export { default as useDeclineFriendRequest } from './useDeclineFriendRequest';
-export { default as useFriendRequests } from './useFriendRequests';
+export { default as useDeclineFriendRequest } from '../features/users/hooks/useDeclineFriendRequest';
+export { default as useFriendRequests } from '../features/users/hooks/useFriendRequests';
 export { default as useIdIsOnArray } from './useIdIsOnArray';
 export { default as useInfiniteScroll } from './useInfiniteScroll';
-export { default as useLogOut } from './useLogOut';
+export { default as useLogOut } from '../features/auth/hooks/useLogOut';
 export { default as useMountTransition } from './useMountTransition';
-export { default as useRefreshUser } from './useRefreshUser';
+export { default as useRefreshUser } from '../features/auth/hooks/useRefreshUser';

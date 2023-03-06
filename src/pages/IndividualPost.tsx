@@ -1,11 +1,13 @@
 import { LoadingPage } from 'components/common';
-import { Post, usePost } from 'components/single-post/index';
+import { SinglePost, useSinglePost } from 'features/posts/index';
 import PageNotFound404 from 'pages/PageNotFound404';
 import { Navigate, useParams } from 'react-router-dom';
 
 export default function IndividualPost() {
   const params = useParams();
-  const post = usePost();
+
+  const QUERY_KEY = `post, ${params.id}`;
+  const post = useSinglePost(QUERY_KEY);
 
   if (!params.id) {
     return <Navigate to="/" />;
@@ -21,7 +23,7 @@ export default function IndividualPost() {
 
   return (
     <main className="post-page">
-      {post.data ? <Post post={post.data} /> : null}
+      {post.data ? <SinglePost post={post.data} queryKey={QUERY_KEY} /> : null}
     </main>
   );
 }

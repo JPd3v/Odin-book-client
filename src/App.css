@@ -639,7 +639,7 @@ a.profile-drop-down__profile-link:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 10px;
+  margin-top: -5px;
 }
 
 .new-post-form {
@@ -647,6 +647,7 @@ a.profile-drop-down__profile-link:hover {
   min-width: 300px;
   max-width: 690px;
   width: 100%;
+  padding: 5px;
 }
 
 .new-post-form__text-input {
@@ -717,7 +718,7 @@ a.profile-drop-down__profile-link:hover {
   max-width: 690px;
   width: 100%;
   gap: 20px;
-  padding-bottom: 20px;
+  padding: 5px 5px 60px 5px;
 }
 
 .infite-scroll-post-loading {
@@ -990,6 +991,7 @@ a.profile-drop-down__profile-link:hover {
   background: var(--color-background-soft);
   display: flex;
   justify-content: center;
+  padding-bottom: 50px;
 }
 
 .single-post {
@@ -1212,7 +1214,7 @@ a.profile-drop-down__profile-link:hover {
 }
 
 .profile-posts {
-  margin: 0px 10px;
+  margin-top: -10px;
 }
 
 .profile-posts__empty-posts {
