@@ -18,7 +18,7 @@ export default function NavBar() {
   }
 
   return (
-    <div className="nav-bar-wrapper">
+    <header className="nav-bar-wrapper">
       <nav className="nav-bar">
         <div>
           <Link to="/">
@@ -69,6 +69,6 @@ export default function NavBar() {
           />
         ) : null}
       </nav>
-    </div>
+    </header>
   );
 }
