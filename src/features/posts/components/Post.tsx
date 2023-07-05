@@ -4,16 +4,17 @@ import { AiFillLike, AiOutlineLike } from 'react-icons/ai';
 import formatDistance from 'date-fns/formatDistance';
 import { Link } from 'react-router-dom';
 import {
-  CommentQuantityLimiter,
+  // CommentQuantityLimiter,
   DotsDropdown,
   EditText,
 } from 'components/common/index';
-import { useAuth, useIdIsOnArray } from 'hooks/index';
+import { useAuth } from 'hooks/index';
 import type { IPost } from 'types/index';
+import { CommentList } from 'features/comments';
 import usePostLike from '../hooks/usePostLike';
 import useDeletePost from '../hooks/useDeletePost';
 import useEditPost from '../hooks/useEditPost';
-import PostComments from './PostComments';
+// import PostComments from './PostComments';
 
 interface IProps {
   post: IPost;
@@ -21,10 +22,19 @@ interface IProps {
 }
 
 export default function Post({ post, queryKey }: IProps) {
-  const { _id, content, creator, edited, likes, timestamp, comments } = post;
+  const {
+    _id,
+    content,
+    creator,
+    edited,
+    timestamp,
+    likesCount,
+    commentCount,
+    isLikedByUser,
+  } = post;
 
   const [showComments, setShowComments] = useState(false);
-  const [commentsLimit, setCommentsLimit] = useState(1);
+  // const [commentsLimit, setCommentsLimit] = useState(1);
   const [isEditing, setIsEditing] = useState(false);
   const { userInfo } = useAuth();
 
@@ -32,14 +42,14 @@ export default function Post({ post, queryKey }: IProps) {
   const deletePostMutation = useDeletePost(queryKey);
   const editPostMutation = useEditPost(queryKey);
 
-  const postComments = comments.slice(0, commentsLimit).reverse();
+  // const postComments = comments.slice(0, commentsLimit).reverse();
 
-  function handleIncrement(increment: number) {
-    if (commentsLimit + increment < comments.length) {
-      return setCommentsLimit((prev) => prev + increment);
-    }
-    return setCommentsLimit(comments.length);
-  }
+  // function handleIncrement(increment: number) {
+  //   if (commentsLimit + increment < comments.length) {
+  //     return setCommentsLimit((prev) => prev + increment);
+  //   }
+  //   return setCommentsLimit(comments.length);
+  // }
 
   function handlePostDelete() {
     deletePostMutation.mutate(_id);
@@ -49,15 +59,13 @@ export default function Post({ post, queryKey }: IProps) {
     setIsEditing((prev) => !prev);
   }
 
-  const userLikeThisPost = useIdIsOnArray(post.likes, userInfo?._id);
-
   const formater = Intl.NumberFormat('en', { notation: 'compact' });
 
-  const likesCount = formater.format(likes.length);
-  const commentsCount = formater.format(comments.length);
+  const formatedLikesCount = formater.format(likesCount);
+  const formatedCommentsCount = formater.format(commentCount);
 
-  const posttDate = new Date(timestamp);
-  const postDateFormated = formatDistance(posttDate, Date.now());
+  const postDate = new Date(timestamp);
+  const postDateFormated = formatDistance(postDate, Date.now());
 
   return (
     <article className="post">
@@ -119,7 +127,7 @@ export default function Post({ post, queryKey }: IProps) {
       ) : null}
 
       <div className="post__controllers">
-        {userLikeThisPost ? (
+        {isLikedByUser ? (
           <button
             type="button"
             className="post__controllers-like-button post__controllers-like-button--active"
@@ -128,7 +136,7 @@ export default function Post({ post, queryKey }: IProps) {
             }
           >
             <AiFillLike aria-label="Remove like" />
-            <p>{likesCount}</p>
+            <p>{formatedLikesCount}</p>
           </button>
         ) : (
           <button
@@ -137,7 +145,7 @@ export default function Post({ post, queryKey }: IProps) {
               !likeMutation.isLoading ? likeMutation.mutate(_id) : null
             }
           >
-            <AiOutlineLike aria-label="Give like" /> <p>{likesCount}</p>
+            <AiOutlineLike aria-label="Give like" /> <p>{formatedLikesCount}</p>
           </button>
         )}
 
@@ -147,23 +155,17 @@ export default function Post({ post, queryKey }: IProps) {
               showComments ? 'close comment section' : 'open comment section'
             }`}
           />
-          <p>{commentsCount}</p>
+          <p>{formatedCommentsCount}</p>
         </button>
       </div>
-      {showComments && comments.length ? (
+      {/* {showComments && comments.length ? (
         <CommentQuantityLimiter
           commentsLength={comments.length}
           currentLimit={commentsLimit}
           handleIncrement={(increment) => handleIncrement(increment)}
         />
-      ) : null}
-      {showComments ? (
-        <PostComments
-          comments={postComments}
-          postId={_id}
-          queryKey={queryKey}
-        />
-      ) : null}
+      ) : null} */}
+      {showComments ? <CommentList postId={_id} /> : null}
     </article>
   );
 }
