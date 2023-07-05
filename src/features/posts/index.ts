@@ -1,6 +1,5 @@
 export { default as NewPostForm } from './components/NewPostForm';
 export { default as Post } from './components/Post';
-export { default as PostComments } from './components/PostComments';
 export { default as PostList } from './components/PostList';
 export { default as ProfilePosts } from './components/ProfilePosts';
 export { default as SinglePost } from './components/SinglePost';

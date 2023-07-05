@@ -13,10 +13,8 @@ async function likePost(postId: string, userToken: string): Promise<string[]> {
 }
 
 export default function usePostLike(queryKey: string | Array<string | number>) {
-  const { userToken, userInfo } = useAuth();
+  const { userToken } = useAuth();
   const queryClient = useQueryClient();
-
-  const userId = userInfo?._id ?? '';
 
   return useMutation([queryKey], {
     mutationFn: (postId: string) => likePost(postId, userToken ?? ''),
@@ -32,13 +30,18 @@ export default function usePostLike(queryKey: string | Array<string | number>) {
             ...page,
             posts: page.posts.map((post) => {
               if (post._id === postId) {
-                if (post.likes.includes(userId)) {
-                  const filteredLikes = post.likes.filter(
-                    (id) => id !== userId
-                  );
-                  return { ...post, likes: filteredLikes };
+                if (post.isLikedByUser) {
+                  return {
+                    ...post,
+                    isLikedByUser: false,
+                    likesCount: post.likesCount - 1,
+                  };
                 }
-                return { ...post, likes: [...post.likes, userId] };
+                return {
+                  ...post,
+                  isLikedByUser: true,
+                  likesCount: post.likesCount + 1,
+                };
               }
               return post;
             }),
@@ -51,18 +54,18 @@ export default function usePostLike(queryKey: string | Array<string | number>) {
     onError: (_err, _postId, context) => {
       queryClient.setQueryData([queryKey], context?.previousPosts);
     },
-    onSuccess(data, postId) {
-      queryClient.setQueryData<InfiniteData>([queryKey], (prev) => {
-        return {
-          ...prev,
-          pages: prev?.pages?.map((page) => ({
-            ...page,
-            posts: page.posts.map((post) =>
-              post._id === postId ? { ...post, likes: [...data] } : post
-            ),
-          })),
-        };
-      });
-    },
+    // onSuccess(data, postId) {
+    //   queryClient.setQueryData<InfiniteData>([queryKey], (prev) => {
+    //     return {
+    //       ...prev,
+    //       pages: prev?.pages?.map((page) => ({
+    //         ...page,
+    //         posts: page.posts.map((post) =>
+    //           post._id === postId ? { ...post, likes: [...data] } : post
+    //         ),
+    //       })),
+    //     };
+    //   });
+    // },
   });
 }
