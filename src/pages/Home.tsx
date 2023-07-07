@@ -13,12 +13,10 @@ const WelcomeHero = lazy(
 export default function Home() {
   const { userToken } = useAuth();
 
-  const QUERY_KEY = 'feed posts';
-
   return userToken ? (
     <main className="user-feed">
       <div className="feed-container">
-        <NewPostForm queryKey={QUERY_KEY} />
+        <NewPostForm />
         <PostList />
       </div>
       <RecommendedFriends />

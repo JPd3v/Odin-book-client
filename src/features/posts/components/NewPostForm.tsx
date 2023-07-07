@@ -7,11 +7,7 @@ import useNewPost from '../hooks/useNewPost';
 import type { IFormInputs } from '../types';
 import UploadedImage from './UploadedImage';
 
-interface IProps {
-  queryKey: string;
-}
-
-export default function NewPostForm({ queryKey }: IProps) {
+export default function NewPostForm() {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const {
     register,
@@ -25,7 +21,7 @@ export default function NewPostForm({ queryKey }: IProps) {
     handleSubmit,
   } = useForm<IFormInputs>({ mode: 'onChange' });
   const imagesInput = watch('images');
-  const newPostMutation = useNewPost(queryKey);
+  const newPostMutation = useNewPost();
   function onSubmit(formInputs: IFormInputs) {
     if (formInputs.images && formInputs.images?.length > 3) {
       return setError('images', {
