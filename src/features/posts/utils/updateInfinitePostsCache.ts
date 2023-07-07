@@ -62,3 +62,18 @@ export function deletePostFromCache(
     })),
   };
 }
+
+export function editPostFromCache(
+  prev: InfiniteData | undefined,
+  editedPost: IPost
+) {
+  return {
+    ...prev,
+    pages: prev?.pages?.map((page) => ({
+      ...page,
+      posts: page.posts.map((post) =>
+        post._id === editedPost._id ? editedPost : post
+      ),
+    })),
+  };
+}
