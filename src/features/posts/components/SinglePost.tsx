@@ -27,7 +27,7 @@ export default function SinglePost() {
 
   const likeMutation = usePostLike();
   const deletePostMutation = useDeletePost();
-  const editPostMutation = useEditPost('queryKey');
+  const editPostMutation = useEditPost();
 
   if (!post.isLoading && (post.error || post.failureCount || !post.data)) {
     return <PageNotFound404 />;

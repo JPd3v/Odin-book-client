@@ -39,7 +39,7 @@ export default function Post({ post }: IProps) {
 
   const likeMutation = usePostLike();
   const deletePostMutation = useDeletePost();
-  const editPostMutation = useEditPost('queryKey');
+  const editPostMutation = useEditPost();
 
   // function handleIncrement(increment: number) {
   //   if (commentsLimit + increment < comments.length) {
