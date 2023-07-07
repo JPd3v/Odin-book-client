@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { axiosConfig } from 'config/index';
 import { useAuth } from 'hooks';
 import { IPost, IAxiosDefaultErrors } from 'types/index';
+import postKeys from 'features/posts/utils/postQuerykeyFactory';
 
 async function getPost(postId: string, userToken: string) {
   const req = await axiosConfig.get(`/posts/${postId}`, {
@@ -12,11 +13,11 @@ async function getPost(postId: string, userToken: string) {
   return req.data;
 }
 
-export default function usePost(queryKey: string | Array<string | number>) {
-  const params = useParams();
+export default function usePost() {
+  const paramsId = useParams().id as string;
   const { userToken } = useAuth();
 
-  return useQuery<IPost, IAxiosDefaultErrors>([queryKey], {
-    queryFn: () => getPost(params.id ?? '', userToken ?? ''),
+  return useQuery<IPost, IAxiosDefaultErrors>(postKeys.detail(paramsId), {
+    queryFn: () => getPost(paramsId, userToken as string),
   });
 }
