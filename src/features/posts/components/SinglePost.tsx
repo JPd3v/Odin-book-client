@@ -26,7 +26,7 @@ export default function SinglePost() {
   const { userInfo } = useAuth();
 
   const likeMutation = usePostLike();
-  const deletePostMutation = useDeletePost('queryKey');
+  const deletePostMutation = useDeletePost();
   const editPostMutation = useEditPost('queryKey');
 
   if (!post.isLoading && (post.error || post.failureCount || !post.data)) {
@@ -46,7 +46,7 @@ export default function SinglePost() {
 
   function handlePostDelete() {
     if (!post.data) return;
-    deletePostMutation.mutate(post.data._id);
+    deletePostMutation.mutate(post.data);
   }
 
   function handlePostLike() {

@@ -38,7 +38,7 @@ export default function Post({ post }: IProps) {
   const { userInfo } = useAuth();
 
   const likeMutation = usePostLike();
-  const deletePostMutation = useDeletePost('queryKey');
+  const deletePostMutation = useDeletePost();
   const editPostMutation = useEditPost('queryKey');
 
   // function handleIncrement(increment: number) {
@@ -49,7 +49,7 @@ export default function Post({ post }: IProps) {
   // }
 
   function handlePostDelete() {
-    deletePostMutation.mutate(_id);
+    deletePostMutation.mutate(post);
   }
 
   function handleEditState() {
