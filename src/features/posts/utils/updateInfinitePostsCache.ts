@@ -1,4 +1,5 @@
 import { InfiniteData } from 'features/posts/types';
+import { IPost } from 'types';
 
 // eslint-disable-next-line import/prefer-default-export
 export function updateInfinitePostsLikesCache(
@@ -28,5 +29,21 @@ export function updateInfinitePostsLikesCache(
         return post;
       }),
     })),
+  };
+}
+
+export function addNewPostToCache(
+  prev: InfiniteData | undefined,
+  newPost: IPost
+) {
+  if (!prev || !prev.pages) return undefined;
+  return {
+    ...prev,
+    pages: prev.pages.map((page, index) => {
+      if (index === 0) {
+        return { ...page, posts: [newPost, ...page.posts] };
+      }
+      return page;
+    }),
   };
 }

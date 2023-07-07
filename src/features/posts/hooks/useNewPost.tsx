@@ -1,7 +1,14 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { axiosConfig } from 'config/index';
 import { useAuth } from 'hooks/index';
-import type { IFormInputs, IAxiosDefaultErrors } from '../types';
+import postKeys from 'features/posts/utils/postQuerykeyFactory';
+import { IPost } from 'types';
+import { addNewPostToCache } from 'features/posts/utils/updateInfinitePostsCache';
+import {
+  type IFormInputs,
+  type IAxiosDefaultErrors,
+  InfiniteData,
+} from '../types';
 
 async function newPost(
   formInputs: IFormInputs,
@@ -20,13 +27,24 @@ async function newPost(
   });
   return req.data;
 }
-export default function useNewPost(queryKey: string) {
+export default function useNewPost() {
   const { userToken } = useAuth();
   const queryCLient = useQueryClient();
-  return useMutation<unknown, IAxiosDefaultErrors, IFormInputs>([queryKey], {
+
+  return useMutation<IPost, IAxiosDefaultErrors, IFormInputs>({
     mutationFn: (formInputs) => newPost(formInputs, userToken),
-    onSuccess: () => {
-      queryCLient.invalidateQueries({ queryKey: [queryKey], exact: true });
+    onSuccess: (post) => {
+      const profileId = post.creator._id;
+
+      queryCLient.setQueryData(postKeys.detail(post._id), post);
+
+      queryCLient.setQueryData<InfiniteData>(postKeys.lists(), (prev) =>
+        addNewPostToCache(prev, post)
+      );
+      queryCLient.setQueryData<InfiniteData>(
+        postKeys.profile(profileId),
+        (prev) => addNewPostToCache(prev, post)
+      );
     },
   });
 }
