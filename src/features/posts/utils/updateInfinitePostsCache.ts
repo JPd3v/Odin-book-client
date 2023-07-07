@@ -1,7 +1,6 @@
 import { InfiniteData } from 'features/posts/types';
 import { IPost } from 'types';
 
-// eslint-disable-next-line import/prefer-default-export
 export function updateInfinitePostsLikesCache(
   prev: InfiniteData | undefined,
   postId: string
@@ -45,5 +44,21 @@ export function addNewPostToCache(
       }
       return page;
     }),
+  };
+}
+
+export function deletePostFromCache(
+  prev: InfiniteData | undefined,
+  post: IPost
+) {
+  if (!prev) return undefined;
+  const postId = post._id;
+
+  return {
+    ...prev,
+    pages: prev?.pages?.map((page) => ({
+      ...page,
+      posts: page.posts.filter((p) => p._id !== postId),
+    })),
   };
 }
