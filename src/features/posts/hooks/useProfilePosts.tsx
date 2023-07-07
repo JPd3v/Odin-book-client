@@ -3,6 +3,7 @@ import { axiosConfig } from 'config/index';
 import { useAuth } from 'hooks/index';
 import postKeys from 'features/posts/utils/postQuerykeyFactory';
 import { useParams } from 'react-router-dom';
+import { IPost } from 'types';
 
 async function userPosts(
   userId: string,
@@ -10,7 +11,7 @@ async function userPosts(
   pageParam = 1,
   pageSize = 10
 ) {
-  const req = await axiosConfig.get(
+  const req = await axiosConfig.get<IPost[]>(
     `/posts/${userId}/user-posts?page=${pageParam}&pageSize=${pageSize}`,
     {
       headers: { Authorization: `Bearer ${userToken}` },
