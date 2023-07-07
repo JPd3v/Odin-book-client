@@ -12,3 +12,5 @@ export { default as usePostLike } from './hooks/usePostLike';
 export { default as useProfilePosts } from './hooks/useProfilePosts';
 export { default as useSinglePost } from './hooks/useSinglePost';
 export * from './types';
+export { default as postQuerykeyFactory } from './utils/postQuerykeyFactory';
+export * from './utils/updateInfinitePostsCache';

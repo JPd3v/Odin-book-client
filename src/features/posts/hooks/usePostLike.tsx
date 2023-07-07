@@ -1,6 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { axiosConfig } from 'config/index';
 import { useAuth } from 'hooks/index';
+import postKeys from 'features/posts/utils/postQuerykeyFactory';
+import { IPost } from 'types';
+import { updateInfinitePostsLikesCache } from 'features/posts/utils/updateInfinitePostsCache';
 import type { InfiniteData } from '../types';
 
 async function likePost(postId: string, userToken: string): Promise<string[]> {
@@ -12,60 +15,72 @@ async function likePost(postId: string, userToken: string): Promise<string[]> {
   return req.data;
 }
 
-export default function usePostLike(queryKey: string | Array<string | number>) {
+export default function usePostLike() {
   const { userToken } = useAuth();
   const queryClient = useQueryClient();
 
-  return useMutation([queryKey], {
-    mutationFn: (postId: string) => likePost(postId, userToken ?? ''),
-    onMutate: async (postId) => {
-      await queryClient.cancelQueries([queryKey]);
+  return useMutation({
+    mutationFn: (post: IPost) => likePost(post._id, userToken as string),
+    onMutate: async (post) => {
+      const postId = post._id;
+      const profileId = post.creator._id;
 
-      const previousPosts = queryClient.getQueryData<InfiniteData>([queryKey]);
+      await queryClient.cancelQueries(postKeys.all);
 
-      queryClient.setQueryData<InfiniteData>([queryKey], (prev) => {
+      const previousListPosts = queryClient.getQueryData<InfiniteData>(
+        postKeys.lists()
+      );
+
+      const previousSinglePost = queryClient.getQueryData<IPost>(
+        postKeys.detail(postId)
+      );
+
+      const previousProfilePosts = queryClient.getQueryData<IPost>(
+        postKeys.profile(profileId)
+      );
+
+      queryClient.setQueryData<IPost>(postKeys.detail(postId), (prev) => {
+        if (!prev) return undefined;
+        if (prev.isLikedByUser) {
+          return {
+            ...prev,
+            isLikedByUser: !prev.isLikedByUser,
+            likesCount: prev.likesCount - 1,
+          };
+        }
         return {
           ...prev,
-          pages: prev?.pages?.map((page) => ({
-            ...page,
-            posts: page.posts.map((post) => {
-              if (post._id === postId) {
-                if (post.isLikedByUser) {
-                  return {
-                    ...post,
-                    isLikedByUser: false,
-                    likesCount: post.likesCount - 1,
-                  };
-                }
-                return {
-                  ...post,
-                  isLikedByUser: true,
-                  likesCount: post.likesCount + 1,
-                };
-              }
-              return post;
-            }),
-          })),
+          isLikedByUser: !prev.isLikedByUser,
+          likesCount: prev.likesCount + 1,
         };
       });
 
-      return { previousPosts };
+      queryClient.setQueryData<InfiniteData>(postKeys.lists(), (prev) =>
+        updateInfinitePostsLikesCache(prev, postId)
+      );
+
+      queryClient.setQueryData<InfiniteData>(
+        postKeys.profile(profileId),
+        (prev) => updateInfinitePostsLikesCache(prev, postId)
+      );
+
+      return { previousListPosts, previousSinglePost, previousProfilePosts };
     },
-    onError: (_err, _postId, context) => {
-      queryClient.setQueryData([queryKey], context?.previousPosts);
+    onError: (_err, post, context) => {
+      const postId = post._id;
+      const profileId = post.creator._id;
+
+      queryClient.setQueryData(postKeys.lists(), context?.previousListPosts);
+
+      queryClient.setQueryData(
+        postKeys.profile(profileId),
+        context?.previousProfilePosts
+      );
+
+      queryClient.setQueryData(
+        postKeys.detail(postId),
+        context?.previousSinglePost
+      );
     },
-    // onSuccess(data, postId) {
-    //   queryClient.setQueryData<InfiniteData>([queryKey], (prev) => {
-    //     return {
-    //       ...prev,
-    //       pages: prev?.pages?.map((page) => ({
-    //         ...page,
-    //         posts: page.posts.map((post) =>
-    //           post._id === postId ? { ...post, likes: [...data] } : post
-    //         ),
-    //       })),
-    //     };
-    //   });
-    // },
   });
 }
