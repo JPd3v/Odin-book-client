@@ -18,10 +18,9 @@ import useEditPost from '../hooks/useEditPost';
 
 interface IProps {
   post: IPost;
-  queryKey: string | Array<string | number>;
 }
 
-export default function Post({ post, queryKey }: IProps) {
+export default function Post({ post }: IProps) {
   const {
     _id,
     content,
@@ -38,11 +37,9 @@ export default function Post({ post, queryKey }: IProps) {
   const [isEditing, setIsEditing] = useState(false);
   const { userInfo } = useAuth();
 
-  const likeMutation = usePostLike(queryKey);
-  const deletePostMutation = useDeletePost(queryKey);
-  const editPostMutation = useEditPost(queryKey);
-
-  // const postComments = comments.slice(0, commentsLimit).reverse();
+  const likeMutation = usePostLike();
+  const deletePostMutation = useDeletePost('queryKey');
+  const editPostMutation = useEditPost('queryKey');
 
   // function handleIncrement(increment: number) {
   //   if (commentsLimit + increment < comments.length) {
@@ -132,7 +129,7 @@ export default function Post({ post, queryKey }: IProps) {
             type="button"
             className="post__controllers-like-button post__controllers-like-button--active"
             onClick={() =>
-              !likeMutation.isLoading ? likeMutation.mutate(_id) : null
+              !likeMutation.isLoading ? likeMutation.mutate(post) : null
             }
           >
             <AiFillLike aria-label="Remove like" />
@@ -142,7 +139,7 @@ export default function Post({ post, queryKey }: IProps) {
           <button
             type="button"
             onClick={() =>
-              !likeMutation.isLoading ? likeMutation.mutate(_id) : null
+              !likeMutation.isLoading ? likeMutation.mutate(post) : null
             }
           >
             <AiOutlineLike aria-label="Give like" /> <p>{formatedLikesCount}</p>
