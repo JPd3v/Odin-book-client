@@ -1,6 +1,5 @@
 export { default as NewPostForm } from './components/NewPostForm';
 export { default as Post } from './components/Post';
-export { default as PostComments } from './components/PostComments';
 export { default as PostList } from './components/PostList';
 export { default as ProfilePosts } from './components/ProfilePosts';
 export { default as SinglePost } from './components/SinglePost';
@@ -13,3 +12,5 @@ export { default as usePostLike } from './hooks/usePostLike';
 export { default as useProfilePosts } from './hooks/useProfilePosts';
 export { default as useSinglePost } from './hooks/useSinglePost';
 export * from './types';
+export { default as postQuerykeyFactory } from './utils/postQuerykeyFactory';
+export * from './utils/updateInfinitePostsCache';

@@ -3,9 +3,10 @@ interface IPost {
   creator: IUser;
   content: IContent;
   edited: boolean;
-  likes: string[];
-  comments: IComment[];
+  likesCount: number;
+  commentCount: number;
   timestamp: string;
+  isLikedByUser: boolean;
 }
 
 interface IContent {
