@@ -1,6 +1,6 @@
 import { useAuth } from 'hooks/index';
 import { lazy } from 'react';
-import { NewPostForm, useFeed } from 'features/posts/index';
+import { NewPostForm } from 'features/posts/index';
 
 const PostList = lazy(() => import('features/posts/components/PostList'));
 const RecommendedFriends = lazy(
@@ -14,13 +14,12 @@ export default function Home() {
   const { userToken } = useAuth();
 
   const QUERY_KEY = 'feed posts';
-  const posts = useFeed(QUERY_KEY);
 
   return userToken ? (
     <main className="user-feed">
       <div className="feed-container">
         <NewPostForm queryKey={QUERY_KEY} />
-        <PostList postsQuery={() => posts} queryKey={QUERY_KEY} />
+        <PostList />
       </div>
       <RecommendedFriends />
     </main>
