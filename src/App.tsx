@@ -1,8 +1,9 @@
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
+import { useRefreshUser } from 'features/auth';
 import { lazy, Suspense, useEffect } from 'react';
 import { LoadingPage } from './components/common/index';
-import { useRefreshUser } from './hooks/index';
+import { useScrollToTop } from './hooks/index';
 import { AuthGuard, RestrictedIfLogedIn } from './guards/index';
 import { PageLayout } from './layout/index';
 
@@ -16,6 +17,7 @@ const PageNotFound404 = lazy(() => import('./pages/PageNotFound404'));
 
 function App() {
   const refreshUser = useRefreshUser();
+  useScrollToTop();
 
   useEffect(() => {
     refreshUser.mutate();

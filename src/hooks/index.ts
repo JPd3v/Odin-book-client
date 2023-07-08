@@ -8,4 +8,4 @@ export { default as useIdIsOnArray } from './useIdIsOnArray';
 export { default as useInfiniteScroll } from './useInfiniteScroll';
 export { default as useLogOut } from '../features/auth/hooks/useLogOut';
 export { default as useMountTransition } from './useMountTransition';
-export { default as useRefreshUser } from '../features/auth/hooks/useRefreshUser';
+export { default as useScrollToTop } from './useScrollToTop';
