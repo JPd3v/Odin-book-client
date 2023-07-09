@@ -1,3 +1,5 @@
+import { InfiniteData } from '@tanstack/react-query';
+
 interface IPost {
   _id: string;
   creator: IUser;
@@ -32,9 +34,10 @@ interface IComment {
   content: IContent;
   creator: IUser;
   edited: boolean;
-  likes: string[];
   timestamp: string;
-  replies: IReply[];
+  likesCount: number;
+  repliesCount: number;
+  isLikedByUser: boolean;
 }
 
 interface IReply {
@@ -62,4 +65,13 @@ interface IErrorresponseData {
   errors?: [{ msg: string }];
 }
 
-export type { IPost, IComment, IReply, IUser, IAxiosDefaultErrors };
+type InfiniteComments = InfiniteData<{ comments: IComment[] }>;
+
+export type {
+  IPost,
+  IComment,
+  IReply,
+  IUser,
+  IAxiosDefaultErrors,
+  InfiniteComments,
+};
