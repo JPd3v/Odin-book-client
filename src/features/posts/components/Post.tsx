@@ -3,18 +3,13 @@ import { BiCommentDetail } from 'react-icons/bi';
 import { AiFillLike, AiOutlineLike } from 'react-icons/ai';
 import formatDistance from 'date-fns/formatDistance';
 import { Link } from 'react-router-dom';
-import {
-  // CommentQuantityLimiter,
-  DotsDropdown,
-  EditText,
-} from 'components/common/index';
+import { DotsDropdown, EditText } from 'components/common/index';
 import { useAuth } from 'hooks/index';
 import type { IPost } from 'types/index';
 import { CommentList } from 'features/comments';
 import usePostLike from '../hooks/usePostLike';
 import useDeletePost from '../hooks/useDeletePost';
 import useEditPost from '../hooks/useEditPost';
-// import PostComments from './PostComments';
 
 interface IProps {
   post: IPost;
@@ -33,20 +28,12 @@ export default function Post({ post }: IProps) {
   } = post;
 
   const [showComments, setShowComments] = useState(false);
-  // const [commentsLimit, setCommentsLimit] = useState(1);
   const [isEditing, setIsEditing] = useState(false);
   const { userInfo } = useAuth();
 
   const likeMutation = usePostLike();
   const deletePostMutation = useDeletePost();
   const editPostMutation = useEditPost();
-
-  // function handleIncrement(increment: number) {
-  //   if (commentsLimit + increment < comments.length) {
-  //     return setCommentsLimit((prev) => prev + increment);
-  //   }
-  //   return setCommentsLimit(comments.length);
-  // }
 
   function handlePostDelete() {
     deletePostMutation.mutate(post);
@@ -155,14 +142,9 @@ export default function Post({ post }: IProps) {
           <p>{formatedCommentsCount}</p>
         </button>
       </div>
-      {/* {showComments && comments.length ? (
-        <CommentQuantityLimiter
-          commentsLength={comments.length}
-          currentLimit={commentsLimit}
-          handleIncrement={(increment) => handleIncrement(increment)}
-        />
-      ) : null} */}
-      {showComments ? <CommentList postId={_id} /> : null}
+      {showComments ? (
+        <CommentList commentsCount={commentCount} postId={_id} />
+      ) : null}
     </article>
   );
 }

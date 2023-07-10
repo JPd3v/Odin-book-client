@@ -3,25 +3,18 @@ import { BiCommentDetail } from 'react-icons/bi';
 import { AiFillLike, AiOutlineLike } from 'react-icons/ai';
 import formatDistance from 'date-fns/formatDistance';
 import { Link } from 'react-router-dom';
-import {
-  // CommentQuantityLimiter,
-  DotsDropdown,
-  EditText,
-  LoadingPage,
-} from 'components/common/index';
+import { DotsDropdown, EditText, LoadingPage } from 'components/common/index';
 import { useAuth } from 'hooks/index';
-// import type { IPost } from 'types/index';
 import useSinglePost from 'features/posts/hooks/useSinglePost';
 import { PageNotFound404 } from 'pages';
 import usePostLike from '../hooks/usePostLike';
 import useDeletePost from '../hooks/useDeletePost';
 import useEditPost from '../hooks/useEditPost';
-// import PostComments from '../../comments/components/CommentList';
+import CommentList from '../../comments/components/CommentList';
 
 export default function SinglePost() {
   const post = useSinglePost();
   const [showComments, setShowComments] = useState(true);
-  // const [commentsLimit, setCommentsLimit] = useState(50);
   const [isEditing, setIsEditing] = useState(false);
   const { userInfo } = useAuth();
 
@@ -36,13 +29,6 @@ export default function SinglePost() {
   if (post.isLoading) {
     return <LoadingPage />;
   }
-
-  // function handleIncrement(increment: number) {
-  //   if (commentsLimit + increment < post.comments.length) {
-  //     return setCommentsLimit((prev) => prev + increment);
-  //   }
-  //   return setCommentsLimit(post.comments.length);
-  // }
 
   function handlePostDelete() {
     if (!post.data) return;
@@ -153,20 +139,13 @@ export default function SinglePost() {
           <p>{commentsCount}</p>
         </button>
       </div>
-      {/* {showComments && post.comments.length ? (
-        <CommentQuantityLimiter
-          commentsLength={post.comments.length}
-          currentLimit={commentsLimit}
-          handleIncrement={(increment) => handleIncrement(increment)}
+
+      {showComments ? (
+        <CommentList
+          commentsCount={post.data.commentCount}
+          postId={post.data._id}
         />
       ) : null}
-      {showComments ? (
-        <PostComments
-          comments={postComments}
-          postId={post._id}
-          queryKey={queryKey}
-        />
-      ) : null} */}
     </article>
   );
 }
