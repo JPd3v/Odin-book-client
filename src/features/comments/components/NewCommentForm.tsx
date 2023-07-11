@@ -7,7 +7,6 @@ import type { IFormInputs } from '../../posts/types';
 
 interface IProps {
   postId: string;
-  // queryKey: string | Array<string | number>;
 }
 
 export default function NewCommentForm({ postId }: IProps) {
@@ -18,20 +17,19 @@ export default function NewCommentForm({ postId }: IProps) {
     formState: { errors },
   } = useForm<IFormInputs>({ mode: 'onChange' });
 
-  // const createNewComment = useNewComment(queryKey);
+  const createNewComment = useNewComment();
 
   const FORM_UUID = crypto.randomUUID();
 
   function onSubmit(formInputs: IFormInputs) {
-    // createNewComment.mutate({ formInputs, postId });
-    console.log(formInputs);
+    createNewComment.mutate({ formInputs, postId });
   }
 
-  // useEffect(() => {
-  //   if (createNewComment.isSuccess) {
-  //     reset();
-  //   }
-  // }, [createNewComment.isSuccess, reset]);
+  useEffect(() => {
+    if (createNewComment.isSuccess) {
+      reset();
+    }
+  }, [createNewComment.isSuccess, reset]);
 
   return (
     <form className="comment-form" noValidate onSubmit={handleSubmit(onSubmit)}>
@@ -45,13 +43,13 @@ export default function NewCommentForm({ postId }: IProps) {
         })}
       />
       <div className="comment-form__controllers">
-        {/* <button
+        <button
           disabled={createNewComment.isLoading}
           type="submit"
           className="comment-form__submit"
         >
           Submit
-        </button> */}
+        </button>
         {errors.text ? (
           <p
             className="comment-form__error-message"
@@ -61,7 +59,7 @@ export default function NewCommentForm({ postId }: IProps) {
           </p>
         ) : null}
 
-        {/* {createNewComment.isLoading ? (
+        {createNewComment.isLoading ? (
           <div className="comment-form__loading-spinner">
             <LoadingSpinner />
           </div>
@@ -78,7 +76,7 @@ export default function NewCommentForm({ postId }: IProps) {
               {createNewComment.error.response.data?.message}
             </p>
           </div>
-        ) : null} */}
+        ) : null}
       </div>
     </form>
   );

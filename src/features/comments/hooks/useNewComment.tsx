@@ -1,12 +1,10 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { axiosConfig } from 'config/index';
 import { useAuth } from 'hooks/index';
-import type { IComment } from 'types/index';
-import type {
-  IFormInputs,
-  IAxiosDefaultErrors,
-  InfiniteData,
-} from '../../posts/types';
+import type { IComment, InfiniteComments } from 'types/index';
+import { addNewCommentInCache } from 'features/comments/utils/updateInfiniteCommentsCache';
+import commentKeys from 'features/comments/utils/commentQuerykeyFactory';
+import type { IFormInputs, IAxiosDefaultErrors } from '../../posts/types';
 
 interface INewComment {
   postId: string;
@@ -25,30 +23,19 @@ async function newComment(
   return req.data;
 }
 
-export default function useNewComment(
-  queryKey: string | Array<string | number>
-) {
+export default function useNewComment() {
   const { userToken } = useAuth();
 
   const queryClient = useQueryClient();
   return useMutation<IComment, IAxiosDefaultErrors, INewComment>({
     mutationFn: (data) => newComment(data, userToken),
-    onSuccess(data) {
-      const commentPostId = data.post_id;
+    onSuccess(returnedComment) {
+      const commentPostId = returnedComment.post_id;
 
-      queryClient.setQueryData<InfiniteData>([queryKey], (prev) => {
-        return {
-          ...prev,
-          pages: prev?.pages?.map((page) => ({
-            ...page,
-            posts: page.posts.map((post) =>
-              post._id === commentPostId
-                ? { ...post, comments: [data, ...post.comments] }
-                : post
-            ),
-          })),
-        };
-      });
+      queryClient.setQueryData<InfiniteComments>(
+        commentKeys.post(commentPostId),
+        (prev) => addNewCommentInCache(prev, returnedComment)
+      );
     },
   });
 }
