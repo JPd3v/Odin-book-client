@@ -19,4 +19,20 @@ function addNewCommentInCache(
   };
 }
 
-export { addNewCommentInCache };
+function editCommentInCache(
+  prev: InfiniteComments | undefined,
+  editedComment: IComment
+) {
+  if (!prev) return undefined;
+  return {
+    ...prev,
+    pages: prev?.pages?.map((page) => ({
+      ...page,
+      comments: page.comments.map((comment) =>
+        comment._id === editedComment._id ? editedComment : comment
+      ),
+    })),
+  };
+}
+
+export { addNewCommentInCache, editCommentInCache };
