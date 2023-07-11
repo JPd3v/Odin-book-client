@@ -35,4 +35,20 @@ function editCommentInCache(
   };
 }
 
-export { addNewCommentInCache, editCommentInCache };
+function deleteCommentInCache(
+  prev: InfiniteComments | undefined,
+  deletedComment: IComment
+) {
+  if (!prev) return undefined;
+  return {
+    ...prev,
+    pages: prev?.pages?.map((page) => ({
+      ...page,
+      comments: page.comments.filter(
+        (comment) => comment._id !== deletedComment._id
+      ),
+    })),
+  };
+}
+
+export { addNewCommentInCache, editCommentInCache, deleteCommentInCache };
