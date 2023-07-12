@@ -51,4 +51,40 @@ function deleteCommentInCache(
   };
 }
 
-export { addNewCommentInCache, editCommentInCache, deleteCommentInCache };
+function updateLikeCommentInCache(
+  prev: InfiniteComments | undefined,
+  commentId: string
+) {
+  if (!prev) return undefined;
+  return {
+    ...prev,
+    pages: prev?.pages.map((page) => ({
+      ...page,
+      comments: page.comments.map((comment) => {
+        if (comment._id === commentId) {
+          if (comment.isLikedByUser) {
+            return {
+              ...comment,
+              isLikedByUser: false,
+              likesCount: comment.likesCount - 1,
+            };
+          }
+
+          return {
+            ...comment,
+            isLikedByUser: true,
+            likesCount: comment.likesCount + 1,
+          };
+        }
+        return comment;
+      }),
+    })),
+  };
+}
+
+export {
+  addNewCommentInCache,
+  editCommentInCache,
+  deleteCommentInCache,
+  updateLikeCommentInCache,
+};

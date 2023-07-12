@@ -1,8 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useAuth } from 'hooks/index';
 import { axiosConfig } from 'config/index';
-import type { IComment } from 'types/index';
-import type { InfiniteData } from '../../posts/types';
+import type { IComment, InfiniteComments } from 'types/index';
+import commentKeys from 'features/comments/utils/commentQuerykeyFactory';
+import { updateLikeCommentInCache } from 'features/comments/utils/updateInfiniteCommentsCache';
 
 async function likeComment(
   comment: IComment,
@@ -16,82 +17,35 @@ async function likeComment(
   return req.data;
 }
 
-export default function useCommentLike(
-  queryKey: string | Array<string | number>
-) {
-  const { userToken, userInfo } = useAuth();
+export default function useCommentLike() {
+  const { userToken } = useAuth();
   const queryClient = useQueryClient();
 
-  return useMutation([queryKey], {
+  return useMutation({
     mutationFn: (comment: IComment) => likeComment(comment, userToken ?? ''),
-    onMutate: async (currentComment) => {
-      const userId = userInfo?._id ?? '';
-      const postId = currentComment.post_id;
-      const commentId = currentComment._id;
+    onMutate: async (likedComment) => {
+      const postId = likedComment.post_id;
+      const commentId = likedComment._id;
 
-      await queryClient.cancelQueries([queryKey]);
+      await queryClient.cancelQueries(commentKeys.post(postId));
 
-      const previousPosts = queryClient.getQueryData<InfiniteData>([queryKey]);
+      const previousComments = queryClient.getQueryData<InfiniteComments>(
+        commentKeys.post(postId)
+      );
+      queryClient.setQueryData<InfiniteComments>(
+        commentKeys.post(postId),
+        (prev) => updateLikeCommentInCache(prev, commentId)
+      );
 
-      queryClient.setQueryData<InfiniteData>([queryKey], (prev) => {
-        return {
-          ...prev,
-          pages: prev?.pages?.map((page) => ({
-            ...page,
-            posts: page.posts.map((post) => {
-              if (post._id === postId)
-                return {
-                  ...post,
-                  comments: post.comments.map((comment) => {
-                    if (comment._id === commentId) {
-                      if (comment.likes.includes(userId)) {
-                        const filteredLikes = comment.likes.filter(
-                          (id) => id !== userId
-                        );
-                        return { ...comment, likes: filteredLikes };
-                      }
-                      return {
-                        ...comment,
-                        likes: [...comment.likes, userId],
-                      };
-                    }
-                    return comment;
-                  }),
-                };
-              return post;
-            }),
-          })),
-        };
-      });
-      return { previousPosts };
+      return { previousComments };
     },
-    onError(_error, _variables, context) {
-      queryClient.setQueryData([queryKey], context?.previousPosts);
-    },
-    onSuccess(data, currentComment) {
-      const postId = currentComment.post_id;
-      const commentId = currentComment._id;
+    onError(_error, likedComment, context) {
+      const postId = likedComment.post_id;
 
-      queryClient.setQueryData<InfiniteData>([queryKey], (prev) => {
-        return {
-          ...prev,
-          pages: prev?.pages?.map((page) => ({
-            ...page,
-            posts: page.posts.map((post) => {
-              if (post._id === postId)
-                return {
-                  ...post,
-                  comments: post.comments.map((comment) => {
-                    return comment._id === commentId
-                      ? { ...comment, likes: [...data] }
-                      : comment;
-                  }),
-                };
-              return post;
-            }),
-          })),
-        };
-      });
+      queryClient.setQueryData(
+        commentKeys.post(postId),
+        context?.previousComments
+      );
     },
   });
 }
