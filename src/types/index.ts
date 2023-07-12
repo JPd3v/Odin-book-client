@@ -45,10 +45,11 @@ interface IReply {
   comment_id: string;
   creator: IUser;
   content: IContent;
-  likes: string[];
   post_id: string;
   edited: boolean;
   timestamp: string;
+  likesCount: number;
+  isLikedByUser: boolean;
 }
 
 interface IAxiosDefaultErrors {
