@@ -3,7 +3,7 @@ import { useState } from 'react';
 import formatDistance from 'date-fns/formatDistance';
 import { BsArrowReturnRight } from 'react-icons/bs';
 import { AiFillLike, AiOutlineLike } from 'react-icons/ai';
-import { useAuth, useIdIsOnArray } from 'hooks/index';
+import { useAuth } from 'hooks/index';
 import { EditText, DotsDropdown } from 'components/common/index';
 import type { IComment } from 'types/index';
 import Replies from '../../replies/components/Replies';
@@ -13,22 +13,19 @@ import useDeleteComment from '../hooks/useDeleteComment';
 
 interface IProps {
   comment: IComment;
-  queryKey: string | Array<string | number>;
 }
 
-export default function Comment({ comment, queryKey }: IProps) {
+export default function Comment({ comment }: IProps) {
   const [showReplies, SetShowReplies] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
   const { userInfo } = useAuth();
-  const userLikeThisComment = useIdIsOnArray(comment.likes, userInfo?._id);
-
-  const likeMutation = useCommentLike(queryKey);
-  const deleteCommentMutation = useDeleteComment(queryKey);
-  const editCommentMutation = useEditComment(queryKey);
+  const likeMutation = useCommentLike();
+  const deleteCommentMutation = useDeleteComment();
+  const editCommentMutation = useEditComment();
 
   function handleCommentDelete() {
-    deleteCommentMutation.mutate(comment._id);
+    deleteCommentMutation.mutate(comment);
   }
 
   function handleEditState() {
@@ -37,8 +34,8 @@ export default function Comment({ comment, queryKey }: IProps) {
 
   const formater = Intl.NumberFormat('en', { notation: 'compact' });
 
-  const likesCount = formater.format(comment.likes.length);
-  const repliesCount = formater.format(comment.replies.length);
+  const likesCount = formater.format(comment.likesCount);
+  const repliesCount = formater.format(comment.repliesCount);
 
   const commentDate = new Date(comment.timestamp);
   const commentDateFormated = formatDistance(commentDate, Date.now());
@@ -88,7 +85,7 @@ export default function Comment({ comment, queryKey }: IProps) {
       )}
 
       <div className="comment__controllers">
-        {userLikeThisComment ? (
+        {comment.isLikedByUser ? (
           <button
             type="button"
             className="comment__controllers-like-button comment__controllers-like-button--active"
@@ -120,13 +117,7 @@ export default function Comment({ comment, queryKey }: IProps) {
         </button>
       </div>
 
-      {showReplies ? (
-        <Replies
-          replies={comment.replies}
-          commentId={comment._id}
-          queryKey={queryKey}
-        />
-      ) : null}
+      {showReplies ? <Replies comment={comment} /> : null}
     </div>
   );
 }
