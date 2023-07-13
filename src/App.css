@@ -931,6 +931,28 @@ a.profile-drop-down__profile-link:hover {
   gap: 25px;
 }
 
+.replies__load-more {
+  align-self: center;
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 500;
+}
+
+.replies__load-more:hover {
+  text-decoration-line: underline;
+  color: var(--color-post-buttons);
+}
+
+.replies__loading {
+  width: 40px;
+  height: 40px;
+  place-self: center;
+}
+
 .edit-form {
   align-items: start;
   display: flex;
