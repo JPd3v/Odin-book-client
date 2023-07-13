@@ -10,10 +10,9 @@ interface IFormInputs {
 
 interface Iprops {
   commentId: string;
-  queryKey: string | Array<string | number>;
 }
 
-export default function NewReplyForm({ commentId, queryKey }: Iprops) {
+export default function NewReplyForm({ commentId }: Iprops) {
   const {
     register,
     reset,
@@ -21,7 +20,7 @@ export default function NewReplyForm({ commentId, queryKey }: Iprops) {
     handleSubmit,
   } = useForm<IFormInputs>({ mode: 'onChange' });
 
-  const newReplyMutation = useNewReply(queryKey);
+  const newReplyMutation = useNewReply();
 
   const REPLY_UUID = crypto.randomUUID();
 

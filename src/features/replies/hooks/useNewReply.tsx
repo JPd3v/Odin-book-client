@@ -1,8 +1,10 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { axiosConfig } from 'config/index';
 import { useAuth } from 'hooks/index';
-import type { IReply } from 'types/index';
-import type { IAxiosDefaultErrors, InfiniteData } from '../../posts/types';
+import type { IReply, InfiniteReplies } from 'types/index';
+import replyKeys from 'features/replies/utils/replyQuerykeyFactory';
+import { newReplyOnCache } from 'features/replies/utils/updateInfiniteRepliesCache';
+import type { IAxiosDefaultErrors } from '../../posts/types';
 
 interface IFormData {
   reply_text: string;
@@ -24,36 +26,19 @@ async function newReply(
   return req.data;
 }
 
-export default function useNewReply(queryKey: string | Array<string | number>) {
+export default function useNewReply() {
   const { userToken } = useAuth();
   const queryClient = useQueryClient();
 
-  return useMutation<IReply, IAxiosDefaultErrors, IFormData>([queryKey], {
+  return useMutation<IReply, IAxiosDefaultErrors, IFormData, unknown>({
     mutationFn: (data) => newReply(data, userToken),
-    onSuccess: (data) => {
-      const commentId = data.comment_id;
-      const postId = data.post_id;
+    onSuccess: (replyCreated) => {
+      const commentId = replyCreated.comment_id;
 
-      queryClient.setQueryData<InfiniteData>([queryKey], (prev) => {
-        return {
-          ...prev,
-          pages: prev?.pages?.map((page) => ({
-            ...page,
-            posts: page.posts.map((post) =>
-              post._id === postId
-                ? {
-                    ...post,
-                    comments: post.comments.map((comment) =>
-                      comment._id === commentId
-                        ? { ...comment, replies: [...comment.replies, data] }
-                        : comment
-                    ),
-                  }
-                : post
-            ),
-          })),
-        };
-      });
+      queryClient.setQueryData<InfiniteReplies>(
+        replyKeys.reply(commentId),
+        (prev) => newReplyOnCache(prev, replyCreated)
+      );
     },
   });
 }
