@@ -51,7 +51,7 @@ export default function Comment({ comment }: IProps) {
         </div>
       ) : null}
       <div className="comment__header">
-        <Link to={`users/${comment.creator._id}`}>
+        <Link to={`/users/${comment.creator._id}`}>
           <img
             className="comment__creator-img"
             src={`${comment.creator.profile_image.img}`}
@@ -62,12 +62,12 @@ export default function Comment({ comment }: IProps) {
 
         <div className="comment__header-right">
           <h2 className="comment__creator-name">
-            <Link to={`users/${comment.creator._id}`}>
+            <Link to={`/users/${comment.creator._id}`}>
               {`${comment.creator.first_name} ${comment.creator.last_name}`}
             </Link>
           </h2>
           <Link
-            to={`posts/${comment.post_id}`}
+            to={`/posts/${comment.post_id}`}
             className="comment__info"
           >{`${commentDateFormated} ${comment.edited ? '(edited)' : ''}`}</Link>
         </div>
@@ -117,7 +117,9 @@ export default function Comment({ comment }: IProps) {
         </button>
       </div>
 
-      {showReplies ? <Replies comment={comment} /> : null}
+      {showReplies ? (
+        <Replies commentId={comment._id} repliesCount={comment.repliesCount} />
+      ) : null}
     </div>
   );
 }
