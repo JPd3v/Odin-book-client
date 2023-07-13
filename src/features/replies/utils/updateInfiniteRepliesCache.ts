@@ -43,4 +43,36 @@ function editReplyInCache(
   };
 }
 
-export { newReplyOnCache, deleteReplyInCache, editReplyInCache };
+function likeReplyInCache(prev: InfiniteReplies | undefined, replyId: string) {
+  if (!prev) return undefined;
+  return {
+    ...prev,
+    pages: prev.pages.map((page) => ({
+      ...page,
+      replies: page.replies.map((reply) => {
+        if (reply._id === replyId) {
+          if (reply.isLikedByUser) {
+            return {
+              ...reply,
+              isLikedByUser: false,
+              likesCount: reply.likesCount - 1,
+            };
+          }
+          return {
+            ...reply,
+            isLikedByUser: true,
+            likesCount: reply.likesCount + 1,
+          };
+        }
+        return reply;
+      }),
+    })),
+  };
+}
+
+export {
+  newReplyOnCache,
+  deleteReplyInCache,
+  editReplyInCache,
+  likeReplyInCache,
+};
