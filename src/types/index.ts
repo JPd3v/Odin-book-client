@@ -68,6 +68,8 @@ interface IErrorresponseData {
 
 type InfiniteComments = InfiniteData<{ comments: IComment[] }>;
 
+type InfiniteReplies = InfiniteData<{ replies: IReply[] }>;
+
 export type {
   IPost,
   IComment,
@@ -75,4 +77,5 @@ export type {
   IUser,
   IAxiosDefaultErrors,
   InfiniteComments,
+  InfiniteReplies,
 };
