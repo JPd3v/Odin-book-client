@@ -27,4 +27,20 @@ function deleteReplyInCache(
   };
 }
 
-export { newReplyOnCache, deleteReplyInCache };
+function editReplyInCache(
+  prev: InfiniteReplies | undefined,
+  editedReply: IReply
+) {
+  if (!prev) return undefined;
+  return {
+    ...prev,
+    pages: prev.pages.map((page) => ({
+      ...page,
+      replies: page.replies.map((reply) =>
+        reply._id === editedReply._id ? editedReply : reply
+      ),
+    })),
+  };
+}
+
+export { newReplyOnCache, deleteReplyInCache, editReplyInCache };
