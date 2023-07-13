@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import formatDistance from 'date-fns/formatDistance';
 import { AiFillLike, AiOutlineLike } from 'react-icons/ai';
 import { DotsDropdown, EditText } from 'components/common/index';
-import { useIdIsOnArray, useAuth } from 'hooks/index';
+import { useAuth } from 'hooks/index';
 import type { IReply } from 'types/index';
 import useReplyLike from '../hooks/useReplyLike';
 import useDeleteReply from '../hooks/useDeleteReply';
@@ -11,22 +11,29 @@ import useEditReply from '../hooks/useEditReply';
 
 interface IProps {
   reply: IReply;
-  queryKey: string | Array<string | number>;
 }
 
-export default function Reply({ reply, queryKey }: IProps) {
-  const { content, creator, edited, likes, post_id, timestamp, _id } = reply;
+export default function Reply({ reply }: IProps) {
+  const {
+    content,
+    creator,
+    edited,
+    likesCount,
+    isLikedByUser,
+    post_id,
+    timestamp,
+    _id,
+  } = reply;
 
   const [isEditing, setIsEditing] = useState(false);
   const { userInfo } = useAuth();
-  const userLikeThisReply = useIdIsOnArray(likes, userInfo?._id);
 
-  const likeMutation = useReplyLike(queryKey);
-  const deleteReplyMutation = useDeleteReply(queryKey);
-  const editReplyMutation = useEditReply(queryKey);
+  const likeMutation = useReplyLike();
+  const deleteReplyMutation = useDeleteReply();
+  const editReplyMutation = useEditReply();
 
   function handleReplyDelete() {
-    deleteReplyMutation.mutate(_id);
+    deleteReplyMutation.mutate(reply);
   }
 
   function handleEditState() {
@@ -34,7 +41,7 @@ export default function Reply({ reply, queryKey }: IProps) {
   }
 
   const formater = Intl.NumberFormat('en', { notation: 'compact' });
-  const likesCount = formater.format(likes.length);
+  const formatedLikesCount = formater.format(likesCount);
 
   const replyDate = new Date(timestamp);
   const replyDateFormated = formatDistance(replyDate, Date.now());
@@ -51,7 +58,7 @@ export default function Reply({ reply, queryKey }: IProps) {
       ) : null}
 
       <div className="reply__header">
-        <Link to={`users/${creator._id}`}>
+        <Link to={`/users/${creator._id}`}>
           <img
             className="reply__creator-img"
             src={`${creator.profile_image.img}`}
@@ -62,12 +69,12 @@ export default function Reply({ reply, queryKey }: IProps) {
 
         <div className="reply__header-right">
           <h2 className="reply__creator-name">
-            <Link to={`users/${creator._id}`}>
+            <Link to={`/users/${creator._id}`}>
               {`${creator.first_name} ${creator.last_name}`}
             </Link>
           </h2>
           <Link
-            to={`posts/${post_id}`}
+            to={`/posts/${post_id}`}
             className="reply__info"
           >{`${replyDateFormated} ${edited ? '(edited)' : ''}`}</Link>
         </div>
@@ -85,7 +92,7 @@ export default function Reply({ reply, queryKey }: IProps) {
       )}
 
       <div className="reply__controllers">
-        {userLikeThisReply ? (
+        {isLikedByUser ? (
           <button
             type="button"
             className="reply__controllers-like-button reply__controllers-like-button--active"
@@ -94,7 +101,7 @@ export default function Reply({ reply, queryKey }: IProps) {
             }
           >
             <AiFillLike aria-label="Remove like" />
-            <p>{likesCount}</p>
+            <p>{formatedLikesCount}</p>
           </button>
         ) : (
           <button
@@ -103,7 +110,7 @@ export default function Reply({ reply, queryKey }: IProps) {
               !likeMutation.isLoading ? likeMutation.mutate(reply) : null
             }
           >
-            <AiOutlineLike aria-label="Give like" /> <p>{likesCount}</p>
+            <AiOutlineLike aria-label="Give like" /> <p>{formatedLikesCount}</p>
           </button>
         )}
       </div>
